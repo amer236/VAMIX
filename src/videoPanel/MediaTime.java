@@ -9,7 +9,8 @@ import javax.swing.Timer;
 import uk.co.caprica.vlcj.player.embedded.EmbeddedMediaPlayer;
 
 /**
- * MediaTime displays progress through the media in the form hh:mm:ss
+ * MediaTime displays progress through the media in the form hh:mm:ss.
+ * Taken from SE206 Assignment 3, paired prototype.
  */
 public class MediaTime extends JLabel implements ActionListener {
 	private EmbeddedMediaPlayer _player;

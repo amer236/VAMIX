@@ -13,6 +13,7 @@ import uk.co.caprica.vlcj.player.embedded.EmbeddedMediaPlayer;
 /**
  * TimeSlider is a slider which displays the progress of the media player and
  * enables controls of the media player.
+ * Taken from SE206 Assignment 3, paired prototype.
  */
 public class TimeSlider extends JSlider implements ActionListener {
 	private EmbeddedMediaPlayer _player;

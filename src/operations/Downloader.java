@@ -11,6 +11,7 @@ import javax.swing.SwingWorker;
 
 /**
  * Downloader is a SwingWorker which downloads media, given a url.
+ * Taken from SE206 Assignment 3, paired prototype.
  */
 public class Downloader extends SwingWorker<Void, Integer> {
 	private String _downloadcmd = "wget";

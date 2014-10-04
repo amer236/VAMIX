@@ -21,7 +21,8 @@ import uk.co.caprica.vlcj.player.embedded.EmbeddedMediaPlayer;
 
 /**
  * ControlsPanel holds all the controls for the media player and their
- * functionality
+ * functionality.
+ * Taken from SE206 Assignment 3, paired prototype.
  */
 public class ControlsPanel extends JPanel {
 	private EmbeddedMediaPlayer _player;
@@ -85,7 +86,7 @@ public class ControlsPanel extends JPanel {
 	public void createControls() {
 		// All icons are from the elegant themes pack on flaticon.com
 		try {
-			pauseImage = ImageIO.read(new File("pause.png"));
+			pauseImage = ImageIO.read(new File("resources/pause.png"));
 			pauseIcon = new ImageIcon(pauseImage);
 		} catch (IOException e1) {
 			playPauseLoaded = false;
@@ -93,7 +94,7 @@ public class ControlsPanel extends JPanel {
 		}
 
 		try {
-			playImage = ImageIO.read(new File("play.png"));
+			playImage = ImageIO.read(new File("resources/play.png"));
 			playIcon = new ImageIcon(playImage);
 			btnPlay = new JButton(pauseIcon);
 		} catch (IOException e1) {
@@ -103,7 +104,7 @@ public class ControlsPanel extends JPanel {
 		}
 
 		try {
-			backImage = ImageIO.read(new File("back.png"));
+			backImage = ImageIO.read(new File("resources/back.png"));
 			backIcon = new ImageIcon(backImage);
 			btnRewind = new JButton(backIcon);
 		} catch (IOException e1) {
@@ -112,7 +113,7 @@ public class ControlsPanel extends JPanel {
 		}
 
 		try {
-			forwardImage = ImageIO.read(new File("forward.png"));
+			forwardImage = ImageIO.read(new File("resources/forward.png"));
 			forwardIcon = new ImageIcon(forwardImage);
 			btnFastForward = new JButton(forwardIcon);
 		} catch (IOException e1) {
@@ -121,7 +122,7 @@ public class ControlsPanel extends JPanel {
 		}
 
 		try {
-			unmuteImage = ImageIO.read(new File("unmute.png"));
+			unmuteImage = ImageIO.read(new File("resources/unmute.png"));
 			unmuteIcon = new ImageIcon(unmuteImage);
 			btnMute = new JButton(unmuteIcon);
 		} catch (IOException e1) {
@@ -131,7 +132,7 @@ public class ControlsPanel extends JPanel {
 		}
 
 		try {
-			muteImage = ImageIO.read(new File("mute.png"));
+			muteImage = ImageIO.read(new File("resources/mute.png"));
 			muteIcon = new ImageIcon(muteImage);
 		} catch (IOException e1) {
 			muteUnmuteLoaded = false;

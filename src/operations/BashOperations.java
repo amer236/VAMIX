@@ -7,7 +7,8 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 
 /**
- * BashOperations deals with bash commands that don't require a swing worker
+ * BashOperations deals with bash commands that don't require a swing worker.
+ * Taken from SE206 Assignment 3, paired prototype.
  */
 public class BashOperations {
 

@@ -17,6 +17,7 @@ import uk.co.caprica.vlcj.player.embedded.EmbeddedMediaPlayer;
 
 /**
  * GeneralPanel is a SidePanel to allow file select and download functionality.
+ * Taken from SE206 Assignment 3, paired prototype.
  */
 public class GeneralPanel extends SidePanel implements ActionListener {
 	private JTextField _selectField;

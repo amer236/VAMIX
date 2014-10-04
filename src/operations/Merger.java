@@ -7,6 +7,7 @@ import javax.swing.SwingWorker;
 
 /**
  * Merger is a SwingWorker which merges two audio tracks into one.
+ * Taken from SE206 Assignment 3, paired prototype.
  */
 public class Merger extends SwingWorker<Void, Integer> {
 	private int _result;

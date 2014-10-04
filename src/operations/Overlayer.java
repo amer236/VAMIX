@@ -7,6 +7,7 @@ import javax.swing.SwingWorker;
 
 /**
  * Overlayer is a SwingWorker which replaces a video's audio stream.
+ * Taken from SE206 Assignment 3, paired prototype.
  */
 public class Overlayer extends SwingWorker<Void, Integer> {
 	private int _result;

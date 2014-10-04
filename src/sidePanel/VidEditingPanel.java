@@ -23,6 +23,10 @@ import javax.swing.text.NumberFormatter;
 
 import operations.Texter;
 
+/**
+ * VidEditingPanel adds title and credit scene functionality.
+ * Taken from SE206 Assignment 3, paired prototype.
+ */
 public class VidEditingPanel extends SidePanel implements ActionListener {
 	Texter _texter = new Texter();
 	GeneralPanel _gPanel;

@@ -18,7 +18,8 @@ import operations.BashOperations;
 import operations.Overlayer;
 
 /**
- * ExtractPanel allows the user to replace a video's audio track
+ * ExtractPanel allows the user to replace a video's audio track.
+ * Taken from SE206 Assignment 3, paired prototype.
  */
 public class OverlayPanel extends SidePanel implements ActionListener {
 	GeneralPanel _generalPanel;

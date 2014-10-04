@@ -8,6 +8,7 @@ import javax.swing.SwingWorker;
 /**
  * Extractor is a SwingWorker which extracts audio, video or both from a given
  * input.
+ * Taken from SE206 Assignment 3, paired prototype.
  */
 public class Extractor extends SwingWorker<Void, Integer> {
 	private int _result;

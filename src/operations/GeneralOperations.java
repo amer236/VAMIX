@@ -13,7 +13,8 @@ import javax.swing.Timer;
 import uk.co.caprica.vlcj.player.embedded.EmbeddedMediaPlayer;
 
 /**
- * This class holds some of the download logic
+ * This class holds some of the download logic.
+ * Taken from SE206 Assignment 3, paired prototype.
  */
 public class GeneralOperations implements ActionListener {
 	public Downloader _downloader;

@@ -18,7 +18,8 @@ import javax.swing.Timer;
 import operations.Extractor;
 
 /**
- * ExtractPanel allows the user to strip out audio, video, or both from specific
+ * ExtractPanel allows the user to strip out audio, video, or both from specific.
+ * Taken from SE206 Assignment 3, paired prototype.
  * time slots
  */
 public class ExtractPanel extends SidePanel implements ActionListener {

@@ -14,6 +14,7 @@ import javax.swing.SwingWorker;
 
 /**
  * Texter is a SwingWorker that adds a title and credit scene to the source video.
+ * Taken from SE206 Assignment 3, paired prototype.
  */
 public class Texter extends SwingWorker<Void, Integer> {
 	private String _location;
@@ -103,7 +104,8 @@ public class Texter extends SwingWorker<Void, Integer> {
 	private void createBlankVideo(String frameSize, String frameRate) {
 		try {
 			// Gets absolute path for input image file
-			File input = new File("input.jpg");
+			File input = new File("resources/input.jpg");
+			System.out.println(input.getAbsolutePath());
 			_builder = new ProcessBuilder("/bin/bash", "-c",
 					"avconv -loop 1 -i " + input.getAbsolutePath() + " -r "
 							+ frameRate + " -t 10 -s " + frameSize
@@ -131,6 +133,7 @@ public class Texter extends SwingWorker<Void, Integer> {
 	// Draws text on blank video start
 	private void drawTextStart() {
 		try {
+			System.out.println("madeit");
 			_builder = new ProcessBuilder("/bin/bash", "-c", "avconv -i "
 					+ System.getProperty("user.home")
 					+ "/VAMIX/blankVideoStart.mp4"
@@ -297,7 +300,7 @@ public class Texter extends SwingWorker<Void, Integer> {
 	// Strip source audio
 	private void overlaySound() {
 		try {
-			File blank = new File("10sec.mp3");
+			File blank = new File("resources/10sec.mp3");
 			Path source = blank.toPath();
 			File folder = new File(System.getProperty("user.home") + "/VAMIX");
 			Path newdir = folder.toPath();
@@ -394,7 +397,7 @@ public class Texter extends SwingWorker<Void, Integer> {
 	// Creates a preview with the text 
 	public void createPreview() {
 		try {
-			File input = new File("input.jpg");
+			File input = new File("resources/input.jpg");
 			_builder = new ProcessBuilder("/bin/bash", "-c",
 					"avconv -loop 1 -i " + input.getAbsolutePath()
 							+ " -r 1 -t 1 -s 1280x720 preview.mp4");

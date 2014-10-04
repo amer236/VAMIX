@@ -33,7 +33,8 @@ import uk.co.caprica.vlcj.player.embedded.EmbeddedMediaPlayer;
 import uk.co.caprica.vlcj.player.embedded.videosurface.CanvasVideoSurface;
 
 /**
- * MainGUI contains all of the GUI pieces that make up the VAMIX program
+ * MainGUI contains all of the GUI pieces that make up the VAMIX program.
+ * Taken from SE206 Assignment 3, paired prototype.
  */
 public class MainGUI {
 
@@ -115,7 +116,7 @@ public class MainGUI {
 		frame.setJMenuBar(menuBar);
 		
 		//Don't think this is working
-		Image icon = Toolkit.getDefaultToolkit().getImage("simple.png");
+		Image icon = Toolkit.getDefaultToolkit().getImage("resources/simple.png");
 		frame.setIconImage(icon);
 
 		// Setup menu items
@@ -145,7 +146,7 @@ public class MainGUI {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				Desktop dt = Desktop.getDesktop();
-				File file = new File("SE206A3_ReadMe.txt");
+				File file = new File("resources/SE206A3_ReadMe.txt");
 				try {
 					dt.open(file);
 				} catch (IOException e1) {

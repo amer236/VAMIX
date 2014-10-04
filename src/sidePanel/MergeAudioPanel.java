@@ -18,7 +18,8 @@ import operations.BashOperations;
 import operations.Merger;
 
 /**
- * MergeAudioPanel allows the user to merge two different audio tracks
+ * MergeAudioPanel allows the user to merge two different audio tracks.
+ * Taken from SE206 Assignment 3, paired prototype.
  */
 public class MergeAudioPanel extends SidePanel implements ActionListener {
 	GeneralPanel _generalPanel;
