@@ -105,7 +105,6 @@ public class Texter extends SwingWorker<Void, Integer> {
 		try {
 			// Gets absolute path for input image file
 			File input = new File("resources/input.jpg");
-			System.out.println(input.getAbsolutePath());
 			_builder = new ProcessBuilder("/bin/bash", "-c",
 					"avconv -loop 1 -i " + input.getAbsolutePath() + " -r "
 							+ frameRate + " -t 10 -s " + frameSize

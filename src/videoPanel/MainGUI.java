@@ -24,6 +24,7 @@ import javax.swing.JTabbedPane;
 import net.miginfocom.swing.MigLayout;
 import operations.StateOrganiser;
 import sidePanel.ExtractPanel;
+import sidePanel.FilterPanel;
 import sidePanel.GeneralPanel;
 import sidePanel.MergeAudioPanel;
 import sidePanel.OverlayPanel;
@@ -100,8 +101,17 @@ public class MainGUI {
 		wrapAudio.add(mergePanel, "wrap, grow");
 		wrapAudio.add(overlayPanel, "grow");
 		tabbedPane.addTab("Audio", scrollPane);
+		
+		JPanel wrapVideo = new JPanel(new MigLayout());
 		VidEditingPanel vPanel = new VidEditingPanel("Video Editing", generalPanel);
-		tabbedPane.addTab("Video Editing", vPanel);
+		FilterPanel fPanel = new FilterPanel("Video Filters", generalPanel);
+
+		wrapVideo.add(vPanel, "wrap");
+		wrapVideo.add(fPanel, "grow");
+		
+		tabbedPane.addTab("Video", wrapVideo);
+
+
 		videoPanel.add(new ControlsPanel(mediaPlayer, generalPanel), "");
 
 		// Setup StateOrganiser

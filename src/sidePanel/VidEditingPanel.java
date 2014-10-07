@@ -185,12 +185,14 @@ public class VidEditingPanel extends SidePanel implements ActionListener {
 			_texter.preview(true, _startText.getText(), fontPath, _fontSizeSpinner.getValue().toString(),
 					_fontColourBox.getSelectedItem().toString());
 			_time.start();
+			switchUsable();
 
 			// preview end command
 		} else if (e.getActionCommand().equals("end")) {
 			_texter.preview(false, _endText.getText(), fontPath, _fontSizeSpinner.getValue().toString(), _fontColourBox
 					.getSelectedItem().toString());
 			_time.start();
+			switchUsable();
 		}
 	}
 
