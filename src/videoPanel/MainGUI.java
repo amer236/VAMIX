@@ -23,6 +23,7 @@ import javax.swing.JTabbedPane;
 
 import net.miginfocom.swing.MigLayout;
 import operations.StateOrganiser;
+import sidePanel.ConcatPanel;
 import sidePanel.ExtractPanel;
 import sidePanel.FilterPanel;
 import sidePanel.GeneralPanel;
@@ -106,7 +107,8 @@ public class MainGUI {
 		JScrollPane scrollPane = new JScrollPane(wrapAudio);
 		wrapAudio.add(extractPanel, "wrap, grow");
 		wrapAudio.add(mergePanel, "wrap, grow");
-		wrapAudio.add(overlayPanel, "grow");
+		wrapAudio.add(overlayPanel, "grow, wrap");
+		wrapAudio.add(new ConcatPanel("Concat", _generalPanel), "grow");
 		tabbedPane.addTab("Audio", scrollPane);
 		
 		JPanel wrapVideo = new JPanel(new MigLayout());
@@ -196,6 +198,8 @@ public class MainGUI {
 					_mediaPlayer.playMedia(mediapath);
 					_generalPanel.setInputField(mediapath);
 				}else{
+					_mediaPlayer.stop();
+					_generalPanel.setInputField("");
 					//No media to play
 				}
 				_controlPanel.switchPlayIcon();

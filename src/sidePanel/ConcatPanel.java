@@ -15,23 +15,25 @@ import javax.swing.JTextField;
 import javax.swing.Timer;
 
 import operations.BashOperations;
+import operations.Concatenater;
 import operations.Merger;
 
 /**
  * MergeAudioPanel allows the user to merge two different audio tracks.
  * Taken from SE206 Assignment 3, paired prototype.
  */
-public class MergeAudioPanel extends SidePanel implements ActionListener {
+public class ConcatPanel extends SidePanel implements ActionListener {
 	GeneralPanel _generalPanel;
 	BashOperations _bash;
-	Merger _merger;
+	Concatenater _concater;
 	JFrame _frame;
-	JButton _save;
+	JButton _saveVideo;
+	JButton _saveAudio;
 	Timer _time = new Timer(1000, null);
 
-	private JButton _btnSelect0 = new JButton("Select audio file");
+	private JButton _btnSelect0 = new JButton("Select file 1");
 	private JTextField _selectField0 = new JTextField();
-	private JButton _btnSelect1 = new JButton("Select audio file");
+	private JButton _btnSelect1 = new JButton("Select file 2");
 	private JTextField _selectField1 = new JTextField();
 	JLabel _outFileL = new JLabel("Output File Name: ");
 	JTextField _outFileT = new JTextField();
@@ -41,19 +43,24 @@ public class MergeAudioPanel extends SidePanel implements ActionListener {
 	boolean isUsable = true;
 	String _outFile;
 
-	public MergeAudioPanel(String name, GeneralPanel generalPanel) {
+	public ConcatPanel(String name, GeneralPanel generalPanel) {
 		super(name);
 		super.setupPanel();
 
 		_generalPanel = generalPanel;
-		_merger = new Merger();
-		_bash = new BashOperations();
+		_concater = new Concatenater();
+
 		setupProgress();
 
-		_save = new JButton("Merge");
-		_save.addActionListener(this);
-		_save.setActionCommand("audio");
-		_save.setPreferredSize(new Dimension(250, 50));
+		_saveVideo = new JButton("Concatenate to Video");
+		_saveVideo.addActionListener(this);
+		_saveVideo.setActionCommand("video");
+		_saveVideo.setPreferredSize(new Dimension(250, 50));
+		
+		_saveAudio = new JButton("Concatenate to Audio");
+		_saveAudio.addActionListener(this);
+		_saveAudio.setActionCommand("audio");
+		_saveAudio.setPreferredSize(new Dimension(250, 50));
 
 		_selectField0.setEditable(false);
 		_selectField1.setEditable(false);
@@ -70,7 +77,7 @@ public class MergeAudioPanel extends SidePanel implements ActionListener {
 		_cancel.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				_merger.cancel();
+				_concater.cancel();
 			}
 		});
 
@@ -106,7 +113,8 @@ public class MergeAudioPanel extends SidePanel implements ActionListener {
 		this.add(_selectField1, "wrap");
 		this.add(_outFileL);
 		this.add(_outFileT, "wrap");
-		this.add(_save, "span, wrap");
+		this.add(_saveVideo, "wrap, span");
+		this.add(_saveAudio, "wrap, span");
 		this.add(_working, "span, grow");
 		this.add(_cancel, "span, grow");
 	}
@@ -120,20 +128,10 @@ public class MergeAudioPanel extends SidePanel implements ActionListener {
 		if (_selectField0.getText().equals("")
 				|| _selectField1.getText().equals("")) {
 			JOptionPane.showMessageDialog(null,
-					"You must select two audio files to merge");
+					"You must select two files to concat");
 			return;
 		}
-		if (_bash.checkAudioFile(_selectField0.getText()) == false) {
-			JOptionPane.showMessageDialog(null, "" + _selectField0.getText()
-					+ " does not appear to be an audio file");
-			return;
-		}
-		if (_bash.checkAudioFile(_selectField1.getText()) == false) {
-			JOptionPane.showMessageDialog(null, "" + _selectField1.getText()
-					+ " does not appear to be an audio file");
-			return;
-		}
-		if (formatCheck(true) == true) {
+		if (formatCheck(false) == true) {
 			File f = new File(_outFileT.getText());
 			if (f.exists()) {
 				Object[] options = { "Cancel", "Overwrite existing" };
@@ -154,15 +152,15 @@ public class MergeAudioPanel extends SidePanel implements ActionListener {
 			}
 		} else {
 			JOptionPane.showMessageDialog(null,
-					"The output name must end in \".mp3\" when saving audio");
+					"The output name must end in .mp4 when saving video");
 		}
 	}
 
 	// Begin merging audio
 	private void beginMerge(boolean b) {
 		switchUsable();
-		_merger = new Merger();
-		_merger.merge(_selectField0.getText(), _selectField1.getText(),
+		_concater = new Concatenater();
+		_concater.concat(_selectField0.getText(), _selectField1.getText(),
 				_outFileT.getText());
 		_time.start();
 	}
@@ -192,7 +190,7 @@ public class MergeAudioPanel extends SidePanel implements ActionListener {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				if (e.getActionCommand().equals("tick")) {
-					if (_merger.getWorking()) {
+					if (_concater.getWorking()) {
 						_working.setIndeterminate(true);
 					} else {
 						_working.setIndeterminate(false);
@@ -208,10 +206,12 @@ public class MergeAudioPanel extends SidePanel implements ActionListener {
 	protected void switchUsable() {
 		if (isUsable == true) {
 			isUsable = false;
-			_save.setEnabled(false);
+			_saveAudio.setEnabled(false);
+			_saveVideo.setEnabled(false);
 		} else {
 			isUsable = true;
-			_save.setEnabled(true);
+			_saveAudio.setEnabled(true);
+			_saveVideo.setEnabled(true);
 		}
 	}
 }

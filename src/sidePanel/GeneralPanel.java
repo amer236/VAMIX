@@ -3,8 +3,13 @@ package sidePanel;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 
+import javax.swing.DefaultListModel;
 import javax.swing.JButton;
+import javax.swing.JFileChooser;
+import javax.swing.JLabel;
+import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JProgressBar;
@@ -31,6 +36,12 @@ public class GeneralPanel extends SidePanel implements ActionListener {
 	private GeneralOperations _genOperations;
 	
 	PlaybackPanel _playbackPanel = null;
+	
+	DefaultListModel<String> listModel = new DefaultListModel<String>();
+	JList list = new JList(listModel);
+	JButton add = new JButton("Queue File");
+	JButton delete = new JButton("Remove file from playlist");
+	JLabel pl = null;
 
 	public GeneralPanel(String name, EmbeddedMediaPlayer player) {
 		super(name);
@@ -53,7 +64,8 @@ public class GeneralPanel extends SidePanel implements ActionListener {
 		JPanel downloadPanel = new SidePanel("Download File");
 		downloadPanel.setLayout(new MigLayout());
 
-		selectPanel.add(_btnSelect);
+		//selectPanel.add(_btnSelect);
+		selectPanel.add(new JLabel("Current File"));
 		selectPanel.add(_selectField, "width 600, wrap");
 		
 		_playbackPanel = new PlaybackPanel("Queue File For Playback", _player, this);
@@ -64,8 +76,54 @@ public class GeneralPanel extends SidePanel implements ActionListener {
 		downloadPanel.add(_prog, "grow");
 
 		this.add(selectPanel, "grow, wrap");
-		this.add(_playbackPanel, "grow, wrap");
+		//this.add(_playbackPanel, "grow, wrap");
 		this.add(downloadPanel, "wrap");
+		
+		add.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				JFileChooser fileChooser = new JFileChooser();
+				int returnValue = fileChooser.showOpenDialog(null);
+				if (returnValue == JFileChooser.APPROVE_OPTION) {
+					File selectedFile = fileChooser.getSelectedFile();
+					listModel.addElement(selectedFile.getAbsolutePath());
+				}
+				delete.setEnabled(true);
+				pl.setText("Playlist");
+				
+				if(_player.isPlayable()){
+					// Do nothing
+				}else{
+					String mediapath = GeneralPanel.this.getElementZero();
+					_player.playMedia(mediapath);
+					GeneralPanel.this.setInputField(mediapath);
+				}
+			}
+		});
+		
+		delete.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if(list.getSelectedIndex() == -1){
+					//Nothing selected
+				} else{
+					listModel.remove(list.getSelectedIndex());
+					if(listModel.getSize() == 0){
+						delete.setEnabled(false);
+						pl.setText("");
+					}
+				}
+			}
+		});
+		
+		
+		pl = new JLabel("");
+		selectPanel.add(pl, "wrap");
+		selectPanel.add(list, "grow, wrap, span");
+		selectPanel.add(add);
+		selectPanel.add(delete);
+		
+		delete.setEnabled(false);
 	}
 
 	// Adds functionality to file select JComponents
@@ -123,5 +181,23 @@ public class GeneralPanel extends SidePanel implements ActionListener {
 	
 	public PlaybackPanel getPlaybackPanel(){
 		return _playbackPanel;
+	}
+	
+	public boolean listHasNext(){
+		if(listModel.isEmpty()){
+			return false;
+		}else{
+			return true;
+		}
+	}
+	
+	public String getElementZero(){
+		String path = listModel.elementAt(0);
+		listModel.remove(0);
+		if(listModel.getSize() == 0){
+			delete.setEnabled(false);
+			pl.setText("");
+		}
+		return path;
 	}
 }

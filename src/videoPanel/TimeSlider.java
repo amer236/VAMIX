@@ -1,5 +1,6 @@
 package videoPanel;
 
+import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
@@ -40,6 +41,8 @@ public class TimeSlider extends JSlider implements ActionListener {
 			@Override
 			public void mousePressed(MouseEvent e) {
 				_timer.stop();
+				Point p = TimeSlider.this.getMousePosition();
+				TimeSlider.this.setValue(10000 * p.x / TimeSlider.this.getWidth());
 			}
 
 			@Override

@@ -7,7 +7,10 @@ import java.io.File;
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
+import javax.swing.JLabel;
 import javax.swing.JList;
+import javax.swing.event.ListDataEvent;
+import javax.swing.event.ListDataListener;
 
 import uk.co.caprica.vlcj.player.embedded.EmbeddedMediaPlayer;
 import net.miginfocom.swing.MigLayout;
@@ -16,10 +19,11 @@ public class PlaybackPanel extends SidePanel{
 	
 	DefaultListModel<String> listModel = new DefaultListModel<String>();
 	JList list = new JList(listModel);
-	JButton add = new JButton("Add file to playlist");
+	JButton add = new JButton("Queue File");
 	JButton delete = new JButton("Remove file from playlist");
 	EmbeddedMediaPlayer _player = null;
 	GeneralPanel _general = null;
+	JLabel pl = null;
 
 	public PlaybackPanel(String name, EmbeddedMediaPlayer player, GeneralPanel general) {
 		super(name);
@@ -36,6 +40,7 @@ public class PlaybackPanel extends SidePanel{
 					listModel.addElement(selectedFile.getAbsolutePath());
 				}
 				delete.setEnabled(true);
+				pl.setText("Playlist");
 				
 				if(_player.isPlayable()){
 					// Do nothing
@@ -56,12 +61,16 @@ public class PlaybackPanel extends SidePanel{
 					listModel.remove(list.getSelectedIndex());
 					if(listModel.getSize() == 0){
 						delete.setEnabled(false);
+						pl.setText("");
 					}
 				}
 			}
 		});
 		
+		
 		this.setLayout(new MigLayout());
+		pl = new JLabel("");
+		this.add(pl, "wrap");
 		this.add(list, "grow, wrap, span");
 		this.add(add);
 		this.add(delete);
@@ -82,6 +91,7 @@ public class PlaybackPanel extends SidePanel{
 		listModel.remove(0);
 		if(listModel.getSize() == 0){
 			delete.setEnabled(false);
+			pl.setText("");
 		}
 		return path;
 	}
