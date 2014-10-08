@@ -6,12 +6,14 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 
+import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JProgressBar;
+import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 import javax.swing.Timer;
 
@@ -35,6 +37,15 @@ public class FilterPanel extends SidePanel implements ActionListener {
 	JProgressBar _working = new JProgressBar();
 	Timer _time = new Timer(1000, null);
 	JButton _cancel = new JButton("Cancel");
+	
+	JRadioButton _hflip = new JRadioButton("Horizontal Flip");
+	JRadioButton _negate = new JRadioButton("Negate");
+	JRadioButton _vflip = new JRadioButton("Vertical Flip");
+	//JRadioButton _hflip = new JRadioButton("Horizontal Flip");
+	//JRadioButton _hflip = new JRadioButton("Horizontal Flip");
+	
+	ButtonGroup _group = new ButtonGroup();
+
 
 	String _outFile;
 
@@ -63,10 +74,23 @@ public class FilterPanel extends SidePanel implements ActionListener {
 
 		_working.setIndeterminate(false);
 		_working.setPreferredSize(new Dimension(250, 20));
+		
+	    _group.add(_hflip);
+	    _hflip.setSelected(true);
+	    _group.add(_negate);
+	    _group.add(_vflip);
+	    
+	    JPanel inner = new JPanel();
+	    
+	    inner.add(_hflip);
+	    inner.add(_negate);
+	    inner.add(_vflip);
+	    
+	    this.add(inner, "wrap");
 
 		this.add(_outFileL,"wrap");
 		this.add(_outFileT,"wrap, grow");
-		//this.add(new JLabel("All times must be in seconds"), "span, wrap");
+
 		this.add(_filter, "wrap, span, grow");
 		this.add(_working, "wrap");
 		this.add(_cancel, "span, grow");
@@ -124,7 +148,13 @@ public class FilterPanel extends SidePanel implements ActionListener {
 		switchUsable();
 		_filterer = new Filterer();
 		_time.start();
-		_filterer.applyFilter(_fsp.getInputField(), _outFile, "hflip");
+		if(_hflip.isSelected()){
+			_filterer.applyFilter(_fsp.getInputField(), _outFile, "hflip");
+		}else if (_negate.isSelected()){
+			_filterer.applyFilter(_fsp.getInputField(), _outFile, "negate");
+		}else if(_vflip.isSelected()){
+			_filterer.applyFilter(_fsp.getInputField(), _outFile, "vflip");
+		}
 	}
 
 	// Setup progress bar

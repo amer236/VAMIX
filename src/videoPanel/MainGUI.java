@@ -28,7 +28,11 @@ import sidePanel.FilterPanel;
 import sidePanel.GeneralPanel;
 import sidePanel.MergeAudioPanel;
 import sidePanel.OverlayPanel;
+import sidePanel.ThemeSelector;
 import sidePanel.VidEditingPanel;
+import uk.co.caprica.vlcj.binding.internal.libvlc_media_t;
+import uk.co.caprica.vlcj.player.MediaPlayer;
+import uk.co.caprica.vlcj.player.MediaPlayerEventListener;
 import uk.co.caprica.vlcj.player.MediaPlayerFactory;
 import uk.co.caprica.vlcj.player.embedded.EmbeddedMediaPlayer;
 import uk.co.caprica.vlcj.player.embedded.videosurface.CanvasVideoSurface;
@@ -38,6 +42,9 @@ import uk.co.caprica.vlcj.player.embedded.videosurface.CanvasVideoSurface;
  * Taken from SE206 Assignment 3, paired prototype.
  */
 public class MainGUI {
+	GeneralPanel _generalPanel = null;
+	EmbeddedMediaPlayer _mediaPlayer = null;
+	ControlsPanel _controlPanel = null;
 
 	// Create and add all the necessary GUI components
 	public void createGUI() {
@@ -52,14 +59,15 @@ public class MainGUI {
 		}
 
 		// Create and initialise panels
-		JFrame frame = new JFrame("VAMIX Prototype");
+		final JFrame frame = new JFrame("VAMIX Prototype");
 		frame.setLayout(new MigLayout());
 		JPanel videoPanel = new JPanel(new MigLayout("center"));
 		JPanel sidePanel = new JPanel();
 		Canvas playerCanvas = new Canvas();
 		JMenuBar menuBar = new JMenuBar();
 		JMenu menu0 = new JMenu("Editor State");
-		JMenu menu1 = new JMenu("Help");
+		JMenu menu1 = new JMenu("Options");
+		JMenu menu2 = new JMenu("Help");
 
 		// Split pane between editor and player
 		JSplitPane splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, sidePanel, videoPanel);
@@ -67,12 +75,11 @@ public class MainGUI {
 
 		// Media player
 		MediaPlayerFactory mediaPlayerFactory = new MediaPlayerFactory();
-		EmbeddedMediaPlayer mediaPlayer = mediaPlayerFactory.newEmbeddedMediaPlayer();
-		mediaPlayer.setRepeat(true);
+		_mediaPlayer = mediaPlayerFactory.newEmbeddedMediaPlayer();
 
 		// Creates a surface to attach the mediaPlayer to the canvas
 		CanvasVideoSurface videoSurface = mediaPlayerFactory.newVideoSurface(playerCanvas);
-		mediaPlayer.setVideoSurface(videoSurface);
+		_mediaPlayer.setVideoSurface(videoSurface);
 		videoPanel.add(playerCanvas, "grow, wrap");
 
 		// Set up canvas to reflect screen size
@@ -88,11 +95,11 @@ public class MainGUI {
 		sidePanel.add(tabbedPane);
 
 		// Create panes for tabbedPane and add them
-		GeneralPanel generalPanel = new GeneralPanel("General", mediaPlayer);
-		tabbedPane.addTab("General", generalPanel);
-		ExtractPanel extractPanel = new ExtractPanel("Cut/Trim Audio, Video or Both", generalPanel);
-		MergeAudioPanel mergePanel = new MergeAudioPanel("Merge Audio Tracks", generalPanel);
-		OverlayPanel overlayPanel = new OverlayPanel("Replace audio track", generalPanel);
+		_generalPanel = new GeneralPanel("General", _mediaPlayer);
+		tabbedPane.addTab("General", _generalPanel);
+		ExtractPanel extractPanel = new ExtractPanel("Cut/Trim Audio, Video or Both", _generalPanel);
+		MergeAudioPanel mergePanel = new MergeAudioPanel("Merge Audio Tracks", _generalPanel);
+		OverlayPanel overlayPanel = new OverlayPanel("Replace audio track", _generalPanel);
 
 		// Wrap each audio pane into wrapAudio
 		JPanel wrapAudio = new JPanel(new MigLayout());
@@ -103,16 +110,16 @@ public class MainGUI {
 		tabbedPane.addTab("Audio", scrollPane);
 		
 		JPanel wrapVideo = new JPanel(new MigLayout());
-		VidEditingPanel vPanel = new VidEditingPanel("Video Editing", generalPanel);
-		FilterPanel fPanel = new FilterPanel("Video Filters", generalPanel);
+		VidEditingPanel vPanel = new VidEditingPanel("Title and Credits Scene", _generalPanel);
+		FilterPanel fPanel = new FilterPanel("Video Filters", _generalPanel);
 
 		wrapVideo.add(vPanel, "wrap");
 		wrapVideo.add(fPanel, "grow");
 		
 		tabbedPane.addTab("Video", wrapVideo);
 
-
-		videoPanel.add(new ControlsPanel(mediaPlayer, generalPanel), "");
+		_controlPanel = new ControlsPanel(_mediaPlayer, _generalPanel);
+		videoPanel.add(_controlPanel, "");
 
 		// Setup StateOrganiser
 		final StateOrganiser _so = new StateOrganiser(System.getProperty("user.home") + "/VAMIX/.log.txt", vPanel);
@@ -163,9 +170,47 @@ public class MainGUI {
 				}
 			}
 		});
-
-		menu1.add(item3);
+		
 		menuBar.add(menu1);
+		JMenuItem theme = new JMenuItem("Change Theme");
+		menu1.add(theme);
+		
+		theme.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				JFrame selector = new ThemeSelector(frame);
+				selector.setVisible(true);
+				frame.setEnabled(false);
+				}
+		});
+
+		menu2.add(item3);
+		menuBar.add(menu2);
+		
+		_mediaPlayer.addMediaPlayerEventListener(new MediaPlayerEventListenerAdapter() {
+			
+			@Override
+			public void finished(MediaPlayer player) {
+				if(_generalPanel.getPlaybackPanel().listHasNext()){
+					String mediapath = _generalPanel.getPlaybackPanel().getElementZero();
+					_mediaPlayer.playMedia(mediapath);
+					_generalPanel.setInputField(mediapath);
+				}else{
+					//No media to play
+				}
+				_controlPanel.switchPlayIcon();
+			}
+			
+			@Override
+			public void paused(MediaPlayer arg0) {
+				_controlPanel.switchPlayIcon();
+			}
+			
+			@Override
+			public void playing(MediaPlayer arg0) {
+				_controlPanel.switchPlayIcon();
+			}
+		});
 	}
 
 }

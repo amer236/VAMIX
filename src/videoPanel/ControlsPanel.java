@@ -165,14 +165,12 @@ public class ControlsPanel extends JPanel {
 				if (_player.getMediaState() != null) {
 					_player.pause();
 					_timer.stop();
-					switchPlayIcon();
 				} else {
 					String file = _generalPanel.getInputField();
 					if (file.equals("")) {
 						// No source selected
 					} else {
 						_player.playMedia(file);
-						switchPlayIcon();
 					}
 				}
 			}
@@ -209,7 +207,7 @@ public class ControlsPanel extends JPanel {
 	}
 
 	// Switch play button between play and pause
-	private void switchPlayIcon() {
+	public void switchPlayIcon() {
 		if (playPauseLoaded) {
 			if (btnPlay.getIcon().equals(playIcon)) {
 				btnPlay.setIcon(pauseIcon);

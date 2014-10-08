@@ -29,6 +29,8 @@ public class GeneralPanel extends SidePanel implements ActionListener {
 	private JButton _cancel;
 	private EmbeddedMediaPlayer _player = null;
 	private GeneralOperations _genOperations;
+	
+	PlaybackPanel _playbackPanel = null;
 
 	public GeneralPanel(String name, EmbeddedMediaPlayer player) {
 		super(name);
@@ -53,13 +55,17 @@ public class GeneralPanel extends SidePanel implements ActionListener {
 
 		selectPanel.add(_btnSelect);
 		selectPanel.add(_selectField, "width 600, wrap");
+		
+		_playbackPanel = new PlaybackPanel("Queue File For Playback", _player, this);
+		
 		downloadPanel.add(_btnDownload);
 		downloadPanel.add(_downloadField, "width 600, wrap");
 		downloadPanel.add(_cancel);
 		downloadPanel.add(_prog, "grow");
 
 		this.add(selectPanel, "grow, wrap");
-		this.add(downloadPanel);
+		this.add(_playbackPanel, "grow, wrap");
+		this.add(downloadPanel, "wrap");
 	}
 
 	// Adds functionality to file select JComponents
@@ -113,5 +119,9 @@ public class GeneralPanel extends SidePanel implements ActionListener {
 	
 	public void setInputField(String set){
 		_selectField.setText(set);
+	}
+	
+	public PlaybackPanel getPlaybackPanel(){
+		return _playbackPanel;
 	}
 }
