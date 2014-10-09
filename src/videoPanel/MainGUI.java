@@ -193,8 +193,8 @@ public class MainGUI {
 			
 			@Override
 			public void finished(MediaPlayer player) {
-				if(_generalPanel.getPlaybackPanel().listHasNext()){
-					String mediapath = _generalPanel.getPlaybackPanel().getElementZero();
+				if(_generalPanel.listHasNext()){
+					String mediapath = _generalPanel.getElementZero();
 					_mediaPlayer.playMedia(mediapath);
 					_generalPanel.setInputField(mediapath);
 				}else{

@@ -35,7 +35,6 @@ public class GeneralPanel extends SidePanel implements ActionListener {
 	private EmbeddedMediaPlayer _player = null;
 	private GeneralOperations _genOperations;
 	
-	PlaybackPanel _playbackPanel = null;
 	
 	DefaultListModel<String> listModel = new DefaultListModel<String>();
 	JList list = new JList(listModel);
@@ -67,9 +66,7 @@ public class GeneralPanel extends SidePanel implements ActionListener {
 		//selectPanel.add(_btnSelect);
 		selectPanel.add(new JLabel("Current File"));
 		selectPanel.add(_selectField, "width 600, wrap");
-		
-		_playbackPanel = new PlaybackPanel("Queue File For Playback", _player, this);
-		
+				
 		downloadPanel.add(_btnDownload);
 		downloadPanel.add(_downloadField, "width 600, wrap");
 		downloadPanel.add(_cancel);
@@ -177,10 +174,6 @@ public class GeneralPanel extends SidePanel implements ActionListener {
 	
 	public void setInputField(String set){
 		_selectField.setText(set);
-	}
-	
-	public PlaybackPanel getPlaybackPanel(){
-		return _playbackPanel;
 	}
 	
 	public boolean listHasNext(){

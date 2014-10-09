@@ -38,6 +38,7 @@ public class ControlsPanel extends JPanel {
 	JButton btnFastForward;;
 	JButton btnMute;
 	JButton btnStart;
+	JButton btnStop;
 
 	BufferedImage playImage = null;
 	BufferedImage pauseImage = null;
@@ -45,13 +46,15 @@ public class ControlsPanel extends JPanel {
 	BufferedImage forwardImage = null;
 	BufferedImage unmuteImage = null;
 	BufferedImage muteImage = null;
-
+	BufferedImage stopImage = null;
+	
 	ImageIcon backIcon;
 	ImageIcon playIcon;
 	ImageIcon forwardIcon;
 	ImageIcon pauseIcon;
 	ImageIcon unmuteIcon;
 	ImageIcon muteIcon;
+	ImageIcon stopIcon;
 
 	public ControlsPanel(EmbeddedMediaPlayer embeddedMediaPlayer, GeneralPanel generalPanel) {
 		this.setLayout(new MigLayout("center"));
@@ -84,13 +87,21 @@ public class ControlsPanel extends JPanel {
 
 	// Setup controls as icons if possible and add to panel
 	public void createControls() {
-		// All icons are from the elegant themes pack on flaticon.com
+		// All icons are from the basic application pack by Freepik, License CC BY 3.0
+		// http://www.flaticon.com/packs/basic-application
 		try {
 			pauseImage = ImageIO.read(new File("resources/pause.png"));
 			pauseIcon = new ImageIcon(pauseImage);
 		} catch (IOException e1) {
 			playPauseLoaded = false;
 			e1.printStackTrace();
+		}
+		
+		try {
+			stopImage = ImageIO.read(new File("resources/pause.png"));
+			stopIcon = new ImageIcon(pauseImage);
+		} catch (IOException e1) {
+			btnStop = new JButton("Stop");
 		}
 
 		try {
