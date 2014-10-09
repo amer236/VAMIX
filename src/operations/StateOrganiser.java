@@ -14,7 +14,7 @@ import sidePanel.GeneralPanel;
 import sidePanel.VidEditingPanel;
 
 /**
- * Allows the user to save and load the vidoeditingstate panel's fields.
+ * Allows the user to save and load the VidEditingPanel's fields.
  * Taken from SE206 Assignment 3, paired prototype.
  */
 public class StateOrganiser {

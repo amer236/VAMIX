@@ -21,9 +21,8 @@ import operations.Extractor;
 import operations.Filterer;
 
 /**
- * ExtractPanel allows the user to strip out audio, video, or both from specific.
+ * FilterPanel allows the user to add filters to the current video.
  * Taken from SE206 Assignment 3, paired prototype.
- * time slots
  */
 public class FilterPanel extends SidePanel implements ActionListener {
 	GeneralPanel _fsp;
@@ -92,7 +91,7 @@ public class FilterPanel extends SidePanel implements ActionListener {
 		this.add(_outFileT,"wrap, grow");
 
 		this.add(_filter, "wrap, span, grow");
-		this.add(_working, "wrap");
+		this.add(_working, "wrap, grow");
 		this.add(_cancel, "span, grow");
 	}
 
@@ -104,7 +103,7 @@ public class FilterPanel extends SidePanel implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		// Add filter to video
 		if (e.getActionCommand().equals("Filter")) {
-			// Check fields, and then begin extraction
+			// Check fields, and then begin filtering
 			if (formatCheck() == true) {
 				File f = new File(_outFileT.getText());
 				if (f.exists()) {

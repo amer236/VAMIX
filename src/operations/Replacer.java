@@ -6,17 +6,17 @@ import javax.swing.JOptionPane;
 import javax.swing.SwingWorker;
 
 /**
- * Overlayer is a SwingWorker which replaces a video's audio stream.
+ * Replacer is a SwingWorker which replaces a video's audio stream.
  * Taken from SE206 Assignment 3, paired prototype.
  */
-public class Overlayer extends SwingWorker<Void, Integer> {
+public class Replacer extends SwingWorker<Void, Integer> {
 	private int _result;
 	private boolean _isWorking = false;
 	private ProcessBuilder _builder;
 	private Process _process;
 	private String _processString;
 
-	public Overlayer() {
+	public Replacer() {
 	}
 
 	@Override

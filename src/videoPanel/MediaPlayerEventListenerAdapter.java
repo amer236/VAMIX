@@ -4,6 +4,10 @@ import uk.co.caprica.vlcj.binding.internal.libvlc_media_t;
 import uk.co.caprica.vlcj.player.MediaPlayer;
 import uk.co.caprica.vlcj.player.MediaPlayerEventListener;
 
+/**
+ * MediaPlayerEventListenerAdapter is implements MediaPlayerEventListener, which allows only some
+ * methods to be overwritten. This saves space whenever a full listener would have been used.
+ */
 public class MediaPlayerEventListenerAdapter implements
 		MediaPlayerEventListener {
 

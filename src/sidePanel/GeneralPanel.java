@@ -18,12 +18,12 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
 import net.miginfocom.swing.MigLayout;
-import operations.Downloader;
 import operations.GeneralOperations;
 import uk.co.caprica.vlcj.player.embedded.EmbeddedMediaPlayer;
 
 /**
  * GeneralPanel is a SidePanel to allow file select and download functionality.
+ * It also allows the user to import files into an easy access list.
  * Taken from SE206 Assignment 3, paired prototype.
  */
 public class GeneralPanel extends SidePanel implements ActionListener {
@@ -39,7 +39,7 @@ public class GeneralPanel extends SidePanel implements ActionListener {
 	
 	
 	DefaultListModel<String> listModel = new DefaultListModel<String>();
-	JList list = new JList(listModel);
+	JList<String> list = new JList<String>(listModel);
 	JButton add = new JButton("Import File");
 	JButton delete = new JButton("Remove File");
 	JButton play = new JButton("Load selected media");

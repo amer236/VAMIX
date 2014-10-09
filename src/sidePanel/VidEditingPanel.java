@@ -42,6 +42,7 @@ public class VidEditingPanel extends SidePanel implements ActionListener {
 	JLabel _fontSizeLabel = new JLabel("Font Size");
 	JLabel _colourLabel = new JLabel("Select Colour");
 	JSpinner _fontSizeSpinner = null;
+	
 	// combo boxes that have drop down menu
 	JComboBox _fontBox = new JComboBox(new DefaultComboBoxModel(Font.values()));
 
@@ -72,6 +73,7 @@ public class VidEditingPanel extends SidePanel implements ActionListener {
 		JFormattedTextField inputSizeText = ((JSpinner.NumberEditor) _fontSizeSpinner.getEditor()).getTextField();
 		((NumberFormatter) inputSizeText.getFormatter()).setAllowsInvalid(false);
 
+		// Add buttons
 		this.add(_startTextLabel, "wrap");
 		this.add(_startText, "width 500, wrap");
 		this.add(_endTextLabel, "width 200, wrap");
@@ -112,6 +114,7 @@ public class VidEditingPanel extends SidePanel implements ActionListener {
 
 	}
 
+	//Setup progress bar
 	public void setupProgress() {
 		_time.setActionCommand("tick");
 		_time.addActionListener(new ActionListener() {

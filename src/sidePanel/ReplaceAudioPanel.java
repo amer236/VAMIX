@@ -15,16 +15,16 @@ import javax.swing.JTextField;
 import javax.swing.Timer;
 
 import operations.BashOperations;
-import operations.Overlayer;
+import operations.Replacer;
 
 /**
- * ExtractPanel allows the user to replace a video's audio track.
- * Taken from SE206 Assignment 3, paired prototype.
+ * ReplaceAudioPanel allows the user to replace a video's audio track.
+ * Taken frReplaceAudioPanelom SE206 Assignment 3, paired prototype.
  */
-public class OverlayPanel extends SidePanel implements ActionListener {
+public class ReplaceAudioPanel extends SidePanel implements ActionListener {
 	GeneralPanel _generalPanel;
 	BashOperations _bash;
-	Overlayer _overlayer;
+	Replacer _overlayer;
 	JFrame _frame;
 	JButton _save;
 	Timer _time = new Timer(1000, null);
@@ -39,13 +39,13 @@ public class OverlayPanel extends SidePanel implements ActionListener {
 	boolean isUsable = true;
 	String _outFile;
 
-	public OverlayPanel(String name, GeneralPanel generalPanel) {
+	public ReplaceAudioPanel(String name, GeneralPanel generalPanel) {
 		super(name);
 		_generalPanel = generalPanel;
 		super.setupPanel();
 
 		_generalPanel = generalPanel;
-		_overlayer = new Overlayer();
+		_overlayer = new Replacer();
 		_bash = new BashOperations();
 		setupProgress();
 
@@ -137,7 +137,7 @@ public class OverlayPanel extends SidePanel implements ActionListener {
 	// Begins replacing audio stream
 	private void beginOverlay(boolean b) {
 		switchUsable();
-		_overlayer = new Overlayer();
+		_overlayer = new Replacer();
 		_overlayer.overlay(_selectField.getText(), _generalPanel.getInputField(), _outFileT.getText(), true);
 		_time.start();
 	}

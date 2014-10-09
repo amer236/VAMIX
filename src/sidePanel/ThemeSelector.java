@@ -1,7 +1,6 @@
 package sidePanel;
 
 import java.awt.Color;
-import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -14,6 +13,10 @@ import javax.swing.UIManager;
 
 import net.miginfocom.swing.MigLayout;
 
+/**
+ * ThemeSelector allows the user to change some colours of the current theme
+ * Taken from SE206 Assignment 3, paired prototype.
+ */
 public class ThemeSelector extends JFrame {
 
 	public ThemeSelector(final JFrame frame) {

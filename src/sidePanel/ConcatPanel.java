@@ -16,10 +16,9 @@ import javax.swing.Timer;
 
 import operations.BashOperations;
 import operations.Concatenater;
-import operations.Merger;
 
 /**
- * MergeAudioPanel allows the user to merge two different audio tracks.
+ * ConcatPanel allows the user to concat two media files together.
  * Taken from SE206 Assignment 3, paired prototype.
  */
 public class ConcatPanel extends SidePanel implements ActionListener {
@@ -144,11 +143,11 @@ public class ConcatPanel extends SidePanel implements ActionListener {
 				} else {
 					f.delete();
 					_outFile = _outFileT.getText();
-					beginMerge(true);
+					beginConcat(true);
 				}
 			} else {
 				_outFile = _outFileT.getText();
-				beginMerge(true);
+				beginConcat(true);
 			}
 		} else {
 			JOptionPane.showMessageDialog(null,
@@ -157,7 +156,7 @@ public class ConcatPanel extends SidePanel implements ActionListener {
 	}
 
 	// Begin merging audio
-	private void beginMerge(boolean b) {
+	private void beginConcat(boolean b) {
 		switchUsable();
 		_concater = new Concatenater();
 		_concater.concat(_selectField0.getText(), _selectField1.getText(),

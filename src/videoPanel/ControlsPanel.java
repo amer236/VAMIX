@@ -20,8 +20,7 @@ import sidePanel.GeneralPanel;
 import uk.co.caprica.vlcj.player.embedded.EmbeddedMediaPlayer;
 
 /**
- * ControlsPanel holds all the controls for the media player and their
- * functionality.
+ * ControlsPanel holds all the controls for the media player and their functionality.
  * Taken from SE206 Assignment 3, paired prototype.
  */
 public class ControlsPanel extends JPanel {
@@ -69,14 +68,13 @@ public class ControlsPanel extends JPanel {
 					repeatAction();
 				}
 			}
-
 		});
 		_timer.setActionCommand("tick");
 		createControls();
 	}
-
+	
+	// Fast forward or rewind depending on _action
 	protected void repeatAction() {
-		// Fast forward or rewind depending on _action
 		if (_action.equals("forward")) {
 			_player.skip(200);
 		} else {
@@ -221,7 +219,7 @@ public class ControlsPanel extends JPanel {
 			}
 		});
 
-		// Own panel to be aligned to the right
+		// Volume panel to be aligned to the right
 		JPanel volControls = new JPanel();
 		volControls.add(btnMute);
 		btnMute.addActionListener(new ActionListener() {

@@ -6,7 +6,7 @@ import javax.swing.JOptionPane;
 import javax.swing.SwingWorker;
 
 /**
- * Filterer is a SwingWorker which replaces a video's audio stream.
+ * Filterer is a SwingWorker which applies a filter to the selected video.
  */
 public class Filterer extends SwingWorker<Void, Integer> {
 	private int _result;
@@ -32,7 +32,6 @@ public class Filterer extends SwingWorker<Void, Integer> {
 					"Operation has been succesfully completed");
 		} else {
 			JOptionPane.showMessageDialog(null, "Operation Incomplete");
-			System.out.println(_result + " " + _processString);
 		}
 	}
 

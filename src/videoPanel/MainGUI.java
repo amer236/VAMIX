@@ -9,6 +9,8 @@ import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 import java.io.File;
 import java.io.IOException;
 
@@ -28,12 +30,10 @@ import sidePanel.ExtractPanel;
 import sidePanel.FilterPanel;
 import sidePanel.GeneralPanel;
 import sidePanel.MergeAudioPanel;
-import sidePanel.OverlayPanel;
+import sidePanel.ReplaceAudioPanel;
 import sidePanel.ThemeSelector;
 import sidePanel.VidEditingPanel;
-import uk.co.caprica.vlcj.binding.internal.libvlc_media_t;
 import uk.co.caprica.vlcj.player.MediaPlayer;
-import uk.co.caprica.vlcj.player.MediaPlayerEventListener;
 import uk.co.caprica.vlcj.player.MediaPlayerFactory;
 import uk.co.caprica.vlcj.player.embedded.EmbeddedMediaPlayer;
 import uk.co.caprica.vlcj.player.embedded.videosurface.CanvasVideoSurface;
@@ -46,6 +46,7 @@ public class MainGUI {
 	GeneralPanel _generalPanel = null;
 	EmbeddedMediaPlayer _mediaPlayer = null;
 	ControlsPanel _controlPanel = null;
+	JFrame _selector = null;
 
 	// Create and add all the necessary GUI components
 	public void createGUI() {
@@ -100,7 +101,7 @@ public class MainGUI {
 		tabbedPane.addTab("General", _generalPanel);
 		ExtractPanel extractPanel = new ExtractPanel("Cut/Trim Audio, Video or Both", _generalPanel);
 		MergeAudioPanel mergePanel = new MergeAudioPanel("Merge Audio Tracks", _generalPanel);
-		OverlayPanel overlayPanel = new OverlayPanel("Replace audio track", _generalPanel);
+		ReplaceAudioPanel overlayPanel = new ReplaceAudioPanel("Replace audio track", _generalPanel);
 
 		// Wrap each audio pane into wrapAudio
 		JPanel wrapAudio = new JPanel(new MigLayout());
@@ -120,6 +121,7 @@ public class MainGUI {
 		
 		tabbedPane.addTab("Video", wrapVideo);
 
+		//Initialise control panel
 		_controlPanel = new ControlsPanel(_mediaPlayer, _generalPanel);
 		videoPanel.add(_controlPanel, "");
 
@@ -134,7 +136,7 @@ public class MainGUI {
 		frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
 		frame.setJMenuBar(menuBar);
 		
-		//Don't think this is working
+		//Custom icon image
 		Image icon = Toolkit.getDefaultToolkit().getImage("resources/simple.png");
 		frame.setIconImage(icon);
 
@@ -177,18 +179,52 @@ public class MainGUI {
 		JMenuItem theme = new JMenuItem("Change Theme");
 		menu1.add(theme);
 		
+		//Implement custom theme feature
 		theme.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				JFrame selector = new ThemeSelector(frame);
-				selector.setVisible(true);
+				_selector = new ThemeSelector(frame);
+				_selector.setVisible(true);
 				frame.setEnabled(false);
-				}
+				_selector.addWindowListener(new WindowListener() {
+					
+					@Override
+					public void windowOpened(WindowEvent e) {						
+					}
+					
+					@Override
+					public void windowIconified(WindowEvent e) {
+					}
+					
+					@Override
+					public void windowDeiconified(WindowEvent e) {
+					}
+					
+					@Override
+					public void windowDeactivated(WindowEvent e) {
+					}
+					
+					@Override
+					public void windowClosing(WindowEvent e) {
+						frame.repaint();
+						frame.setEnabled(true);
+					}
+					
+					@Override
+					public void windowClosed(WindowEvent e) {
+					}
+					
+					@Override
+					public void windowActivated(WindowEvent e) {						
+					}
+				});
+			}
 		});
 
 		menu2.add(item3);
 		menuBar.add(menu2);
 		
+		//Add media player listener
 		_mediaPlayer.addMediaPlayerEventListener(new MediaPlayerEventListenerAdapter() {
 			
 			@Override
