@@ -98,8 +98,9 @@ public class ControlsPanel extends JPanel {
 		}
 		
 		try {
-			stopImage = ImageIO.read(new File("resources/pause.png"));
-			stopIcon = new ImageIcon(pauseImage);
+			stopImage = ImageIO.read(new File("resources/stop.png"));
+			stopIcon = new ImageIcon(stopImage);
+			btnStop = new JButton(stopIcon);
 		} catch (IOException e1) {
 			btnStop = new JButton("Stop");
 		}
@@ -107,7 +108,7 @@ public class ControlsPanel extends JPanel {
 		try {
 			playImage = ImageIO.read(new File("resources/play.png"));
 			playIcon = new ImageIcon(playImage);
-			btnPlay = new JButton(pauseIcon);
+			btnPlay = new JButton(playIcon);
 		} catch (IOException e1) {
 			btnPlay = new JButton("Pause");
 			playPauseLoaded = false;
@@ -176,6 +177,26 @@ public class ControlsPanel extends JPanel {
 				if (_player.getMediaState() != null) {
 					_player.pause();
 					_timer.stop();
+				} else {
+					String file = _generalPanel.getInputField();
+					if (file.equals("")) {
+						// No source selected
+					} else {
+						_player.playMedia(file);
+					}
+				}
+			}
+		});
+		
+		this.add(btnStop);
+		btnStop.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if (_player.getMediaState() != null) {
+					_player.stop();
+					_generalPanel.setInputField("");
+					_timer.stop();
+					btnPlay.setIcon(playIcon);
 				} else {
 					String file = _generalPanel.getInputField();
 					if (file.equals("")) {

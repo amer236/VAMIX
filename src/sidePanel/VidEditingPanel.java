@@ -158,7 +158,7 @@ public class VidEditingPanel extends SidePanel implements ActionListener {
 		// creates preview file if it does not exist
 		File file = new File(System.getProperty("user.home") + "/VAMIX/preview.mp4");
 		if (!file.exists()) {
-			_texter.createPreview();
+			_texter.createSizedPreview(_gPanel.getInputField());
 		}
 
 		// checks that fontsize is vaild. If not, sets it to 12

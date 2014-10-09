@@ -132,7 +132,6 @@ public class Texter extends SwingWorker<Void, Integer> {
 	// Draws text on blank video start
 	private void drawTextStart() {
 		try {
-			System.out.println("madeit");
 			_builder = new ProcessBuilder("/bin/bash", "-c", "avconv -i "
 					+ System.getProperty("user.home")
 					+ "/VAMIX/blankVideoStart.mp4"
@@ -394,7 +393,7 @@ public class Texter extends SwingWorker<Void, Integer> {
 	}
 
 	// Creates a preview with the text 
-	public void createPreview() {
+	private void createPreview(String frameSize) {
 		try {
 			File input = new File("resources/input.jpg");
 			_builder = new ProcessBuilder("/bin/bash", "-c",
@@ -417,6 +416,41 @@ public class Texter extends SwingWorker<Void, Integer> {
 		} catch (IOException | InterruptedException e) {
 		}
 
+	}
+	
+	public void createSizedPreview(String location) {
+		try {
+			_builder = new ProcessBuilder("/bin/bash", "-c", "avprobe "
+					+ location);
+			_builder.directory(new File(System.getProperty("user.home")
+					+ "/VAMIX"));
+			_builder = _builder.redirectErrorStream(true);
+			_process = _builder.start();
+			InputStream stdout = _process.getInputStream();
+			BufferedReader stdoutBuffered = new BufferedReader(
+					new InputStreamReader(stdout));
+			String line = null;
+			String[] parts = null;
+			while ((line = stdoutBuffered.readLine()) != null) {
+				// Gets line that has needed information
+				if (line.contains("Video")) {
+					parts = line.split(",");
+				}
+			}
+
+			// gets frame rate and frame size
+			String[] tempArray = parts[2].split(" ");
+			String frameSize = tempArray[1];
+			tempArray = parts[4].split(" ");
+			String frameRate = tempArray[1];
+
+			_result = _process.waitFor();
+			if (_result == 0) {
+				createPreview(frameSize);
+			}
+		}catch (IOException | InterruptedException e){
+			
+		}
 	}
 
 	// Empties VAMIX folder for new operation
