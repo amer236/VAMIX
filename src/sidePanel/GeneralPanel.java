@@ -13,7 +13,9 @@ import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JProgressBar;
+import javax.swing.JScrollPane;
 import javax.swing.JTextField;
+import javax.swing.ScrollPaneConstants;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
@@ -138,11 +140,16 @@ public class GeneralPanel extends SidePanel implements ActionListener {
 				
 			}
 		});
-		
-		
+		JPanel listPane = new JPanel();
+		//listPane.setPreferredSize(new Dimension(100,200));
+		listPane.add(list);
+		JScrollPane scrollPane = new JScrollPane(listPane);
+		scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
+		scrollPane.setPreferredSize(new Dimension(10,200));
+		//scrollPane.add(list);
 		
 		selectPanel.add(pl, "wrap");
-		selectPanel.add(list, "grow, wrap, span");
+		selectPanel.add(scrollPane, "grow, wrap, span");
 		selectPanel.add(add);
 		selectPanel.add(delete, "wrap");
 		selectPanel.add(play,"span, grow");

@@ -104,6 +104,11 @@ public class FilterPanel extends SidePanel implements ActionListener {
 		// Add filter to video
 		if (e.getActionCommand().equals("Filter")) {
 			// Check fields, and then begin filtering
+			if (_fsp.getInputField().equals("")) {
+				JOptionPane.showMessageDialog(null,
+						"No source file has been selected. Please select a file in the General tab.");
+				return;
+			}
 			if (formatCheck() == true) {
 				File f = new File(_outFileT.getText());
 				if (f.exists()) {

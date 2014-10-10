@@ -2,7 +2,6 @@ package sidePanel;
 
 import javax.swing.BorderFactory;
 import javax.swing.JPanel;
-import javax.swing.JTextField;
 import javax.swing.border.TitledBorder;
 
 import net.miginfocom.swing.MigLayout;
@@ -24,13 +23,5 @@ public class SidePanel extends JPanel{
 	protected void setupPanel() {
 		this.setLayout(new MigLayout());
 		this.setupPanel();
-	}
-	
-	protected boolean isFileSelected(JTextField field){
-		if(field.getText().equals("")){
-			return false;
-		}else{
-			return true;
-		}
 	}
 }

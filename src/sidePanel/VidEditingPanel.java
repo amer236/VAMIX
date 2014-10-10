@@ -153,6 +153,11 @@ public class VidEditingPanel extends SidePanel implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
+		if (_gPanel.getInputField().equals("")) {
+			JOptionPane.showMessageDialog(null,
+					"No source file has been selected. Please select a file in the General tab.");
+			return;
+		}
 		_texter = new Texter();
 		// gets font path
 		Font thisFont = (Font) _fontBox.getSelectedItem();
@@ -167,12 +172,6 @@ public class VidEditingPanel extends SidePanel implements ActionListener {
 		// checks that fontsize is vaild. If not, sets it to 12
 		// add text command
 		if (e.getActionCommand().equals("confirm")) {
-			if (_gPanel.getInputField().equals("")) {
-				JOptionPane.showMessageDialog(null,
-						"No source file has been selected. Please select a file in the General tab.");
-				return;
-			}
-
 			if (!_outnameText.getText().endsWith(".mp4")) {
 				JOptionPane.showMessageDialog(null, "The output file must end with .mp4");
 				return;

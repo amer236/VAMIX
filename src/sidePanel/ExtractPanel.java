@@ -108,6 +108,11 @@ public class ExtractPanel extends SidePanel implements ActionListener {
 	// Setup button actions
 	@Override
 	public void actionPerformed(ActionEvent e) {
+		if (_fsp.getInputField().equals("")) {
+			JOptionPane.showMessageDialog(null,
+					"No source file has been selected. Please select a file in the General tab.");
+			return;
+		}
 		// Strip audio
 		if (e.getActionCommand().equals("audio")) {
 			// Check fields, and then begin extraction
