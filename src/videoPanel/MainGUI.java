@@ -167,7 +167,7 @@ public class MainGUI {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				Desktop dt = Desktop.getDesktop();
-				File file = new File("resources/SE206A3_ReadMe.txt");
+				File file = new File("resources/SE206_VAMIX_ReadMe.txt");
 				try {
 					dt.open(file);
 				} catch (IOException e1) {
