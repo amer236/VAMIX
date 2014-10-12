@@ -7,8 +7,11 @@ INSTALLATION
 -To launch the .jar file, open your console and navigate to the installed directory.
 -Then, enter "java -jar SE206_VAMIX_beta_amer236.jar". The program will then launch.
 
--To launch from eclipse, add the src folder and the resources folder to an eclipse project. Add
--the three jar files to 
+-DO NOT launch the jar by applying the executable permissions.
+
+-To launch from eclipse, add the src folder and the resources folder to an eclipse project. After adding
+-the three jar files from the resources folder to the build path, the project will then compile and can be run.
+-Note, the resources folder does not need to be a source folder.
 
 OVERVIEW
 -Upon running the program, the main video player and controls are located on the right of the window, 

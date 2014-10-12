@@ -108,7 +108,7 @@ public class ControlsPanel extends JPanel {
 			playIcon = new ImageIcon(playImage);
 			btnPlay = new JButton(playIcon);
 		} catch (IOException e1) {
-			btnPlay = new JButton("Pause");
+			btnPlay = new JButton("Play");
 			playPauseLoaded = false;
 			e1.printStackTrace();
 		}
