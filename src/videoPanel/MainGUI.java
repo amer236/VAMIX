@@ -229,15 +229,16 @@ public class MainGUI {
 			
 			@Override
 			public void finished(MediaPlayer player) {
-				if(_generalPanel.listHasNext()){
-					String mediapath = _generalPanel.getElementZero();
-					_mediaPlayer.playMedia(mediapath);
-					_generalPanel.setInputField(mediapath);
-				}else{
-					_mediaPlayer.stop();
-					_generalPanel.setInputField("");
-					//No media to play
-				}
+//				if(_generalPanel.listHasNext()){
+//					String mediapath = _generalPanel.getElementZero();
+//					_mediaPlayer.playMedia(mediapath);
+//					_generalPanel.setInputField(mediapath);
+//				}else{
+//					_mediaPlayer.stop();
+//					_generalPanel.setInputField("");
+//					//No media to play
+//				}
+				_mediaPlayer.stop();
 				_controlPanel.switchPlayIcon();
 			}
 			
@@ -252,5 +253,4 @@ public class MainGUI {
 			}
 		});
 	}
-
 }

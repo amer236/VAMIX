@@ -220,7 +220,7 @@ public class GeneralPanel extends SidePanel implements ActionListener {
 	
 	public String getElementZero(){
 		String path = listModel.elementAt(0);
-		listModel.remove(0);
+		//listModel.remove(0);
 		if(listModel.getSize() == 0){
 			delete.setEnabled(false);
 		}
