@@ -32,6 +32,7 @@ import sidePanel.FilterPanel;
 import sidePanel.GeneralPanel;
 import sidePanel.MergeAudioPanel;
 import sidePanel.ReplaceAudioPanel;
+import sidePanel.SubtitlesPanel;
 import sidePanel.ThemeSelector;
 import sidePanel.VidEditingPanel;
 import uk.co.caprica.vlcj.player.MediaPlayer;
@@ -124,8 +125,11 @@ public class MainGUI {
 		
 		tabbedPane.addTab("Video", wrapVideo);
 		
+		JPanel wrapSubtitle = new JPanel(new MigLayout());
+		SubtitlesPanel sPanel = new SubtitlesPanel("Subtitles", _generalPanel);
+		wrapSubtitle.add(sPanel, "grow");
 		
-		
+		tabbedPane.addTab("Subtitles", wrapSubtitle);
 
 		//Initialise control panel
 		_controlPanel = new ControlsPanel(_mediaPlayer, _generalPanel);
