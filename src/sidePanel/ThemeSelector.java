@@ -10,7 +10,9 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSlider;
+import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
+import javax.swing.plaf.ColorUIResource;
 
 import net.miginfocom.swing.MigLayout;
 
@@ -41,9 +43,9 @@ public class ThemeSelector extends JFrame {
 		base.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				UIManager.put("nimbusBase", new Color(red.getValue(), blue.getValue(), green.getValue()));
-				frame.repaint();
-				repaint();
+				UIManager.put("nimbusBase", new ColorUIResource(red.getValue(), green.getValue(), blue.getValue()));
+				SwingUtilities.updateComponentTreeUI(frame);
+				SwingUtilities.updateComponentTreeUI(ThemeSelector.this);
 			}
 		});
 		panel.add(base,"grow");
@@ -52,9 +54,9 @@ public class ThemeSelector extends JFrame {
 		control.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				UIManager.put("control", new Color(red.getValue(), blue.getValue(), green.getValue()));
-				frame.repaint();
-				repaint();
+				UIManager.put("control", new ColorUIResource(red.getValue(), green.getValue(), blue.getValue()));
+				SwingUtilities.updateComponentTreeUI(frame);
+				SwingUtilities.updateComponentTreeUI(ThemeSelector.this);
 			}
 		});
 		panel.add(control, "grow, wrap");
@@ -63,10 +65,10 @@ public class ThemeSelector extends JFrame {
 		control.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				UIManager.put("nimbusBlueGrey", new Color(red.getValue(), blue.getValue(), green.getValue()));
-				UIManager.put("nimbusFocus", new Color(red.getValue(), blue.getValue(), green.getValue()));
-				frame.repaint();
-				repaint();
+				UIManager.put("nimbusBlueGrey", new ColorUIResource(red.getValue(), green.getValue(), blue.getValue()));
+				UIManager.put("nimbusFocus", new ColorUIResource(red.getValue(), green.getValue(), blue.getValue()));
+				SwingUtilities.updateComponentTreeUI(ThemeSelector.this);				
+				SwingUtilities.updateComponentTreeUI(frame);
 			}
 		});
 		panel.add(highlight, "grow, wrap, span");
@@ -75,12 +77,12 @@ public class ThemeSelector extends JFrame {
 		def.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				UIManager.put("control", new Color(214, 217, 223));
-				UIManager.put("nimbusBase", new Color(51,98,140));
-				UIManager.put("nimbusBlueGrey", new Color(169,176,190));
-				UIManager.put("nimbusFocus", new Color(115,164,209));
-				repaint();
-				frame.repaint();
+				UIManager.put("control", new ColorUIResource(214, 217, 223));
+				UIManager.put("nimbusBase", new ColorUIResource(51,98,140));
+				UIManager.put("nimbusBlueGrey", new ColorUIResource(169,176,190));
+				UIManager.put("nimbusFocus", new ColorUIResource(115,164,209));
+				SwingUtilities.updateComponentTreeUI(frame);
+				SwingUtilities.updateComponentTreeUI(ThemeSelector.this);
 			}
 		});
 		panel.add(def,"span, grow, wrap");
@@ -89,8 +91,10 @@ public class ThemeSelector extends JFrame {
 		done.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				frame.repaint();
+				SwingUtilities.updateComponentTreeUI(frame);
+
 				frame.setEnabled(true);
+				
 				dispose();
 			}
 		});
@@ -101,6 +105,5 @@ public class ThemeSelector extends JFrame {
 		this.setPreferredSize(new Dimension(300, 300));
 		this.pack();
 		this.add(panel);
-	}
-	
+	}	
 }

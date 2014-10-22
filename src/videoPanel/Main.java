@@ -1,5 +1,6 @@
 package videoPanel;
 
+import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
@@ -17,8 +18,14 @@ public class Main {
 			// Oh well, worked at home
 		}
 
-		// Begin program
-		MainGUI gui = new MainGUI();
-		gui.createGUI();
+		SwingUtilities.invokeLater(new Runnable() {
+
+			@Override
+			public void run() {
+				// Begin program
+				MainGUI gui = new MainGUI();
+				gui.createGUI();				
+			}
+		});
 	}
 }

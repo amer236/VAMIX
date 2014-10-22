@@ -22,6 +22,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
 import javax.swing.JTabbedPane;
+import javax.swing.SwingUtilities;
 
 import net.miginfocom.swing.MigLayout;
 import operations.StateOrganiser;
@@ -47,6 +48,7 @@ public class MainGUI {
 	EmbeddedMediaPlayer _mediaPlayer = null;
 	ControlsPanel _controlPanel = null;
 	JFrame _selector = null;
+	JTabbedPane tabbedPane = null;
 
 	// Create and add all the necessary GUI components
 	public void createGUI() {
@@ -93,7 +95,7 @@ public class MainGUI {
 		// Setup side panel and add tabbedPane
 		sidePanel.setLayout(new BorderLayout());
 		sidePanel.setPreferredSize(new Dimension(screenSize.width / 4, screenSize.height / 4));
-		JTabbedPane tabbedPane = new JTabbedPane();
+		tabbedPane = new JTabbedPane();
 		sidePanel.add(tabbedPane);
 
 		// Create panes for tabbedPane and add them
@@ -106,10 +108,11 @@ public class MainGUI {
 		// Wrap each audio pane into wrapAudio
 		JPanel wrapAudio = new JPanel(new MigLayout());
 		JScrollPane scrollPane = new JScrollPane(wrapAudio);
+
 		wrapAudio.add(extractPanel, "wrap, grow");
 		wrapAudio.add(mergePanel, "wrap, grow");
 		wrapAudio.add(overlayPanel, "grow, wrap");
-		wrapAudio.add(new ConcatPanel("Concat", _generalPanel), "grow");
+		wrapAudio.add(new ConcatPanel("Join Videos", _generalPanel), "grow");
 		tabbedPane.addTab("Audio", scrollPane);
 		
 		JPanel wrapVideo = new JPanel(new MigLayout());
@@ -120,6 +123,9 @@ public class MainGUI {
 		wrapVideo.add(fPanel, "grow");
 		
 		tabbedPane.addTab("Video", wrapVideo);
+		
+		
+		
 
 		//Initialise control panel
 		_controlPanel = new ControlsPanel(_mediaPlayer, _generalPanel);
@@ -206,7 +212,10 @@ public class MainGUI {
 					
 					@Override
 					public void windowClosing(WindowEvent e) {
-						frame.repaint();
+						SwingUtilities.updateComponentTreeUI(frame);
+						SwingUtilities.updateComponentTreeUI(tabbedPane);
+						
+
 						frame.setEnabled(true);
 					}
 					
