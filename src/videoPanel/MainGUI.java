@@ -82,6 +82,7 @@ public class MainGUI {
 		// Split pane between editor and player
 		JSplitPane splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT,
 				sidePanel, videoPanel);
+		splitPane.setEnabled(false);
 		frame.add(splitPane, "push, grow");
 
 		// Media player
@@ -109,10 +110,10 @@ public class MainGUI {
 
 		// Create panes for tabbedPane and add them
 		_generalPanel = new GeneralPanel("General", _mediaPlayer);
-		tabbedPane.addTab("General", _generalPanel);
+		tabbedPane.addTab("File Select", _generalPanel);
 		ExtractPanel extractPanel = new ExtractPanel(
-				"Cut/Trim Audio, Video or Both", _generalPanel);
-		MergeAudioPanel mergePanel = new MergeAudioPanel("Merge Audio Tracks",
+				"Cut and Trim", _generalPanel);
+		MergeAudioPanel mergePanel = new MergeAudioPanel("Merge Audio",
 				_generalPanel);
 		ReplaceAudioPanel overlayPanel = new ReplaceAudioPanel(
 				"Replace audio track", _generalPanel);
@@ -125,7 +126,7 @@ public class MainGUI {
 		wrapAudio.add(mergePanel, "wrap, grow");
 		wrapAudio.add(overlayPanel, "grow, wrap");
 		wrapAudio.add(new ConcatPanel("Join Media", _generalPanel), "grow");
-		tabbedPane.addTab("Audio", scrollPane);
+		tabbedPane.addTab("Manipulation", scrollPane);
 
 		JPanel wrapVideo = new JPanel(new MigLayout());
 		VidEditingPanel vPanel = new VidEditingPanel("Title and Credits Scene",
@@ -149,7 +150,7 @@ public class MainGUI {
 
 		// Setup StateOrganiser
 		final StateOrganiser _so = new StateOrganiser(
-				System.getProperty("user.home") + "/VAMIX/.log.txt", vPanel);
+				System.getProperty("user.home") + "/VAMIX/.log.txt", vPanel, sPanel);
 
 		// Organise frame
 		frame.pack();

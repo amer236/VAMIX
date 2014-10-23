@@ -45,10 +45,9 @@ public class Concatenater extends SwingWorker<Void, Integer> {
 
 	// Create temp videos in mpeg format
 	private void createTempVids() {
-		createTemp2();
 		createTemp1();
 		if (_result == 0) {
-			mergeVideos();	
+			createTemp2();
 		}
 
 	}
@@ -85,7 +84,9 @@ public class Concatenater extends SwingWorker<Void, Integer> {
 			_builder = _builder.redirectErrorStream(true);
 			_process = _builder.start();
 			_result = _process.waitFor();
-
+			if (_result == 0) {
+				mergeVideos();
+			}
 			_process.destroy();
 
 		} catch (IOException | InterruptedException e) {
@@ -143,7 +144,7 @@ public class Concatenater extends SwingWorker<Void, Integer> {
 		_isWorking = false;
 
 		if (getResult() == 0) {
-			JOptionPane.showMessageDialog(null, "Concatenation Complete. Please copy your output file from the VAMIX folder in your home directory.");
+			JOptionPane.showMessageDialog(null, "Join Complete. Please copy your output file from the VAMIX folder in your home directory.");
 		} else {
 			JOptionPane.showMessageDialog(null,	"Operation incomplete");
 		}

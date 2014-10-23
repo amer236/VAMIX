@@ -50,7 +50,7 @@ public class ConcatPanel extends SidePanel implements ActionListener {
 
 		setupProgress();
 
-		_saveVideo = new JButton("Join Medai");
+		_saveVideo = new JButton("Join Media");
 		_saveVideo.addActionListener(this);
 		_saveVideo.setActionCommand("join");
 		_saveVideo.setPreferredSize(new Dimension(250, 50));
@@ -143,9 +143,16 @@ public class ConcatPanel extends SidePanel implements ActionListener {
 					return;
 				}
 			}else{
+				if (_outFileT.getText().equals("")) {
+					JOptionPane
+					.showMessageDialog(null,
+							"Please specify an output file name");
+					return;
+				}
 				JOptionPane
 				.showMessageDialog(null,
-						"Warning: Potentially differing file types. See manual for more information");
+						"Warning: Potentially differing file types. See manual for more information. "
+						+ "\nNote: no check on your file name has been run");
 			}
 			File f = new File(_outFileT.getText());
 			if (f.exists()) {

@@ -8,9 +8,11 @@ import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import sidePanel.GeneralPanel;
+import sidePanel.SubtitlesPanel;
 import sidePanel.VidEditingPanel;
 
 /**
@@ -22,11 +24,13 @@ public class StateOrganiser {
 	GeneralPanel _gPanel;
 	JPanel _audioPanel;
 	VidEditingPanel _vPanel;
+	SubtitlesPanel _sPanel;
 	ArrayList<String> stateList = new ArrayList<String>();
 
-	public StateOrganiser(String logFileLoc, VidEditingPanel vPanel) {
+	public StateOrganiser(String logFileLoc, VidEditingPanel vPanel, SubtitlesPanel sPanel) {
 		_loc = logFileLoc;
 		_vPanel = vPanel;
+		_sPanel = sPanel;
 	}
 
 	public void initialise() {
@@ -41,19 +45,20 @@ public class StateOrganiser {
 			br = new BufferedReader(new FileReader(System.getProperty("user.home") + "/Documents/VAMIX_STATE.txt"));
 			String line;
 
-			while ((line  = br.readLine()) != null) {
+			while ((line = br.readLine()) != null) {
 				stateList.add(line);
 			}
 			
 			_vPanel.loadState(stateList);
+			JOptionPane.showMessageDialog(null, "Video tab has been loaded");
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
 
 	// gets states and saves to a file
 	public void save() {
+		_sPanel.saveSRTFile();
 		ArrayList<String> saveStateList = new ArrayList<String>();
 		saveStateList = _vPanel.returnState();
 		try {
@@ -62,7 +67,7 @@ public class StateOrganiser {
 				writer.println(s);
 			}
 			writer.close();
-
+			JOptionPane.showMessageDialog(null, "Video tab has been saved");
 		} catch (FileNotFoundException | UnsupportedEncodingException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

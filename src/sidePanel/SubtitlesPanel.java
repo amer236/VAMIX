@@ -3,15 +3,20 @@ package sidePanel;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 
 import javax.swing.JButton;
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
+import javax.swing.JSeparator;
 import javax.swing.JSpinner;
 import javax.swing.JTable;
 import javax.swing.JTextArea;
@@ -59,6 +64,8 @@ public class SubtitlesPanel extends SidePanel {
 	JTextArea subtitle = new JTextArea();
 	
 	JButton save = new JButton("Save Subtitle File");
+	
+	JButton loadSRT = new JButton("Load Subtitle file");
 
 	
 	boolean isUsable = true;
@@ -81,7 +88,6 @@ public class SubtitlesPanel extends SidePanel {
         
 		this.add(scrollPane, "grow, wrap, span");
 
-		this.add(deleteButton, "span, wrap, grow");
 		this.add(new JLabel(""));
 		this.add(hours, "grow");
 		this.add(mins, "grow");
@@ -100,7 +106,12 @@ public class SubtitlesPanel extends SidePanel {
 		this.add(subtitle, "grow, wrap, span");
 
 		this.add(addButton, "span, grow, wrap");
-		this.add(save, "grow, span");
+		this.add(deleteButton, "span, wrap, grow");
+
+		
+		this.add(new JSeparator(),"span, grow, wrap");
+		this.add(save, "grow, span, wrap");
+		this.add(loadSRT, "grow, span");
 		
 		addButton.addActionListener(new ActionListener(){
 			@Override
@@ -123,17 +134,34 @@ public class SubtitlesPanel extends SidePanel {
 		save.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				if(_generalPanel.getInputField().equals("")){
-					JOptionPane.showMessageDialog(null,
-							"No source file has been selected. Please select a file in the General tab.");
-					return;
-				}
+				
 				saveSRTFile();
 			}
+		});
+		
+		loadSRT.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				JFileChooser fileChooser = new JFileChooser();
+				int returnValue = fileChooser.showOpenDialog(null);
+				if (returnValue == JFileChooser.APPROVE_OPTION) {
+					File selectedFile = fileChooser.getSelectedFile();
+					String absolutePath = selectedFile.getAbsolutePath();
+					loadSRTFile(absolutePath);
+				}
+			}
+
+			
 		});
 	}
 
 	public void saveSRTFile() {
+		if(_generalPanel.getInputField().equals("")){
+			JOptionPane.showMessageDialog(null,
+					"No source file has been selected. Please select a file in the General tab to save SRT.");
+			return;
+		}
 		String outtext;
 		File inputMedia = new File(_generalPanel.getInputField());
 		int location = inputMedia.getAbsolutePath().lastIndexOf(".");
@@ -154,8 +182,39 @@ public class SubtitlesPanel extends SidePanel {
 				output.println(subtitleData.getValueAt(i, 2));
 			}
 			output.close();
+			JOptionPane.showMessageDialog(null, "Subtitle file saved");
 		} catch (IOException e1) {
 			e1.printStackTrace();
+		}
+	}
+	
+	private void loadSRTFile(String absolutePath) {
+		BufferedReader br;
+		try {
+			br = new BufferedReader(new FileReader(absolutePath));
+			String line;
+
+			while ((line = br.readLine()) != null) {
+				if(line.equals("")){
+				}else{
+					line = br.readLine();
+					String[] split = line.split("-->");
+					String[] starts = split[0].split(",");
+					String[] stops = split[1].split(",");
+					String message = (line = br.readLine());
+					while ((line = br.readLine()) != null) {
+						if(line.equals("") == false){
+							message = message.concat("\n" + line);
+						}else{
+							break;
+						}
+					}
+					subtitleData.addDataRow(starts[0].trim(), stops[0].trim(), message);
+				}
+			}
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 	}
 
