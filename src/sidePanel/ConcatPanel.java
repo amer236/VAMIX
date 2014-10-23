@@ -18,16 +18,15 @@ import operations.BashOperations;
 import operations.Concatenater;
 
 /**
- * ConcatPanel allows the user to concat two media files together.
- * Taken from SE206 Assignment 3, paired prototype.
+ * ConcatPanel allows the user to concat two media files together. Taken from
+ * SE206 Assignment 3, paired prototype.
  */
 public class ConcatPanel extends SidePanel implements ActionListener {
 	GeneralPanel _generalPanel;
-	BashOperations _bash;
+	BashOperations _bash = new BashOperations();
 	Concatenater _concater;
 	JFrame _frame;
 	JButton _saveVideo;
-	JButton _saveAudio;
 	Timer _time = new Timer(1000, null);
 
 	private JButton _btnSelect0 = new JButton("Select file 1");
@@ -51,15 +50,10 @@ public class ConcatPanel extends SidePanel implements ActionListener {
 
 		setupProgress();
 
-		_saveVideo = new JButton("Concatenate to Video");
+		_saveVideo = new JButton("Join Medai");
 		_saveVideo.addActionListener(this);
-		_saveVideo.setActionCommand("video");
+		_saveVideo.setActionCommand("join");
 		_saveVideo.setPreferredSize(new Dimension(250, 50));
-		
-		_saveAudio = new JButton("Concatenate to Audio");
-		_saveAudio.addActionListener(this);
-		_saveAudio.setActionCommand("audio");
-		_saveAudio.setPreferredSize(new Dimension(250, 50));
 
 		_selectField0.setEditable(false);
 		_selectField1.setEditable(false);
@@ -113,7 +107,6 @@ public class ConcatPanel extends SidePanel implements ActionListener {
 		this.add(_outFileL);
 		this.add(_outFileT, "wrap");
 		this.add(_saveVideo, "wrap, span");
-		this.add(_saveAudio, "wrap, span");
 		this.add(_working, "span, grow");
 		this.add(_cancel, "span, grow");
 	}
@@ -130,33 +123,58 @@ public class ConcatPanel extends SidePanel implements ActionListener {
 					"You must select two files to concat");
 			return;
 		}
-		if (formatCheck(false) == true) {
+		if (e.getActionCommand().equals("join")) {
+			if (_bash.checkVideoFile(_selectField0.getText()) == true
+					&& _bash.checkVideoFile(_selectField1.getText()) == true) {
+				if (formatCheck(false) == true) {
+				} else {
+					JOptionPane
+							.showMessageDialog(null,
+									"The output name must end in .mp4 when saving video");
+					return;
+				}
+			} else if(_bash.checkAudioFile(_selectField0.getText()) == true
+					&& _bash.checkAudioFile(_selectField1.getText()) == true) {
+				if (formatCheck(true) == true) {
+				} else {
+					JOptionPane
+							.showMessageDialog(null,
+									"The output name must end in .mp3 when saving audio");
+					return;
+				}
+			}else{
+				JOptionPane
+				.showMessageDialog(null,
+						"Warning: Potentially differing file types. See manual for more information");
+			}
 			File f = new File(_outFileT.getText());
 			if (f.exists()) {
 				Object[] options = { "Cancel", "Overwrite existing" };
-				int result = JOptionPane.showOptionDialog(null, f.getName()
-						+ " already exists. What would you like to do?",
-						"Already Exists", JOptionPane.ERROR_MESSAGE,
-						JOptionPane.WARNING_MESSAGE, null, options, options[1]);
+				int result = JOptionPane
+						.showOptionDialog(
+								null,
+								f.getName()
+										+ " already exists. What would you like to do?",
+								"Already Exists",
+								JOptionPane.ERROR_MESSAGE,
+								JOptionPane.WARNING_MESSAGE, null,
+								options, options[1]);
 				if (result == 0) {
 					// Do nothing
 				} else {
 					f.delete();
 					_outFile = _outFileT.getText();
-					beginConcat(true);
+					beginConcat();
 				}
 			} else {
 				_outFile = _outFileT.getText();
-				beginConcat(true);
+				beginConcat();
 			}
-		} else {
-			JOptionPane.showMessageDialog(null,
-					"The output name must end in .mp4 when saving video");
 		}
 	}
 
 	// Begin merging audio
-	private void beginConcat(boolean b) {
+	private void beginConcat() {
 		switchUsable();
 		_concater = new Concatenater();
 		_concater.concat(_selectField0.getText(), _selectField1.getText(),
@@ -201,15 +219,14 @@ public class ConcatPanel extends SidePanel implements ActionListener {
 		});
 	}
 
-	//Switch the buttons' enabled characteristic
+	// Switch the buttons' enabled characteristic
 	protected void switchUsable() {
 		if (isUsable == true) {
 			isUsable = false;
-			_saveAudio.setEnabled(false);
 			_saveVideo.setEnabled(false);
 		} else {
 			isUsable = true;
-			_saveAudio.setEnabled(true);
+
 			_saveVideo.setEnabled(true);
 		}
 	}

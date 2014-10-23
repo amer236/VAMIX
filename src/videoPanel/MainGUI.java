@@ -74,10 +74,10 @@ public class MainGUI {
 		JPanel sidePanel = new JPanel();
 		Canvas playerCanvas = new Canvas();
 		JMenuBar menuBar = new JMenuBar();
-		JMenu menu = new JMenu("File");
-		JMenu menu0 = new JMenu("Editor State");
-		JMenu menu1 = new JMenu("Options");
-		JMenu menu2 = new JMenu("Help");
+		JMenu fileMenu = new JMenu("File");
+		JMenu saveMenu = new JMenu("Editor State");
+		JMenu optionsSubMenu = new JMenu("Options");
+		JMenu helpMenu = new JMenu("Help");
 
 		// Split pane between editor and player
 		JSplitPane splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT,
@@ -124,7 +124,7 @@ public class MainGUI {
 		wrapAudio.add(extractPanel, "wrap, grow");
 		wrapAudio.add(mergePanel, "wrap, grow");
 		wrapAudio.add(overlayPanel, "grow, wrap");
-		wrapAudio.add(new ConcatPanel("Join Videos", _generalPanel), "grow");
+		wrapAudio.add(new ConcatPanel("Join Media", _generalPanel), "grow");
 		tabbedPane.addTab("Audio", scrollPane);
 
 		JPanel wrapVideo = new JPanel(new MigLayout());
@@ -165,9 +165,9 @@ public class MainGUI {
 		frame.setIconImage(icon);
 
 		// Setup menu items
-		menuBar.add(menu);
+		menuBar.add(fileMenu);
 		JMenuItem quickOpen = new JMenuItem("Open Media");
-		menu.add(quickOpen);
+		fileMenu.add(quickOpen);
 		
 		quickOpen.addActionListener(new ActionListener() {
 			
@@ -185,11 +185,11 @@ public class MainGUI {
 		});
 
 		
-		menuBar.add(menu0);
+		menuBar.add(saveMenu);
 		JMenuItem item0 = new JMenuItem("Save State");
 		JMenuItem item1 = new JMenuItem("Load State");
-		menu0.add(item0);
-		menu0.add(item1);
+		saveMenu.add(item0);
+		saveMenu.add(item1);
 
 		// Setup menu actions
 		item0.addActionListener(new ActionListener() {
@@ -219,9 +219,9 @@ public class MainGUI {
 			}
 		});
 
-		menuBar.add(menu1);
+		fileMenu.add(optionsSubMenu);
 		JMenuItem theme = new JMenuItem("Change Theme");
-		menu1.add(theme);
+		optionsSubMenu.add(theme);
 
 		// Implement custom theme feature
 		theme.addActionListener(new ActionListener() {
@@ -242,7 +242,7 @@ public class MainGUI {
 		});
 		
 		JMenuItem adjust = new JMenuItem("Playback Adjustment");
-		menu1.add(adjust);
+		optionsSubMenu.add(adjust);
 
 		adjust.addActionListener(new ActionListener() {
 			@Override
@@ -260,8 +260,8 @@ public class MainGUI {
 			}
 		});
 
-		menu2.add(item3);
-		menuBar.add(menu2);
+		helpMenu.add(item3);
+		menuBar.add(helpMenu);
 
 		// Add media player listener
 		_mediaPlayer

@@ -62,4 +62,32 @@ public class BashOperations {
 		}
 		return returnValue;
 	}
+	
+	public boolean checkVideoFile(String loc) {
+		File file = new File(loc);
+		boolean returnValue = false;
+		try {
+			_builder = new ProcessBuilder("/bin/bash", "-c", "echo $(file '"
+					+ loc + "')");
+			_builder = _builder.redirectErrorStream(true);
+			_process = _builder.start();
+
+			InputStream stdout = _process.getInputStream();
+			BufferedReader stdoutBuffered = new BufferedReader(
+					new InputStreamReader(stdout));
+			String line = null;
+
+			while ((line = stdoutBuffered.readLine()) != null) {
+				if (line.contains("Video") || line.contains("video")) {
+					returnValue = true;
+				}
+			}
+
+			_process.waitFor();
+			_process.destroy();
+		} catch (IOException | InterruptedException e) {
+			e.printStackTrace();
+		}
+		return returnValue;
+	}
 }
