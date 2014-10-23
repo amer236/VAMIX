@@ -1,6 +1,5 @@
 package sidePanel;
 
-import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -39,18 +38,19 @@ public class ThemeSelector extends JFrame {
 		//panel.add(new JLabel("NimbusBase"));
 		//panel.add(new JLabel("Control"), "wrap");
 		
-		JButton base = new JButton("Set Base Colour");
-		base.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				UIManager.put("nimbusBase", new ColorUIResource(red.getValue(), green.getValue(), blue.getValue()));
-				SwingUtilities.updateComponentTreeUI(frame);
-				SwingUtilities.updateComponentTreeUI(ThemeSelector.this);
-			}
-		});
-		panel.add(base,"grow");
+		//This button is too bugged to be included in the final version
+//		JButton base = new JButton("Set Base Colour");
+//		base.addActionListener(new ActionListener() {
+//			@Override
+//			public void actionPerformed(ActionEvent e) {
+//				UIManager.put("nimbusBase", new ColorUIResource(red.getValue(), green.getValue(), blue.getValue()));
+//				SwingUtilities.updateComponentTreeUI(frame);
+//				SwingUtilities.updateComponentTreeUI(ThemeSelector.this);
+//			}
+//		});
+//		panel.add(base,"grow");
 		
-		JButton control = new JButton("Set Control Color");
+		JButton control = new JButton("Set Background Color");
 		control.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -59,10 +59,10 @@ public class ThemeSelector extends JFrame {
 				SwingUtilities.updateComponentTreeUI(ThemeSelector.this);
 			}
 		});
-		panel.add(control, "grow, wrap");
+		panel.add(control, "grow");
 		
 		JButton highlight = new JButton("Set Highlight Color");
-		control.addActionListener(new ActionListener() {
+		highlight.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				UIManager.put("nimbusBlueGrey", new ColorUIResource(red.getValue(), green.getValue(), blue.getValue()));
@@ -71,13 +71,14 @@ public class ThemeSelector extends JFrame {
 				SwingUtilities.updateComponentTreeUI(frame);
 			}
 		});
-		panel.add(highlight, "grow, wrap, span");
+		panel.add(highlight, "grow, wrap");
 		
 		JButton def = new JButton("Default All");
 		def.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				UIManager.put("control", new ColorUIResource(214, 217, 223));
+				UIManager.put("ProgressBar.background", new ColorUIResource(214, 217, 223));
 				UIManager.put("nimbusBase", new ColorUIResource(51,98,140));
 				UIManager.put("nimbusBlueGrey", new ColorUIResource(169,176,190));
 				UIManager.put("nimbusFocus", new ColorUIResource(115,164,209));
@@ -92,18 +93,15 @@ public class ThemeSelector extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				SwingUtilities.updateComponentTreeUI(frame);
-
 				frame.setEnabled(true);
-				
 				dispose();
 			}
 		});
 		panel.add(done,"span, grow");
-		
-		
-		
-		this.setPreferredSize(new Dimension(300, 300));
+
+		this.setPreferredSize(new Dimension(380, 250));
 		this.pack();
 		this.add(panel);
+		this.setResizable(false);
 	}	
 }

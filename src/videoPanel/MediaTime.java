@@ -1,16 +1,21 @@
 package videoPanel;
 
+import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 
 import javax.swing.JLabel;
+import javax.swing.JToolTip;
 import javax.swing.Timer;
 
 import uk.co.caprica.vlcj.player.embedded.EmbeddedMediaPlayer;
 
 /**
- * MediaTime displays progress through the media in the form hh:mm:ss.
- * Taken from SE206 Assignment 3, paired prototype.
+ * MediaTime displays progress through the media in the form hh:mm:ss. Taken
+ * from SE206 Assignment 3, paired prototype.
  */
 public class MediaTime extends JLabel implements ActionListener {
 	private EmbeddedMediaPlayer _player;
@@ -41,6 +46,7 @@ public class MediaTime extends JLabel implements ActionListener {
 	}
 
 	private void setTime(int totalSecs) {
+		this.setToolTipText("Seconds: " + totalSecs);
 		// Convert seconds to hh:mm:ss
 		_hours = (int) Math.floor(totalSecs / 3600);
 		totalSecs = totalSecs - (_hours * 3600);

@@ -10,9 +10,11 @@ import java.io.PrintWriter;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JSpinner;
 import javax.swing.JTable;
+import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.SpinnerModel;
 import javax.swing.SpinnerNumberModel;
@@ -54,7 +56,7 @@ public class SubtitlesPanel extends SidePanel {
 	JSpinner endSec = new JSpinner(new SpinnerNumberModel(0,0,59,1));
 	
 	JLabel text = new JLabel("Text: ");
-	JTextField subtitle = new JTextField();
+	JTextArea subtitle = new JTextArea();
 	
 	JButton save = new JButton("Save Subtitle File");
 
@@ -121,6 +123,11 @@ public class SubtitlesPanel extends SidePanel {
 		save.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				if(_generalPanel.getInputField().equals("")){
+					JOptionPane.showMessageDialog(null,
+							"No source file has been selected. Please select a file in the General tab.");
+					return;
+				}
 				saveSRTFile();
 			}
 		});
