@@ -64,7 +64,7 @@ public class MainGUI {
 		}
 
 		// Create and initialise panels
-		final JFrame frame = new JFrame("VAMIX Prototype");
+		final JFrame frame = new JFrame("VAMIX");
 		frame.setLayout(new MigLayout());
 		JPanel videoPanel = new JPanel(new MigLayout("center"));
 		JPanel sidePanel = new JPanel();

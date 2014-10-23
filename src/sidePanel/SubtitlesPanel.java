@@ -4,30 +4,24 @@ import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.PrintWriter;
 
 import javax.swing.JButton;
-import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JProgressBar;
 import javax.swing.JScrollPane;
 import javax.swing.JSpinner;
 import javax.swing.JTable;
 import javax.swing.JTextField;
-import javax.swing.Timer;
-import javax.swing.table.TableColumn;
-import javax.swing.table.TableColumnModel;
-import javax.swing.table.TableModel;
+import javax.swing.SpinnerModel;
+import javax.swing.SpinnerNumberModel;
 
 import operations.BashOperations;
 import operations.Concatenater;
 
 /**
- * ConcatPanel allows the user to concat two media files together.
+ * ConcatPanel allows the user to join two media files together.
  * Taken from SE206 Assignment 3, paired prototype.
  */
 public class SubtitlesPanel extends SidePanel {
@@ -51,13 +45,13 @@ public class SubtitlesPanel extends SidePanel {
 	JLabel start = new JLabel("Start Time");
 	JLabel finish = new JLabel("End Time");
 	
-	JSpinner startHour = new JSpinner();
-	JSpinner startMin = new JSpinner();
-	JSpinner startSec = new JSpinner();
+	JSpinner startHour = new JSpinner(new SpinnerNumberModel(0,0,99,1));
+	JSpinner startMin = new JSpinner(new SpinnerNumberModel(0,0,59,1));
+	JSpinner startSec = new JSpinner(new SpinnerNumberModel(0,0,59,1));
 	
-	JSpinner endHour = new JSpinner();
-	JSpinner endMin = new JSpinner();
-	JSpinner endSec = new JSpinner();
+	JSpinner endHour = new JSpinner(new SpinnerNumberModel(0,0,99,1));
+	JSpinner endMin = new JSpinner(new SpinnerNumberModel(0,0,59,1));
+	JSpinner endSec = new JSpinner(new SpinnerNumberModel(0,0,59,1));
 	
 	JLabel text = new JLabel("Text: ");
 	JTextField subtitle = new JTextField();

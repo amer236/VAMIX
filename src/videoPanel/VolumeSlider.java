@@ -1,5 +1,6 @@
 package videoPanel;
 
+import java.awt.Point;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
@@ -28,6 +29,11 @@ public class VolumeSlider extends JSlider {
 
 		// When slider is moved, set new volume
 		this.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mousePressed(MouseEvent e){
+				Point p = VolumeSlider.this.getMousePosition();
+				VolumeSlider.this.setValue(100 * p.x / VolumeSlider.this.getWidth());
+			}
 			@Override
 			public void mouseReleased(MouseEvent e) {
 				_player.setVolume(VolumeSlider.this.getValue());

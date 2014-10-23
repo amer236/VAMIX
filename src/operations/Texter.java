@@ -398,7 +398,7 @@ public class Texter extends SwingWorker<Void, Integer> {
 			File input = new File("resources/input.jpg");
 			_builder = new ProcessBuilder("/bin/bash", "-c",
 					"avconv -loop 1 -i " + input.getAbsolutePath()
-							+ " -r 1 -t 1 -s 1280x720 preview.mp4");
+							+ " -r 1 -t 1 -s " + frameSize + " preview.mp4");
 			_builder.directory(new File(System.getProperty("user.home")
 					+ "/VAMIX"));
 			_builder = _builder.redirectErrorStream(true);
@@ -406,7 +406,7 @@ public class Texter extends SwingWorker<Void, Integer> {
 
 			_result = _process.waitFor();
 			if (_result == 0) {
-
+				
 			} else {
 
 			}
