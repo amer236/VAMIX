@@ -124,8 +124,8 @@ public class GeneralPanel extends SidePanel implements ActionListener {
 				if(list.getSelectedIndex() == -1){
 					//Nothing selected
 				} else{
-					_player.playMedia(listModel.elementAt(list.getSelectedIndex()));
 					setInputField(listModel.elementAt(list.getSelectedIndex()));
+					_player.playMedia(getInputField());
 				}
 			}
 		});

@@ -267,19 +267,11 @@ public class MainGUI {
 		// Add media player listener
 		_mediaPlayer
 				.addMediaPlayerEventListener(new MediaPlayerEventListenerAdapter() {
-
 					@Override
 					public void finished(MediaPlayer player) {
-						// if(_generalPanel.listHasNext()){
-						// String mediapath = _generalPanel.getElementZero();
-						// _mediaPlayer.playMedia(mediapath);
-						// _generalPanel.setInputField(mediapath);
-						// }else{
-						// _mediaPlayer.stop();
-						// _generalPanel.setInputField("");
-						// //No media to play
-						// }
 						_mediaPlayer.stop();
+						_mediaPlayer.playMedia(_generalPanel.getInputField());
+						_mediaPlayer.pause();
 						_controlPanel.switchPlayIcon();
 					}
 

@@ -213,7 +213,6 @@ public class SubtitlesPanel extends SidePanel {
 				}
 			}
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}

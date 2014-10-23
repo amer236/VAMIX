@@ -172,7 +172,7 @@ public class ControlsPanel extends JPanel {
 		btnPlay.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				if (_player.getMediaState() != null) {
+				if (_player.getMediaState().toString().equals("libvlc_Stopped") == false) {
 					_player.pause();
 					_timer.stop();
 				} else {
@@ -192,7 +192,6 @@ public class ControlsPanel extends JPanel {
 			public void actionPerformed(ActionEvent e) {
 				if (_player.getMediaState() != null) {
 					_player.stop();
-					_generalPanel.setInputField("");
 					_timer.stop();
 					btnPlay.setIcon(playIcon);
 				} else {
