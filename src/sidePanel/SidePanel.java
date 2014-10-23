@@ -10,6 +10,7 @@ import net.miginfocom.swing.MigLayout;
  * SidePanel is the parent class to all panels on the editor side of the split pane.
  * Taken from SE206 Assignment 3, paired prototype.
  */
+@SuppressWarnings("serial")
 public class SidePanel extends JPanel{
 	String _panelName;
 	TitledBorder title;

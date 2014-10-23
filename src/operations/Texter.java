@@ -441,8 +441,6 @@ public class Texter extends SwingWorker<Void, Integer> {
 			// gets frame rate and frame size
 			String[] tempArray = parts[2].split(" ");
 			String frameSize = tempArray[1];
-			tempArray = parts[4].split(" ");
-			String frameRate = tempArray[1];
 
 			_result = _process.waitFor();
 			if (_result == 0) {

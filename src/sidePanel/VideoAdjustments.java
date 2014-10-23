@@ -15,6 +15,7 @@ import javax.swing.event.ChangeListener;
 import uk.co.caprica.vlcj.player.embedded.EmbeddedMediaPlayer;
 import net.miginfocom.swing.MigLayout;
 
+@SuppressWarnings("serial")
 public class VideoAdjustments extends JFrame implements ChangeListener{
 	EmbeddedMediaPlayer _player;
 	JSlider hue = new JSlider(0,360);

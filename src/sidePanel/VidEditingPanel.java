@@ -27,6 +27,7 @@ import operations.Texter;
  * VidEditingPanel adds title and credit scene functionality.
  * Taken from SE206 Assignment 3, paired prototype.
  */
+@SuppressWarnings("serial")
 public class VidEditingPanel extends SidePanel implements ActionListener {
 	Texter _texter = new Texter();
 	GeneralPanel _gPanel;
@@ -44,10 +45,12 @@ public class VidEditingPanel extends SidePanel implements ActionListener {
 	JSpinner _fontSizeSpinner = null;
 	
 	// combo boxes that have drop down menu
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	JComboBox _fontBox = new JComboBox(new DefaultComboBoxModel(Font.values()));
 
 	// array which stores colours
 	String[] colours = { "white", "blue", "red", "green" };
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	JComboBox _fontColourBox = new JComboBox(colours);
 
 	JButton _previewStart = new JButton("Preview Start");

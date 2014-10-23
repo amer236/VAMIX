@@ -22,6 +22,7 @@ import operations.Extractor;
  * Taken from SE206 Assignment 3, paired prototype.
  * time slots
  */
+@SuppressWarnings("serial")
 public class ExtractPanel extends SidePanel implements ActionListener {
 	GeneralPanel _fsp;
 	Extractor _extractor;

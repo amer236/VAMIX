@@ -29,6 +29,7 @@ import uk.co.caprica.vlcj.player.embedded.EmbeddedMediaPlayer;
  * It also allows the user to import files into an easy access list.
  * Taken from SE206 Assignment 3, paired prototype.
  */
+@SuppressWarnings("serial")
 public class GeneralPanel extends SidePanel implements ActionListener {
 	private JTextField _selectField;
 	private JTextField _downloadField;

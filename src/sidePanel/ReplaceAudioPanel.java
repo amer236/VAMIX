@@ -21,6 +21,7 @@ import operations.Replacer;
  * ReplaceAudioPanel allows the user to replace a video's audio track.
  * Taken frReplaceAudioPanelom SE206 Assignment 3, paired prototype.
  */
+@SuppressWarnings("serial")
 public class ReplaceAudioPanel extends SidePanel implements ActionListener {
 	GeneralPanel _generalPanel;
 	BashOperations _bash;

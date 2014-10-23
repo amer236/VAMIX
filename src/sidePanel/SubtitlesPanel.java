@@ -8,7 +8,6 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.ArrayList;
 
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
@@ -20,8 +19,6 @@ import javax.swing.JSeparator;
 import javax.swing.JSpinner;
 import javax.swing.JTable;
 import javax.swing.JTextArea;
-import javax.swing.JTextField;
-import javax.swing.SpinnerModel;
 import javax.swing.SpinnerNumberModel;
 
 import operations.BashOperations;
@@ -31,6 +28,7 @@ import operations.Concatenater;
  * ConcatPanel allows the user to join two media files together.
  * Taken from SE206 Assignment 3, paired prototype.
  */
+@SuppressWarnings("serial")
 public class SubtitlesPanel extends SidePanel {
 	GeneralPanel _generalPanel;
 	BashOperations _bash;

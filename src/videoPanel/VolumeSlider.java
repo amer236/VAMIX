@@ -12,6 +12,7 @@ import uk.co.caprica.vlcj.player.embedded.EmbeddedMediaPlayer;
  * VolumeSlider is a slider which controls the volume of the embedded media player.
  * Taken from SE206 Assignment 3, paired prototype.
  */
+@SuppressWarnings("serial")
 public class VolumeSlider extends JSlider {
 	private EmbeddedMediaPlayer _player;
 

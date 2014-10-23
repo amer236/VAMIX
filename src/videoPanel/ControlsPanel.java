@@ -23,6 +23,7 @@ import uk.co.caprica.vlcj.player.embedded.EmbeddedMediaPlayer;
  * ControlsPanel holds all the controls for the media player and their functionality.
  * Taken from SE206 Assignment 3, paired prototype.
  */
+@SuppressWarnings("serial")
 public class ControlsPanel extends JPanel {
 	private EmbeddedMediaPlayer _player;
 	private GeneralPanel _generalPanel;

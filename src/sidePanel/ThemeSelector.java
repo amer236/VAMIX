@@ -19,6 +19,7 @@ import net.miginfocom.swing.MigLayout;
  * ThemeSelector allows the user to change some colours of the current theme
  * Taken from SE206 Assignment 3, paired prototype.
  */
+@SuppressWarnings("serial")
 public class ThemeSelector extends JFrame {
 	JSlider red = new JSlider(0,255);
 	JSlider green = new JSlider(0,255);

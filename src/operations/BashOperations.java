@@ -1,7 +1,6 @@
 package operations;
 
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -36,7 +35,7 @@ public class BashOperations {
 
 	// Check that a file is audio
 	public boolean checkAudioFile(String loc) {
-		File file = new File(loc);
+		//File file = new File(loc);
 		boolean returnValue = false;
 		try {
 			_builder = new ProcessBuilder("/bin/bash", "-c", "echo $(file '"
@@ -64,7 +63,7 @@ public class BashOperations {
 	}
 	
 	public boolean checkVideoFile(String loc) {
-		File file = new File(loc);
+		//File file = new File(loc);
 		boolean returnValue = false;
 		try {
 			_builder = new ProcessBuilder("/bin/bash", "-c", "echo $(file '"

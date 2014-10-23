@@ -1,7 +1,6 @@
 package sidePanel;
 
 import java.awt.Dimension;
-import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
@@ -17,13 +16,13 @@ import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 import javax.swing.Timer;
 
-import operations.Extractor;
 import operations.Filterer;
 
 /**
  * FilterPanel allows the user to add filters to the current video.
  * Taken from SE206 Assignment 3, paired prototype.
  */
+@SuppressWarnings("serial")
 public class FilterPanel extends SidePanel implements ActionListener {
 	GeneralPanel _fsp;
 	Filterer _filterer;

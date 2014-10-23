@@ -16,6 +16,7 @@ import uk.co.caprica.vlcj.player.embedded.EmbeddedMediaPlayer;
  * enables controls of the media player.
  * Taken from SE206 Assignment 3, paired prototype.
  */
+@SuppressWarnings("serial")
 public class TimeSlider extends JSlider implements ActionListener {
 	private EmbeddedMediaPlayer _player;
 	Timer _timer;

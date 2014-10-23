@@ -21,6 +21,7 @@ import operations.Concatenater;
  * ConcatPanel allows the user to concat two media files together. Taken from
  * SE206 Assignment 3, paired prototype.
  */
+@SuppressWarnings("serial")
 public class ConcatPanel extends SidePanel implements ActionListener {
 	GeneralPanel _generalPanel;
 	BashOperations _bash = new BashOperations();

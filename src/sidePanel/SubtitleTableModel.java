@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import javax.swing.table.AbstractTableModel;
 
+@SuppressWarnings("serial")
 public class SubtitleTableModel extends AbstractTableModel {
 	
 	private String[] colNames = new String[3];
