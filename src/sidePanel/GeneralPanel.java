@@ -16,11 +16,12 @@ import javax.swing.JProgressBar;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.ScrollPaneConstants;
+import javax.swing.Timer;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
 import net.miginfocom.swing.MigLayout;
-import operations.GeneralOperations;
+import operations.Downloader;
 import uk.co.caprica.vlcj.player.embedded.EmbeddedMediaPlayer;
 
 /**
@@ -30,14 +31,15 @@ import uk.co.caprica.vlcj.player.embedded.EmbeddedMediaPlayer;
  */
 public class GeneralPanel extends SidePanel implements ActionListener {
 	private JTextField _selectField;
-	private JButton _btnSelect;
 	private JTextField _downloadField;
 	private JButton _btnDownload;
 
+	private Timer _time;
+	private Downloader _downloader = new Downloader();
+	
 	private JProgressBar _prog;
 	private JButton _cancel;
 	private EmbeddedMediaPlayer _player = null;
-	private GeneralOperations _genOperations;
 	
 	
 	DefaultListModel<String> listModel = new DefaultListModel<String>();
@@ -45,12 +47,11 @@ public class GeneralPanel extends SidePanel implements ActionListener {
 	JButton add = new JButton("Import File");
 	JButton delete = new JButton("Remove File");
 	JButton play = new JButton("Load selected media");
-	JLabel pl = new JLabel("Easy Access Files");
+	JLabel imported = new JLabel("Imported Files");
 
 	public GeneralPanel(String name, EmbeddedMediaPlayer player) {
 		super(name);
 		_player = player;
-		_genOperations = new GeneralOperations(_player);
 		super.setupPanel();
 		this.setBorder(null);
 	}
@@ -60,7 +61,6 @@ public class GeneralPanel extends SidePanel implements ActionListener {
 		this.setLayout(new MigLayout());
 		createFileSelect();
 		createDownload();
-		_genOperations.setupProgress(_prog);
 
 		// Comprised of select panel and download panel
 		JPanel selectPanel = new SidePanel("Select File");
@@ -68,7 +68,6 @@ public class GeneralPanel extends SidePanel implements ActionListener {
 		JPanel downloadPanel = new SidePanel("Download File");
 		downloadPanel.setLayout(new MigLayout());
 
-		//selectPanel.add(_btnSelect);
 		selectPanel.add(new JLabel("Current File"));
 		selectPanel.add(_selectField, "width 400, wrap");
 				
@@ -78,8 +77,11 @@ public class GeneralPanel extends SidePanel implements ActionListener {
 		downloadPanel.add(_prog, "grow");
 
 		this.add(selectPanel, "grow, wrap");
-		//this.add(_playbackPanel, "grow, wrap");
 		this.add(downloadPanel, "wrap");
+		
+		_time = new Timer(200, null);
+		_time.setActionCommand("tick");
+		_time.addActionListener(this);
 		
 		add.addActionListener(new ActionListener() {
 			@Override
@@ -148,7 +150,7 @@ public class GeneralPanel extends SidePanel implements ActionListener {
 		scrollPane.setPreferredSize(new Dimension(10,200));
 		//scrollPane.add(list);
 		
-		selectPanel.add(pl, "wrap");
+		selectPanel.add(imported, "wrap");
 		selectPanel.add(scrollPane, "grow, wrap, span");
 		selectPanel.add(add);
 		selectPanel.add(delete, "wrap");
@@ -162,10 +164,6 @@ public class GeneralPanel extends SidePanel implements ActionListener {
 		_selectField = new JTextField("");
 		_selectField.setEditable(false);
 		_selectField.setPreferredSize(new Dimension(100, 20));
-
-		_btnSelect = new JButton("Select File");
-		_btnSelect.setActionCommand("select");
-		_btnSelect.addActionListener(this);
 	}
 
 	// Adds functionality to download JComponents
@@ -187,17 +185,45 @@ public class GeneralPanel extends SidePanel implements ActionListener {
 	@Override
 	// Perform actions through generalOperations based on action command
 	public void actionPerformed(ActionEvent e) {
-		if (e.getActionCommand().equals("select")) {
-			_genOperations.selectAction(_selectField);
-		} else if (e.getActionCommand().equals("download")) {
+		if (e.getActionCommand().equals("tick")) {
+			_prog.setValue(_downloader.getPercentage());
+			if (_prog.getValue() == 100) {
+				_time.stop();
+				_downloader._percent = 0;
+			}
+		}else if (e.getActionCommand().equals("download")) {
 			if (_downloadField.getText().equals("")) {
 				JOptionPane.showMessageDialog(null,	"Please enter a url to download media");
 			} else {
 				_prog.setValue(0);
-				_genOperations.downloadAction(_downloadField.getText());
+				if (JOptionPane.showConfirmDialog(null, "Is this file open source?",
+						"", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+					File urlFile = new File(_downloadField.getText());
+					File file = new File(urlFile.getName());
+					_time.start();
+
+					if (file.exists()) {
+						Object[] options = { "Cancel", "Overwrite existing",
+								"Resume existing" };
+						int result = JOptionPane.showOptionDialog(null, file.getName()
+								+ " already exists. What would you like to do?",
+								"Already Exists", JOptionPane.ERROR_MESSAGE,
+								JOptionPane.WARNING_MESSAGE, null, options, options[0]);
+						if (result == 0) {
+							// Do nothing
+						} else if (result == 1) {
+							file.delete();
+							beginDownload();
+						} else {
+							beginDownload();
+						}
+					} else {
+						beginDownload();
+					}
+				}
 			}
 		} else if (e.getActionCommand().equals("cancel")) {
-			_genOperations._downloader.cancel();
+			_downloader.cancel();
 		}
 	}
 
@@ -229,5 +255,11 @@ public class GeneralPanel extends SidePanel implements ActionListener {
 	
 	public void addToList(String input){
 		listModel.addElement(input);
+	}
+	
+	// Begin download through swing worker
+	private void beginDownload() {
+		_downloader = new Downloader();
+		_downloader.download(_downloadField.getText());
 	}
 }

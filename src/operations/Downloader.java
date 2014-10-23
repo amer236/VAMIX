@@ -15,7 +15,7 @@ import javax.swing.SwingWorker;
  */
 public class Downloader extends SwingWorker<Void, Integer> {
 	private String _downloadcmd = "wget";
-	protected int _percent = 0;
+	public int _percent = 0;
 	private int _result;
 	private String _url;
 	private ProcessBuilder _builder;
