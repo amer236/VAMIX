@@ -466,7 +466,7 @@ public class Texter extends SwingWorker<Void, Integer> {
 		_isWorking = false;
 
 		if (getResult() == 0) {
-			JOptionPane.showMessageDialog(null, "Text Drawing Complete. Please copy your output file from the VAMIX folder in your home directory.");
+			JOptionPane.showMessageDialog(null, "Text Drawing Complete. Output file is in the VAMIX folder in your home directory.");
 		} else {
 			JOptionPane.showMessageDialog(null,	"Operation incomplete");
 		}

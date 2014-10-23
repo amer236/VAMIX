@@ -30,7 +30,7 @@ public class Replacer extends SwingWorker<Void, Integer> {
 		_isWorking = false;
 		if (getResult() == 0) {
 			JOptionPane.showMessageDialog(null,
-					"Operation has been succesfully completed");
+					"Operation has been successfully completed");
 		} else {
 			JOptionPane.showMessageDialog(null, "Operation Incomplete");
 		}

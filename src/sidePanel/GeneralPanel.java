@@ -226,4 +226,8 @@ public class GeneralPanel extends SidePanel implements ActionListener {
 		}
 		return path;
 	}
+	
+	public void addToList(String input){
+		listModel.addElement(input);
+	}
 }

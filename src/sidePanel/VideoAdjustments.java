@@ -1,7 +1,10 @@
 package sidePanel;
 
 import java.awt.Dimension;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -18,7 +21,7 @@ public class VideoAdjustments extends JFrame implements ChangeListener{
 	JSlider brightness = new JSlider(0,2000);
 	JSlider saturation = new JSlider(0,3000);
 	JSlider contrast = new JSlider(0,2000);
-
+	JButton defaults = new JButton("Default");
 	
 	public VideoAdjustments(EmbeddedMediaPlayer player) {
 		_player = player;
@@ -32,20 +35,30 @@ public class VideoAdjustments extends JFrame implements ChangeListener{
 		saturation.setValue((int) (1000 * _player.getSaturation()));
 		contrast.setValue((int) (1000 * _player.getContrast()));
 
-
 		hue.addChangeListener(this);
 		brightness.addChangeListener(this);
 		saturation.addChangeListener(this);
 		contrast.addChangeListener(this);
+
+		defaults.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				hue.setValue(0);
+				brightness.setValue(1000);
+				saturation.setValue(1000);
+				contrast.setValue(1000);
+			}
+		});
 		
 		panel.add(new JLabel("Hue"), "grow");
 		panel.add(hue, "wrap, grow");
 		panel.add(new JLabel("Brightness"), "grow");
 		panel.add(brightness, "wrap, grow");
-		panel.add(new JLabel("Saturation"), "grow");
-		panel.add(saturation, "wrap, grow");
 		panel.add(new JLabel("Contrast"), "grow");
 		panel.add(contrast, "wrap, grow");
+		panel.add(new JLabel("Saturation"), "grow");
+		panel.add(saturation, "wrap, grow");
+		panel.add(defaults, "span, grow");
 		
 		this.add(panel);
 		this.setPreferredSize(new Dimension(380, 250));
@@ -59,6 +72,5 @@ public class VideoAdjustments extends JFrame implements ChangeListener{
 		_player.setBrightness(brightness.getValue()/1000.0f);
 		_player.setSaturation(saturation.getValue()/1000.0f);
 		_player.setContrast(contrast.getValue()/1000.0f);
-
 	}
 }

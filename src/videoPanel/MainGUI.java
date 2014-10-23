@@ -15,6 +15,7 @@ import java.awt.event.WindowListener;
 import java.io.File;
 import java.io.IOException;
 
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
@@ -165,8 +166,25 @@ public class MainGUI {
 
 		// Setup menu items
 		menuBar.add(menu);
+		JMenuItem quickOpen = new JMenuItem("Open Media");
+		menu.add(quickOpen);
 		
+		quickOpen.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				JFileChooser fileChooser = new JFileChooser();
+				int returnValue = fileChooser.showOpenDialog(null);
+				if (returnValue == JFileChooser.APPROVE_OPTION) {
+					File selectedFile = fileChooser.getSelectedFile();
+					_generalPanel.setInputField(selectedFile.getAbsolutePath());				
+					_mediaPlayer.playMedia(selectedFile.getAbsolutePath());
+					_generalPanel.addToList(selectedFile.getAbsolutePath());
+				}
+			}
+		});
 
+		
 		menuBar.add(menu0);
 		JMenuItem item0 = new JMenuItem("Save State");
 		JMenuItem item1 = new JMenuItem("Load State");
@@ -223,7 +241,7 @@ public class MainGUI {
 			}
 		});
 		
-		JMenuItem adjust = new JMenuItem("Open");
+		JMenuItem adjust = new JMenuItem("Playback Adjustment");
 		menu1.add(adjust);
 
 		adjust.addActionListener(new ActionListener() {
