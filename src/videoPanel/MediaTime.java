@@ -69,4 +69,12 @@ public class MediaTime extends JLabel implements ActionListener {
 			updateTime();
 		}
 	}
+	
+	public String[] getCurrentTime(){
+		String[] times = new String[3];
+		times[0] = "" + _hours10s + _hours;
+		times[1] = "" + _minutes10s + _minutes;
+		times[2] = "" + _seconds10s + _seconds;
+		return times;
+	}
 }

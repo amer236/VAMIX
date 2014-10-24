@@ -137,15 +137,15 @@ public class MainGUI {
 
 		tabbedPane.addTab("Video", wrapVideo);
 
-		JPanel wrapSubtitle = new JPanel(new MigLayout());
-		SubtitlesPanel sPanel = new SubtitlesPanel("Subtitles", _generalPanel);
-		wrapSubtitle.add(sPanel, "grow");
-
-		tabbedPane.addTab("Subtitles", wrapSubtitle);
-
 		// Initialise control panel
 		_controlPanel = new ControlsPanel(_mediaPlayer, _generalPanel);
 		videoPanel.add(_controlPanel, "");
+		
+		JPanel wrapSubtitle = new JPanel(new MigLayout());
+		SubtitlesPanel sPanel = new SubtitlesPanel("Subtitles", _generalPanel, _controlPanel.getMediaTime());
+		wrapSubtitle.add(sPanel, "grow");
+
+		tabbedPane.addTab("Subtitles", wrapSubtitle);
 
 		// Setup StateOrganiser
 		final StateOrganiser _so = new StateOrganiser(

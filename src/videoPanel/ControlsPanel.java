@@ -56,11 +56,15 @@ public class ControlsPanel extends JPanel {
 	ImageIcon muteIcon;
 	ImageIcon stopIcon;
 
+	MediaTime mediaTime;
+	
 	public ControlsPanel(EmbeddedMediaPlayer embeddedMediaPlayer, GeneralPanel generalPanel) {
 		this.setLayout(new MigLayout("center"));
 		_player = embeddedMediaPlayer;
 		_generalPanel = generalPanel;
 
+		mediaTime = new MediaTime(_player);
+		
 		// Timer to perform repeat actions
 		_timer = new Timer(16, new ActionListener() {
 			@Override
@@ -152,7 +156,7 @@ public class ControlsPanel extends JPanel {
 
 		// Add to panel and set up actions
 		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-		this.add(new MediaTime(_player));
+		this.add(mediaTime);
 		this.add(new TimeSlider(_player), "span 6, width " + (screenSize.width)	+ ", wrap");
 		this.add(new JLabel(""));
 
@@ -268,5 +272,9 @@ public class ControlsPanel extends JPanel {
 				btnMute.setText("Mute");
 			}
 		}
+	}
+	
+	public MediaTime getMediaTime(){
+		return mediaTime;
 	}
 }

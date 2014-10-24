@@ -20,13 +20,16 @@ import javax.swing.JSpinner;
 import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.SpinnerNumberModel;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 
 import operations.BashOperations;
 import operations.Concatenater;
+import videoPanel.MediaTime;
 
 /**
- * ConcatPanel allows the user to join two media files together.
- * Taken from SE206 Assignment 3, paired prototype.
+ * ConcatPanel allows the user to join two media files together. Taken from
+ * SE206 Assignment 3, paired prototype.
  */
 @SuppressWarnings("serial")
 public class SubtitlesPanel extends SidePanel {
@@ -34,56 +37,63 @@ public class SubtitlesPanel extends SidePanel {
 	BashOperations _bash;
 	Concatenater _concater;
 	JFrame _frame;
-	
+
 	JButton _saveVideo;
-	
+
 	SubtitleTableModel subtitleData;
 	JTable subsTable;
-	
+
 	JButton addButton = new JButton("Add Row");
 	JButton deleteButton = new JButton("Delete Selected Row");
-	
+
 	JLabel hours = new JLabel("Hours");
 	JLabel mins = new JLabel("Minutes");
 	JLabel secs = new JLabel("Seconds");
-	
+
 	JLabel start = new JLabel("Start Time");
 	JLabel finish = new JLabel("End Time");
+
+	JSpinner startHour = new JSpinner(new SpinnerNumberModel(0, 0, 99, 1));
+	JSpinner startMin = new JSpinner(new SpinnerNumberModel(0, 0, 59, 1));
+	JSpinner startSec = new JSpinner(new SpinnerNumberModel(0, 0, 59, 1));
 	
-	JSpinner startHour = new JSpinner(new SpinnerNumberModel(0,0,99,1));
-	JSpinner startMin = new JSpinner(new SpinnerNumberModel(0,0,59,1));
-	JSpinner startSec = new JSpinner(new SpinnerNumberModel(0,0,59,1));
-	
-	JSpinner endHour = new JSpinner(new SpinnerNumberModel(0,0,99,1));
-	JSpinner endMin = new JSpinner(new SpinnerNumberModel(0,0,59,1));
-	JSpinner endSec = new JSpinner(new SpinnerNumberModel(0,0,59,1));
+	JButton startTime = new JButton("Set");
+
+	JSpinner endHour = new JSpinner(new SpinnerNumberModel(0, 0, 99, 1));
+	JSpinner endMin = new JSpinner(new SpinnerNumberModel(0, 0, 59, 1));
+	JSpinner endSec = new JSpinner(new SpinnerNumberModel(0, 0, 59, 1));
+
+	JButton endTime = new JButton("Set");
 	
 	JLabel text = new JLabel("Text: ");
 	JTextArea subtitle = new JTextArea();
-	
+
 	JButton save = new JButton("Save Subtitle File");
-	
+
 	JButton loadSRT = new JButton("Load Subtitle file");
 
-	
 	boolean isUsable = true;
 	String _outFile;
 
-	public SubtitlesPanel(String name, GeneralPanel generalPanel) {
+	MediaTime mediaTime;
+	
+	public SubtitlesPanel(String name, GeneralPanel generalPanel, MediaTime currentTime) {
 		super(name);
+		
+		_generalPanel = generalPanel;
+		mediaTime = currentTime;
 		super.setupPanel();
 
-		_generalPanel = generalPanel;
-		}
+	}
 
 	protected void setupPanel() {
 		subtitleData = new SubtitleTableModel();
 		subsTable = new JTable(subtitleData);
 		subsTable.setPreferredScrollableViewportSize(new Dimension(500, 70));
 		subsTable.setFillsViewportHeight(true);
-		
+
 		JScrollPane scrollPane = new JScrollPane(subsTable);
-        
+
 		this.add(scrollPane, "grow, wrap, span");
 
 		this.add(new JLabel(""));
@@ -94,51 +104,54 @@ public class SubtitlesPanel extends SidePanel {
 		this.add(startHour, "grow");
 		this.add(startMin, "grow");
 		this.add(startSec, "grow");
-		this.add(new JLabel(""), "wrap");
+		this.add(startTime, "wrap");
 		this.add(finish, "grow");
 		this.add(endHour, "grow");
 		this.add(endMin, "grow");
 		this.add(endSec, "grow");
-		this.add(new JLabel(""), "wrap");
+		this.add(endTime, "wrap");
 		this.add(text, "grow");
 		this.add(subtitle, "grow, wrap, span");
 
 		this.add(addButton, "span, grow, wrap");
 		this.add(deleteButton, "span, wrap, grow");
 
-		
-		this.add(new JSeparator(),"span, grow, wrap");
+		this.add(new JSeparator(), "span, grow, wrap");
 		this.add(save, "grow, span, wrap");
 		this.add(loadSRT, "grow, span");
-		
-		addButton.addActionListener(new ActionListener(){
+
+		addButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				subtitleData.addDataRow(startHour.getValue().toString() + ":" + startMin.getValue().toString() + ":" + startSec.getValue().toString(),
-						endHour.getValue().toString() + ":" + endMin.getValue().toString() + ":" + endSec.getValue().toString(),
-						subtitle.getText());
+				subtitleData.addDataRow(startHour.getValue().toString() + ":"
+						+ startMin.getValue().toString() + ":"
+						+ startSec.getValue().toString(), endHour.getValue()
+						.toString()
+						+ ":"
+						+ endMin.getValue().toString()
+						+ ":"
+						+ endSec.getValue().toString(), subtitle.getText());
 			}
 		});
-		
-		deleteButton.addActionListener(new ActionListener(){
+
+		deleteButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				if(subsTable.getSelectedRow() != -1){
+				if (subsTable.getSelectedRow() != -1) {
 					subtitleData.deleteDataRow(subsTable.getSelectedRow());
 				}
 			}
 		});
-		
+
 		save.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				
+
 				saveSRTFile();
 			}
 		});
-		
-		loadSRT.addActionListener(new ActionListener() {
 
+		loadSRT.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				JFileChooser fileChooser = new JFileChooser();
@@ -150,42 +163,85 @@ public class SubtitlesPanel extends SidePanel {
 				}
 			}
 
-			
+		});
+		
+		startTime.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				startHour.setValue(Integer.parseInt(mediaTime.getCurrentTime()[0]));
+				startMin.setValue(Integer.parseInt(mediaTime.getCurrentTime()[1]));
+				startSec.setValue(Integer.parseInt(mediaTime.getCurrentTime()[2]));
+			}
+		});
+		
+		endTime.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				endHour.setValue(Integer.parseInt(mediaTime.getCurrentTime()[0]));
+				endMin.setValue(Integer.parseInt(mediaTime.getCurrentTime()[1]));
+				endSec.setValue(Integer.parseInt(mediaTime.getCurrentTime()[2]));
+			}
+		});
+		
+		startHour.addChangeListener(new ChangeListener(){
+			@Override
+			public void stateChanged(ChangeEvent e) {
+				endHour.setModel(new SpinnerNumberModel((Number) startHour.getValue(), (Comparable) startHour.getValue(), 99, 1));
+			}
 		});
 	}
 
 	public void saveSRTFile() {
-		if(_generalPanel.getInputField().equals("")){
-			JOptionPane.showMessageDialog(null,
-					"No source file has been selected. Please select a file in the General tab to save SRT.");
+		if (_generalPanel.getInputField().equals("")) {
+			JOptionPane
+					.showMessageDialog(
+							null,
+							"No source file has been selected. Please select a file in the General tab to save SRT.");
 			return;
 		}
 		String outtext;
 		File inputMedia = new File(_generalPanel.getInputField());
 		int location = inputMedia.getAbsolutePath().lastIndexOf(".");
-		if(location == -1){
+		if (location == -1) {
 			outtext = inputMedia.getName();
-		}else{
+		} else {
 			outtext = _generalPanel.getInputField().substring(0, location);
 		}
 		try {
 			File outSRT = new File(outtext + ".srt");
-			outSRT.createNewFile();
-			PrintWriter output = new PrintWriter(outtext + ".srt");
-			System.out.println(outtext);
-			for(int i = 0; i < subtitleData.getRowCount(); i++){
-				output.println();
-				output.println(i);
-				output.println(subtitleData.getValueAt(i, 0) + ",000 --> " + subtitleData.getValueAt(i, 1) + ",000");
-				output.println(subtitleData.getValueAt(i, 2));
+			if (outSRT.exists()) {
+				Object[] options = { "Cancel", "Overwrite existing" };
+				int result = JOptionPane
+						.showOptionDialog(
+								null,
+								outSRT.getName()
+										+ " already exists. What would you like to do?",
+								"Already Exists", JOptionPane.ERROR_MESSAGE,
+								JOptionPane.WARNING_MESSAGE, null, options,
+								options[1]);
+				if (result == 0) {
+					// Do nothing
+				} else {
+					outSRT.createNewFile();
+					PrintWriter output = new PrintWriter(outtext + ".srt");
+					System.out.println(outtext);
+					for (int i = 0; i < subtitleData.getRowCount(); i++) {
+						output.println();
+						output.println(i);
+						output.println(subtitleData.getValueAt(i, 0)
+								+ ",000 --> " + subtitleData.getValueAt(i, 1)
+								+ ",000");
+						output.println(subtitleData.getValueAt(i, 2));
+					}
+					output.close();
+					JOptionPane.showMessageDialog(null, "Subtitle file saved");
+				}
 			}
-			output.close();
-			JOptionPane.showMessageDialog(null, "Subtitle file saved");
 		} catch (IOException e1) {
 			e1.printStackTrace();
 		}
 	}
-	
+
 	private void loadSRTFile(String absolutePath) {
 		BufferedReader br;
 		try {
@@ -193,21 +249,22 @@ public class SubtitlesPanel extends SidePanel {
 			String line;
 
 			while ((line = br.readLine()) != null) {
-				if(line.equals("")){
-				}else{
+				if (line.equals("")) {
+				} else {
 					line = br.readLine();
 					String[] split = line.split("-->");
 					String[] starts = split[0].split(",");
 					String[] stops = split[1].split(",");
 					String message = (line = br.readLine());
 					while ((line = br.readLine()) != null) {
-						if(line.equals("") == false){
+						if (line.equals("") == false) {
 							message = message.concat("\n" + line);
-						}else{
+						} else {
 							break;
 						}
 					}
-					subtitleData.addDataRow(starts[0].trim(), stops[0].trim(), message);
+					subtitleData.addDataRow(starts[0].trim(), stops[0].trim(),
+							message);
 				}
 			}
 		} catch (IOException e) {
