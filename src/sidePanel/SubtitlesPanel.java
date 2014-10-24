@@ -183,12 +183,29 @@ public class SubtitlesPanel extends SidePanel {
 			}
 		});
 		
-		startHour.addChangeListener(new ChangeListener(){
+		ChangeListener chListener = new ChangeListener(){
 			@Override
 			public void stateChanged(ChangeEvent e) {
-				endHour.setModel(new SpinnerNumberModel((Number) startHour.getValue(), (Comparable) startHour.getValue(), 99, 1));
+				int totalStart = ((int) startHour.getValue() * 3600) + ((int) startMin.getValue() * 60) + (int) startSec.getValue();
+				int totalEnd = ((int) endHour.getValue() * 3600) + ((int) endMin.getValue() * 60) + (int) endSec.getValue();
+				if(totalStart > totalEnd){
+					endHour.setModel(new SpinnerNumberModel((Number) startHour.getValue(), (Comparable) startHour.getValue(), 99, 1));
+					endMin.setModel(new SpinnerNumberModel((Number) startMin.getValue(), (Comparable) startMin.getValue(), 59, 1));
+					endSec.setModel(new SpinnerNumberModel((Number) startSec.getValue(), (Comparable) startSec.getValue(), 59, 1));
+				}else{
+					endHour.setModel(new SpinnerNumberModel((Number) endHour.getValue(), 0, 99, 1));
+					endMin.setModel(new SpinnerNumberModel((Number) endMin.getValue(), 0, 59, 1));
+					endSec.setModel(new SpinnerNumberModel((Number) endSec.getValue(), 0, 59, 1));
+				}
 			}
-		});
+		};
+		
+		startHour.addChangeListener(chListener);
+		startMin.addChangeListener(chListener);
+		startSec.addChangeListener(chListener);
+		endHour.addChangeListener(chListener);
+		endMin.addChangeListener(chListener);
+		endSec.addChangeListener(chListener);
 	}
 
 	public void saveSRTFile() {
@@ -224,7 +241,6 @@ public class SubtitlesPanel extends SidePanel {
 				} else {
 					outSRT.createNewFile();
 					PrintWriter output = new PrintWriter(outtext + ".srt");
-					System.out.println(outtext);
 					for (int i = 0; i < subtitleData.getRowCount(); i++) {
 						output.println();
 						output.println(i);

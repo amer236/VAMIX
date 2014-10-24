@@ -61,8 +61,8 @@ public class Texter extends SwingWorker<Void, Integer> {
 	// Gets correct dimensions from target video
 	private void createBlankVideo(String location) {
 		try {
-			_builder = new ProcessBuilder("/bin/bash", "-c", "avprobe "
-					+ location);
+			_builder = new ProcessBuilder("/bin/bash", "-c", "avprobe '"
+					+ location + "'");
 			_builder.directory(new File(System.getProperty("user.home")
 					+ "/VAMIX"));
 			_builder = _builder.redirectErrorStream(true);
@@ -106,10 +106,10 @@ public class Texter extends SwingWorker<Void, Integer> {
 			// Gets absolute path for input image file
 			File input = new File("resources/input.jpg");
 			_builder = new ProcessBuilder("/bin/bash", "-c",
-					"avconv -loop 1 -i " + input.getAbsolutePath() + " -r "
+					"avconv -loop 1 -i '" + input.getAbsolutePath() + "' -r "
 							+ frameRate + " -t 10 -s " + frameSize
-							+ " blankVideoStart.mp4 & " + "avconv -loop 1 -i "
-							+ input.getAbsolutePath() + " -r " + frameRate
+							+ " blankVideoStart.mp4 & " + "avconv -loop 1 -i '"
+							+ input.getAbsolutePath() + "' -r " + frameRate
 							+ " -t 30 -s " + frameSize + " blankVideoEnd.mp4");
 			_builder.directory(new File(System.getProperty("user.home")
 					+ "/VAMIX"));
@@ -119,7 +119,6 @@ public class Texter extends SwingWorker<Void, Integer> {
 
 			if (_result == 0) {
 				drawTextStart();
-				drawTextEnd();
 			}
 
 			_process.destroy();
@@ -144,6 +143,9 @@ public class Texter extends SwingWorker<Void, Integer> {
 			_process = _builder.start();
 			_result = _process.waitFor();
 
+			if (_result == 0) {
+				drawTextEnd();
+			}
 			_process.destroy();
 
 		} catch (IOException | InterruptedException e) {
@@ -219,7 +221,7 @@ public class Texter extends SwingWorker<Void, Integer> {
 			_builder = new ProcessBuilder(
 					"/bin/bash",
 					"-c",
-					"avconv -i " + _location	+ " temp2.mpg");
+					"avconv -i '" + _location + "' temp2.mpg");
 			_builder.directory(new File(System.getProperty("user.home")
 					+ "/VAMIX"));
 			_builder = _builder.redirectErrorStream(true);
@@ -327,7 +329,7 @@ public class Texter extends SwingWorker<Void, Integer> {
 	public String getTimeLength(String location) {
 		String length = "";
 		try {
-			_builder = new ProcessBuilder("/bin/bash", "-c", "avprobe "	+ location);
+			_builder = new ProcessBuilder("/bin/bash", "-c", "avprobe '"	+ location + "'");
 			_builder.directory(new File(System.getProperty("user.home")	+ "/VAMIX"));
 			_builder = _builder.redirectErrorStream(true);
 			_process = _builder.start();
@@ -397,8 +399,8 @@ public class Texter extends SwingWorker<Void, Integer> {
 		try {
 			File input = new File("resources/input.jpg");
 			_builder = new ProcessBuilder("/bin/bash", "-c",
-					"avconv -loop 1 -i " + input.getAbsolutePath()
-							+ " -r 1 -t 1 -s " + frameSize + " preview.mp4");
+					"avconv -loop 1 -i '" + input.getAbsolutePath()
+							+ "' -r 1 -t 1 -s " + frameSize + " preview.mp4");
 			_builder.directory(new File(System.getProperty("user.home")
 					+ "/VAMIX"));
 			_builder = _builder.redirectErrorStream(true);
@@ -420,8 +422,8 @@ public class Texter extends SwingWorker<Void, Integer> {
 	
 	public void createSizedPreview(String location) {
 		try {
-			_builder = new ProcessBuilder("/bin/bash", "-c", "avprobe "
-					+ location);
+			_builder = new ProcessBuilder("/bin/bash", "-c", "avprobe '"
+					+ location + "'");
 			_builder.directory(new File(System.getProperty("user.home")
 					+ "/VAMIX"));
 			_builder = _builder.redirectErrorStream(true);
