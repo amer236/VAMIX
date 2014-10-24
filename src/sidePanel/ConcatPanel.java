@@ -110,6 +110,9 @@ public class ConcatPanel extends SidePanel implements ActionListener {
 		this.add(_working, "span, grow");
 		this.add(_cancel, "span, grow");
 	}
+	
+	protected void setupPanel() {
+	}
 
 	/**
 	 * Setup buttons to perform appropriate actions

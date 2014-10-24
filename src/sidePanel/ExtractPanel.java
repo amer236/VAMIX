@@ -102,6 +102,9 @@ public class ExtractPanel extends SidePanel implements ActionListener {
 		this.add(_working, "wrap");
 		this.add(_cancel, "span, grow");
 	}
+	
+	protected void setupPanel() {
+	}
 
 	/**
 	 * Setup button actions

@@ -90,6 +90,9 @@ public class FilterPanel extends SidePanel implements ActionListener {
 		this.add(_working, "wrap, grow");
 		this.add(_cancel, "span, grow");
 	}
+	
+	protected void setupPanel() {
+	}
 
 	/**
 	 * Setup button actions
