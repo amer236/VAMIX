@@ -22,7 +22,6 @@ public class Extractor extends SwingWorker<Void, Integer> {
 	private Process _process;
 	private String _processString;
 
-	// This is for an external indeterminate progress bar
 	private boolean _isWorking = false;
 
 	public Extractor() {
@@ -44,7 +43,14 @@ public class Extractor extends SwingWorker<Void, Integer> {
 		}
 	}
 
-	// Public method to begin extraction
+	/**
+	 * Public method to begin extraction
+	 * @param location of input file
+	 * @param stime start time
+	 * @param ttime total time
+	 * @param outname output file name
+	 * @param isAudioVideoBoth save as audio of video or both
+	 */
 	public void extract(String location, String stime, String ttime,
 			String outname, int isAudioVideoBoth) {
 		_location = location;
@@ -71,7 +77,13 @@ public class Extractor extends SwingWorker<Void, Integer> {
 		this.execute();
 	}
 
-	// Method to be run in background of swing worker
+	/**
+	 * Method to be run in background of swing worker
+	 * @param location
+	 * @param stime
+	 * @param ttime
+	 * @param outname
+	 */
 	private void extractSW(String location, String stime, String ttime,
 			String outname) {
 		try {
@@ -82,23 +94,30 @@ public class Extractor extends SwingWorker<Void, Integer> {
 			_result = _process.waitFor();
 
 			_process.destroy();
-
 		} catch (IOException | InterruptedException e) {
 			e.printStackTrace();
 		}
 	}
 
-	// Returns result of SwingWorker
+	/**
+	 * Returns result of SwingWorker
+	 * @return integer result
+	 */
 	public int getResult() {
 		return _result;
 	}
 
-	// Returns whether the SwingWorker is working
+	/**
+	 * Returns whether the SwingWorker is working
+	 * @return boolean if operation is in progress
+	 */
 	public boolean getWorking() {
 		return _isWorking;
 	}
 
-	// Cancel the Worker
+	/**
+	 * Cancel the operation
+	 */
 	public void cancel() {
 		if (_process != null) {
 			_process.destroy();

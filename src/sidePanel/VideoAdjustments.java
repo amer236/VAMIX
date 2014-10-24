@@ -15,6 +15,9 @@ import javax.swing.event.ChangeListener;
 import uk.co.caprica.vlcj.player.embedded.EmbeddedMediaPlayer;
 import net.miginfocom.swing.MigLayout;
 
+/**
+ * VideoAdjustments allows the user to adjust the video playback
+ */
 @SuppressWarnings("serial")
 public class VideoAdjustments extends JFrame implements ChangeListener{
 	EmbeddedMediaPlayer _player;
@@ -69,6 +72,7 @@ public class VideoAdjustments extends JFrame implements ChangeListener{
 
 	@Override
 	public void stateChanged(ChangeEvent arg0) {
+		//Fire any change to the media player
 		_player.setHue(360*hue.getValue()/1000);
 		_player.setBrightness(brightness.getValue()/1000.0f);
 		_player.setSaturation(saturation.getValue()/1000.0f);

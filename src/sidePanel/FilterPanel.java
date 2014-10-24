@@ -39,11 +39,8 @@ public class FilterPanel extends SidePanel implements ActionListener {
 	JRadioButton _hflip = new JRadioButton("Horizontal Flip");
 	JRadioButton _negate = new JRadioButton("Negate");
 	JRadioButton _vflip = new JRadioButton("Vertical Flip");
-	//JRadioButton _hflip = new JRadioButton("Horizontal Flip");
-	//JRadioButton _hflip = new JRadioButton("Horizontal Flip");
 	
 	ButtonGroup _group = new ButtonGroup();
-
 
 	String _outFile;
 
@@ -94,10 +91,9 @@ public class FilterPanel extends SidePanel implements ActionListener {
 		this.add(_cancel, "span, grow");
 	}
 
-	protected void setupPanel() {
-	}
-
-	// Setup button actions
+	/**
+	 * Setup button actions
+	 */
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// Add filter to video
@@ -136,8 +132,10 @@ public class FilterPanel extends SidePanel implements ActionListener {
 		}
 	}
 
-	// Checks only the appropriate inputs are made
-	// Checks that the output ends in or .mp4
+	/**
+	 * Checks that the output ends in .mp4
+	 * @return boolean
+	 */
 	private boolean formatCheck() {
 		if (_outFileT.getText().endsWith(".mp4")) {
 			return true;
@@ -146,7 +144,9 @@ public class FilterPanel extends SidePanel implements ActionListener {
 		}
 	}
 
-	// Begin filtering
+	/**
+	 * Begin filtering
+	 */
 	private void beginApplyingFilter() {
 		switchUsable();
 		_filterer = new Filterer();
@@ -160,7 +160,9 @@ public class FilterPanel extends SidePanel implements ActionListener {
 		}
 	}
 
-	// Setup progress bar
+	/**
+	 * Setup progress bar
+	 */
 	public void setupProgress() {
 		_time.setActionCommand("tick");
 		_time.addActionListener(new ActionListener() {
@@ -180,7 +182,9 @@ public class FilterPanel extends SidePanel implements ActionListener {
 		});
 	}
 
-	// Switch the buttons' enabled characteristic
+	/**
+	 * Switch the buttons' enabled characteristic
+	 */
 	protected void switchUsable() {
 		if (isUsable == true) {
 			isUsable = false;

@@ -42,7 +42,6 @@ public class GeneralPanel extends SidePanel implements ActionListener {
 	private JButton _cancel;
 	private EmbeddedMediaPlayer _player = null;
 	
-	
 	DefaultListModel<String> listModel = new DefaultListModel<String>();
 	JList<String> list = new JList<String>(listModel);
 	JButton add = new JButton("Import File");
@@ -57,7 +56,9 @@ public class GeneralPanel extends SidePanel implements ActionListener {
 		this.setBorder(null);
 	}
 
-	// Sets up the panel
+	/**
+	 * Sets up the panel
+	 */
 	protected void setupPanel() {
 		this.setLayout(new MigLayout());
 		createFileSelect();
@@ -94,14 +95,6 @@ public class GeneralPanel extends SidePanel implements ActionListener {
 					listModel.addElement(selectedFile.getAbsolutePath());
 				}
 				delete.setEnabled(true);
-				
-//				if(_player.isPlayable()){
-//					// Do nothing
-//				}else{
-//					String mediapath = GeneralPanel.this.getElementZero();
-//					_player.playMedia(mediapath);
-//					GeneralPanel.this.setInputField(mediapath);
-//				}
 			}
 		});
 		
@@ -144,12 +137,10 @@ public class GeneralPanel extends SidePanel implements ActionListener {
 			}
 		});
 		JPanel listPane = new JPanel();
-		//listPane.setPreferredSize(new Dimension(100,200));
 		listPane.add(list);
 		JScrollPane scrollPane = new JScrollPane(listPane);
 		scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
 		scrollPane.setPreferredSize(new Dimension(10,200));
-		//scrollPane.add(list);
 		
 		selectPanel.add(imported, "wrap");
 		selectPanel.add(scrollPane, "grow, wrap, span");
@@ -160,14 +151,18 @@ public class GeneralPanel extends SidePanel implements ActionListener {
 		delete.setEnabled(false);
 	}
 
-	// Adds functionality to file select JComponents
+	/**
+	 * Adds functionality to file select JComponents
+	 */
 	private void createFileSelect() {
 		_selectField = new JTextField("");
 		_selectField.setEditable(false);
 		_selectField.setPreferredSize(new Dimension(100, 20));
 	}
 
-	// Adds functionality to download JComponents
+	/**
+	 * Adds functionality to download JComponents
+	 */
 	private void createDownload() {
 		_btnDownload = new JButton("Download");
 		_btnDownload.setActionCommand("download");
@@ -183,8 +178,10 @@ public class GeneralPanel extends SidePanel implements ActionListener {
 		_cancel.setActionCommand("cancel");
 	}
 
+	/**
+	 * Add functionality to buttons
+	 */
 	@Override
-	// Perform actions through generalOperations based on action command
 	public void actionPerformed(ActionEvent e) {
 		if (e.getActionCommand().equals("tick")) {
 			_prog.setValue(_downloader.getPercentage());
@@ -228,15 +225,26 @@ public class GeneralPanel extends SidePanel implements ActionListener {
 		}
 	}
 
-	// Returns the path of the selected file
+	/**
+	 * Returns the path of the selected file
+	 * @return
+	 */
 	public String getInputField() {
 		return _selectField.getText();
 	}
 	
+	/**
+	 * Sets the selected file
+	 * @param set file path
+	 */
 	public void setInputField(String set){
 		_selectField.setText(set);
 	}
 	
+	/**
+	 * Checks if the import list has another item
+	 * @return boolean
+	 */
 	public boolean listHasNext(){
 		if(listModel.isEmpty()){
 			return false;
@@ -245,20 +253,29 @@ public class GeneralPanel extends SidePanel implements ActionListener {
 		}
 	}
 	
+	/**
+	 * Get the first element on the list
+	 * @return string of the first element
+	 */
 	public String getElementZero(){
 		String path = listModel.elementAt(0);
-		//listModel.remove(0);
 		if(listModel.getSize() == 0){
 			delete.setEnabled(false);
 		}
 		return path;
 	}
 	
+	/**
+	 * Add new item to import list
+	 * @param input to add
+	 */
 	public void addToList(String input){
 		listModel.addElement(input);
 	}
 	
-	// Begin download through swing worker
+	/**
+	 * Begin download through swing worker
+	 */
 	private void beginDownload() {
 		_downloader = new Downloader();
 		_downloader.download(_downloadField.getText());

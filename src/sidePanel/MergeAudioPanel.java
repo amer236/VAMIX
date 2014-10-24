@@ -115,7 +115,9 @@ public class MergeAudioPanel extends SidePanel implements ActionListener {
 	protected void setupPanel() {
 	}
 
-	// Setup buttons to perform appropriate actions
+	/**
+	 * Setup buttons to perform appropriate actions
+	 */
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (_selectField0.getText().equals("")
@@ -159,7 +161,10 @@ public class MergeAudioPanel extends SidePanel implements ActionListener {
 		}
 	}
 
-	// Begin merging audio
+	/**
+	 * Begin merging audio
+	 * @param b
+	 */
 	private void beginMerge(boolean b) {
 		switchUsable();
 		_merger = new Merger();
@@ -168,8 +173,11 @@ public class MergeAudioPanel extends SidePanel implements ActionListener {
 		_time.start();
 	}
 
-	// Checks only the appropriate inputs are made
-	// Checks that the output ends in .mp3 or .mp4 depending on isAudio
+	/**
+	 * Checks that the output ends in .mp3 or .mp4 depending on isAudio
+	 * @param isAudio
+	 * @return boolean
+	 */
 	private boolean formatCheck(boolean isAudio) {
 		if (isAudio == true) {
 			if (_outFileT.getText().endsWith(".mp3")) {
@@ -186,7 +194,9 @@ public class MergeAudioPanel extends SidePanel implements ActionListener {
 		}
 	}
 
-	// Sets up the progress bar
+	/**
+	 * Sets up the progress bar
+	 */
 	public void setupProgress() {
 		_time.setActionCommand("tick");
 		_time.addActionListener(new ActionListener() {
@@ -205,7 +215,9 @@ public class MergeAudioPanel extends SidePanel implements ActionListener {
 		});
 	}
 
-	//Switch the buttons' enabled characteristic
+	/**
+	 * Switch the buttons' enabled characteristic
+	 */
 	protected void switchUsable() {
 		if (isUsable == true) {
 			isUsable = false;

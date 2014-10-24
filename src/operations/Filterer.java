@@ -35,7 +35,12 @@ public class Filterer extends SwingWorker<Void, Integer> {
 		}
 	}
 
-	// Public method to begin audio replacement
+	/**
+	 * Public method to begin adding filter
+	 * @param mp4Input
+	 * @param outFile
+	 * @param filter
+	 */
 	public void applyFilter(String mp4Input, String outFile, String filter) {
 		_processString = "avconv -i '" + mp4Input + "' -vf " + filter + " -strict experimental '" + outFile + "'";
 
@@ -43,6 +48,9 @@ public class Filterer extends SwingWorker<Void, Integer> {
 		this.execute();
 	}
 
+	/**
+	 * Perform operation
+	 */
 	private void filterSW() {
 		try {
 			_builder = new ProcessBuilder("/bin/bash", "-c", _processString);
@@ -52,23 +60,30 @@ public class Filterer extends SwingWorker<Void, Integer> {
 			_result = _process.waitFor();
 
 			_process.destroy();
-
 		} catch (IOException | InterruptedException e) {
 			e.printStackTrace();
 		}
 	}
 
-	// Returns result of SwingWorker
+	/**
+	 * Returns result of SwingWorker
+	 * @return integer result
+	 */
 	public int getResult() {
 		return _result;
 	}
 
-	// Returns whether the SwingWorker is working
+	/**
+	 * Returns whether the SwingWorker is working
+	 * @return boolean whether operation was in progress
+	 */
 	public boolean getWorking() {
 		return _isWorking;
 	}
 
-	// Cancel the Worker
+	/**
+	 * Cancel the operation
+	 */
 	public void cancel() {
 		if (_process != null) {
 			_process.destroy();

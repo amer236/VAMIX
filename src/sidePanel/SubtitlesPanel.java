@@ -28,8 +28,7 @@ import operations.Concatenater;
 import videoPanel.MediaTime;
 
 /**
- * ConcatPanel allows the user to join two media files together. Taken from
- * SE206 Assignment 3, paired prototype.
+ * SubtitlesPanel allows the user to create and add subtitles to the player
  */
 @SuppressWarnings("serial")
 public class SubtitlesPanel extends SidePanel {
@@ -86,6 +85,9 @@ public class SubtitlesPanel extends SidePanel {
 
 	}
 
+	/**
+	 * Setup this panel
+	 */
 	protected void setupPanel() {
 		subtitleData = new SubtitleTableModel();
 		subsTable = new JTable(subtitleData);
@@ -208,6 +210,9 @@ public class SubtitlesPanel extends SidePanel {
 		endSec.addChangeListener(chListener);
 	}
 
+	/**
+	 * Save subtitle file from the table
+	 */
 	public void saveSRTFile() {
 		if (_generalPanel.getInputField().equals("")) {
 			JOptionPane
@@ -258,6 +263,10 @@ public class SubtitlesPanel extends SidePanel {
 		}
 	}
 
+	/**
+	 * Load a subtitle file into the table
+	 * @param absolutePath of the SRT file
+	 */
 	private void loadSRTFile(String absolutePath) {
 		BufferedReader br;
 		try {
@@ -287,5 +296,4 @@ public class SubtitlesPanel extends SidePanel {
 			e.printStackTrace();
 		}
 	}
-
 }

@@ -13,8 +13,8 @@ import javax.swing.JOptionPane;
 import javax.swing.SwingWorker;
 
 /**
- * Texter is a SwingWorker that adds a title and credit scene to the source video.
- * Taken from SE206 Assignment 3, paired prototype.
+ * Texter is a SwingWorker that adds a title and credit scene to the source
+ * video. Taken from SE206 Assignment 3, paired prototype.
  */
 public class Texter extends SwingWorker<Void, Integer> {
 	private String _location;
@@ -39,11 +39,26 @@ public class Texter extends SwingWorker<Void, Integer> {
 	protected Void doInBackground() throws Exception {
 		clearTempFiles();
 		createBlankVideo(_location);
-
 		return null;
 	}
 
-	// Public method to begin worker
+	/**
+	 * Public method to begin worker
+	 * 
+	 * @param location
+	 *            of input file
+	 * @param startText
+	 *            to be added
+	 * @param endText
+	 *            to be added
+	 * @param outname
+	 *            of the file
+	 * @param fontPath
+	 *            selected font
+	 * @param fontSize
+	 * @param colour
+	 *            of font
+	 */
 	public void drawText(String location, String startText, String endText,
 			String outname, String fontPath, String fontSize, String colour) {
 		_isWorking = true;
@@ -58,7 +73,12 @@ public class Texter extends SwingWorker<Void, Integer> {
 		this.execute();
 	}
 
-	// Gets correct dimensions from target video
+	/**
+	 * Gets correct dimensions from target video
+	 * 
+	 * @param location
+	 *            of the target file
+	 */
 	private void createBlankVideo(String location) {
 		try {
 			_builder = new ProcessBuilder("/bin/bash", "-c", "avprobe '"
@@ -90,7 +110,6 @@ public class Texter extends SwingWorker<Void, Integer> {
 				createBlankVideo(frameSize, frameRate);
 			}
 			_process.destroy();
-
 		} catch (IOException | InterruptedException e) {
 			if (e.getMessage() == "Stream closed") {
 				// This is expected behavior from cancel().
@@ -100,7 +119,12 @@ public class Texter extends SwingWorker<Void, Integer> {
 		}
 	}
 
-	// Creates blank video with correct dimensions
+	/**
+	 * Creates blank video with correct dimensions
+	 * 
+	 * @param frameSize
+	 * @param frameRate
+	 */
 	private void createBlankVideo(String frameSize, String frameRate) {
 		try {
 			// Gets absolute path for input image file
@@ -120,15 +144,15 @@ public class Texter extends SwingWorker<Void, Integer> {
 			if (_result == 0) {
 				drawTextStart();
 			}
-
 			_process.destroy();
-
 		} catch (IOException | InterruptedException e) {
 			e.printStackTrace();
 		}
 	}
 
-	// Draws text on blank video start
+	/**
+	 *  Draws text on blank video start
+	 */
 	private void drawTextStart() {
 		try {
 			_builder = new ProcessBuilder("/bin/bash", "-c", "avconv -i "
@@ -153,7 +177,9 @@ public class Texter extends SwingWorker<Void, Integer> {
 		}
 	}
 
-	// Draws text on blank video start
+	/**
+	 *  Draws text on blank video end
+	 */
 	private void drawTextEnd() {
 		try {
 			_builder = new ProcessBuilder("/bin/bash", "-c", "avconv -i "
@@ -171,32 +197,31 @@ public class Texter extends SwingWorker<Void, Integer> {
 			if (_result == 0) {
 				createTempVids();
 			}
-
 			_process.destroy();
-
 		} catch (IOException | InterruptedException e) {
 			e.printStackTrace();
 		}
 	}
 
-	// Create temp videos in mpegt format
-	// https://trac.ffmpeg.org/wiki/How%20to%20concatenate%20%28join,%20merge%29%20media%20files
+	/**
+	 * Create temporary videos in mpeg format
+	 * https://trac.ffmpeg.org/wiki/How%20to%20concatenate%20%28join,%20merge%29%20media%20files
+	 */
 	private void createTempVids() {
 		createTemp2();
 		createTemp3();
 		createTemp1();
 		if (_result == 0) {
-			overlaySound();	
+			overlaySound();
 		}
-
 	}
 
-	// Creates temporary video 1
+	/**
+	 * Creates temporary video 1
+	 */
 	private void createTemp1() {
 		try {
-			_builder = new ProcessBuilder(
-					"/bin/bash",
-					"-c",
+			_builder = new ProcessBuilder("/bin/bash", "-c",
 					"avconv -i StartText.mp4 temp1.mpg");
 			_builder.directory(new File(System.getProperty("user.home")
 					+ "/VAMIX"));
@@ -205,23 +230,18 @@ public class Texter extends SwingWorker<Void, Integer> {
 			_result = _process.waitFor();
 
 			_process.destroy();
-
 		} catch (IOException | InterruptedException e) {
 			e.printStackTrace();
 		}
 	}
 
-	// Creates temporary video 2
+	/**
+	 * Creates temporary video 2
+	 */
 	private void createTemp2() {
 		try {
-			//_builder = new ProcessBuilder(
-			//		"/bin/bash",
-			//		"-c",
-			//		"avconv -i "	+ _location	+ " -c copy -bsf:v h264_mp4toannexb -f mpegts temp2 2> /dev/null");
-			_builder = new ProcessBuilder(
-					"/bin/bash",
-					"-c",
-					"avconv -i '" + _location + "' temp2.mpg");
+			_builder = new ProcessBuilder("/bin/bash", "-c", "avconv -i '"
+					+ _location + "' temp2.mpg");
 			_builder.directory(new File(System.getProperty("user.home")
 					+ "/VAMIX"));
 			_builder = _builder.redirectErrorStream(true);
@@ -229,22 +249,17 @@ public class Texter extends SwingWorker<Void, Integer> {
 			_result = _process.waitFor();
 
 			_process.destroy();
-
 		} catch (IOException | InterruptedException e) {
 			e.printStackTrace();
 		}
 	}
-	
-	// Creates temporary video 3
+
+	/**
+	 * Creates temporary video 3
+	 */
 	private void createTemp3() {
 		try {
-//			_builder = new ProcessBuilder(
-//					"/bin/bash",
-//					"-c",
-//					"avconv -i EndText.mp4 -c copy -bsf:v h264_mp4toannexb -f mpegts temp3 2> /dev/null");
-			_builder = new ProcessBuilder(
-					"/bin/bash",
-					"-c",
+			_builder = new ProcessBuilder("/bin/bash", "-c",
 					"avconv -i EndText.mp4 temp3.mpg");
 			_builder.directory(new File(System.getProperty("user.home")
 					+ "/VAMIX"));
@@ -253,13 +268,14 @@ public class Texter extends SwingWorker<Void, Integer> {
 			_result = _process.waitFor();
 
 			_process.destroy();
-
 		} catch (IOException | InterruptedException e) {
 			e.printStackTrace();
 		}
 	}
 
-	// Merge temporary videos. This removes sound
+	/**
+	 * Merge temporary videos
+	 */
 	private void mergeVideos() {
 		try {
 			String stringP = "cat temp1new.mpg temp2.mpg temp3.mpg > final.mpg";
@@ -269,35 +285,39 @@ public class Texter extends SwingWorker<Void, Integer> {
 			_builder = _builder.redirectErrorStream(true);
 			_process = _builder.start();
 			_result = _process.waitFor();
-			
+
 			if (_result == 0) {
 				convertTomp4();
 			}
-			
-			_process.destroy();
 
+			_process.destroy();
 		} catch (IOException | InterruptedException e) {
 		}
 	}
 
+	/**
+	 * Convert temporary video to mp4 with output name
+	 */
 	private void convertTomp4() {
-		 try {
-				String stringP = "avconv -i final.mpg -strict experimental '" + _outname + "'";
-				_builder = new ProcessBuilder("/bin/bash", "-c", stringP);
-				_builder.directory(new File(System.getProperty("user.home")
-						+ "/VAMIX"));
-				_builder = _builder.redirectErrorStream(true);
-				_process = _builder.start();
-				_result = _process.waitFor();
-								
-				_process.destroy();
+		try {
+			String stringP = "avconv -i final.mpg -strict experimental '"
+					+ _outname + "'";
+			_builder = new ProcessBuilder("/bin/bash", "-c", stringP);
+			_builder.directory(new File(System.getProperty("user.home")
+					+ "/VAMIX"));
+			_builder = _builder.redirectErrorStream(true);
+			_process = _builder.start();
+			_result = _process.waitFor();
 
-			} catch (IOException | InterruptedException e) {
-			}
+			_process.destroy();
+		} catch (IOException | InterruptedException e) {
+		}
 	}
 
-	// Add sound back in to video in a number of steps
-	// Strip source audio
+	/**
+	 * Add sound back in to video in a number of steps
+	 * Strip source audio
+	 */
 	private void overlaySound() {
 		try {
 			File blank = new File("resources/10sec.mp3");
@@ -306,7 +326,7 @@ public class Texter extends SwingWorker<Void, Integer> {
 			Path newdir = folder.toPath();
 
 			Files.copy(source, newdir.resolve(source.getFileName()));
-			
+
 			String _processString = "avconv -i 10sec.mp3 -i temp1.mpg -map 0:0 -map 1:0 -c copy temp1new.mpg";
 			_builder = new ProcessBuilder("/bin/bash", "-c", _processString);
 			_builder.directory(new File(System.getProperty("user.home")
@@ -315,26 +335,32 @@ public class Texter extends SwingWorker<Void, Integer> {
 			_process = _builder.start();
 
 			_result = _process.waitFor();
-			
+
 			if (_result == 0) {
 				mergeVideos();
 			}
 			_process.destroy();
-
 		} catch (IOException | InterruptedException e) {
 		}
 	}
 
-	// Returns length of source
+	/**
+	 * Returns length of source
+	 * @param location of input file
+	 * @return String of the length of the file
+	 */
 	public String getTimeLength(String location) {
 		String length = "";
 		try {
-			_builder = new ProcessBuilder("/bin/bash", "-c", "avprobe '"	+ location + "'");
-			_builder.directory(new File(System.getProperty("user.home")	+ "/VAMIX"));
+			_builder = new ProcessBuilder("/bin/bash", "-c", "avprobe '"
+					+ location + "'");
+			_builder.directory(new File(System.getProperty("user.home")
+					+ "/VAMIX"));
 			_builder = _builder.redirectErrorStream(true);
 			_process = _builder.start();
 			InputStream stdout = _process.getInputStream();
-			BufferedReader stdoutBuffered = new BufferedReader(new InputStreamReader(stdout));
+			BufferedReader stdoutBuffered = new BufferedReader(
+					new InputStreamReader(stdout));
 			String line = null;
 			String[] parts = null;
 			while ((line = stdoutBuffered.readLine()) != null) {
@@ -345,18 +371,28 @@ public class Texter extends SwingWorker<Void, Integer> {
 			}
 			String[] tempArray = parts[0].trim().split(" ");
 			String[] timesArray = tempArray[1].split(":");
-			length = ""	+ ((Integer.parseInt(timesArray[0]) * 60 * 60) + (Integer.parseInt(timesArray[1]) * 60) + (int) Double.parseDouble(timesArray[2]));
+			length = ""
+					+ ((Integer.parseInt(timesArray[0]) * 60 * 60)
+							+ (Integer.parseInt(timesArray[1]) * 60) + (int) Double
+								.parseDouble(timesArray[2]));
 		} catch (IOException e) {
-			if (e.getMessage() == "Stream closed") { 
+			if (e.getMessage() == "Stream closed") {
 				// This is expected behavior from cancel
 			} else {
 				e.printStackTrace();
 			}
 		}
-		return length; 
+		return length;
 	}
 
-	
+	/**
+	 * Calls avplay to open a preview of a text scene
+	 * @param start boolean whether to show start or end
+	 * @param text to display
+	 * @param fontPath for font
+	 * @param fontSize
+	 * @param colour
+	 */
 	public void preview(boolean start, String text, String fontPath,
 			String fontSize, String colour) {
 		String cmd = null;
@@ -391,10 +427,12 @@ public class Texter extends SwingWorker<Void, Integer> {
 
 		} catch (IOException | InterruptedException e) {
 		}
-
 	}
 
-	// Creates a preview with the text 
+	/**
+	 * Creates a preview with the text
+	 * @param frameSize
+	 */
 	private void createPreview(String frameSize) {
 		try {
 			File input = new File("resources/input.jpg");
@@ -407,19 +445,16 @@ public class Texter extends SwingWorker<Void, Integer> {
 			_process = _builder.start();
 
 			_result = _process.waitFor();
-			if (_result == 0) {
-				
-			} else {
-
-			}
 
 			_process.destroy();
-
 		} catch (IOException | InterruptedException e) {
 		}
-
 	}
-	
+
+	/**
+	 * Calculates correct frame size for preview, and then calls preview
+	 * @param location of input file
+	 */
 	public void createSizedPreview(String location) {
 		try {
 			_builder = new ProcessBuilder("/bin/bash", "-c", "avprobe '"
@@ -448,12 +483,13 @@ public class Texter extends SwingWorker<Void, Integer> {
 			if (_result == 0) {
 				createPreview(frameSize);
 			}
-		}catch (IOException | InterruptedException e){
-			
+		} catch (IOException | InterruptedException e) {
 		}
 	}
 
-	// Empties VAMIX folder for new operation
+	/**
+	 * Empties VAMIX folder for new operation
+	 */
 	private void clearTempFiles() {
 		File dir = new File(System.getProperty("user.home") + "/VAMIX");
 		for (File file : dir.listFiles()) {
@@ -466,23 +502,34 @@ public class Texter extends SwingWorker<Void, Integer> {
 		_isWorking = false;
 
 		if (getResult() == 0) {
-			JOptionPane.showMessageDialog(null, "Text Drawing Complete. Output file is in the VAMIX folder in your home directory.");
+			JOptionPane
+					.showMessageDialog(
+							null,
+							"Text Drawing Complete. Output file is in the VAMIX folder in your home directory.");
 		} else {
-			JOptionPane.showMessageDialog(null,	"Operation incomplete");
+			JOptionPane.showMessageDialog(null, "Operation incomplete");
 		}
 	}
 
-	// Returns result of SwingWorker
+	/**
+	 * Returns result of SwingWorker
+	 * @return integer result of the operation
+	 */
 	public int getResult() {
 		return _result;
 	}
 
-	// Returns whether the SwingWorker is working
+	/**
+	 * Returns whether the SwingWorker is working
+	 * @return boolean if operation is in progress
+	 */
 	public boolean getWorking() {
 		return _isWorking;
 	}
 
-	// Cancel the Worker
+	/**
+	 * Cancel the operation
+	 */
 	public void cancel() {
 		if (_process != null) {
 			_process.destroy();

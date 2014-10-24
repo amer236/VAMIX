@@ -24,8 +24,8 @@ import javax.swing.text.NumberFormatter;
 import operations.Texter;
 
 /**
- * VidEditingPanel adds title and credit scene functionality.
- * Taken from SE206 Assignment 3, paired prototype.
+ * VidEditingPanel adds title and credit scene functionality. Taken from SE206
+ * Assignment 3, paired prototype.
  */
 @SuppressWarnings("serial")
 public class VidEditingPanel extends SidePanel implements ActionListener {
@@ -35,7 +35,8 @@ public class VidEditingPanel extends SidePanel implements ActionListener {
 
 	JLabel _startTextLabel = new JLabel("Text to display at start of video: ");
 	JTextArea _startText = new JTextArea(5, 20);
-	JLabel _endTextLabel = new JLabel("<html> Text to display at end of video: <html/>");
+	JLabel _endTextLabel = new JLabel(
+			"<html> Text to display at end of video: <html/>");
 	JTextArea _endText = new JTextArea(5, 20);
 	JLabel _outnameLabel = new JLabel("<html> Output file name: <html/>");
 	JTextField _outnameText = new JTextField();
@@ -43,7 +44,7 @@ public class VidEditingPanel extends SidePanel implements ActionListener {
 	JLabel _fontSizeLabel = new JLabel("Font Size");
 	JLabel _colourLabel = new JLabel("Select Colour");
 	JSpinner _fontSizeSpinner = null;
-	
+
 	// combo boxes that have drop down menu
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	JComboBox _fontBox = new JComboBox(new DefaultComboBoxModel(Font.values()));
@@ -59,7 +60,7 @@ public class VidEditingPanel extends SidePanel implements ActionListener {
 
 	JProgressBar _working = new JProgressBar();
 	JButton _cancel = new JButton("Cancel");
-	
+
 	boolean isUsable = true;
 
 	public VidEditingPanel(String name, GeneralPanel gPanel) {
@@ -69,12 +70,16 @@ public class VidEditingPanel extends SidePanel implements ActionListener {
 		setupProgress();
 	}
 
+	/**
+	 * Setup this panel
+	 */
 	protected void setupPanel() {
-
 		SpinnerModel inputSizeModel = new SpinnerNumberModel(10, 10, 72, 1);
 		_fontSizeSpinner = new JSpinner(inputSizeModel);
-		JFormattedTextField inputSizeText = ((JSpinner.NumberEditor) _fontSizeSpinner.getEditor()).getTextField();
-		((NumberFormatter) inputSizeText.getFormatter()).setAllowsInvalid(false);
+		JFormattedTextField inputSizeText = ((JSpinner.NumberEditor) _fontSizeSpinner
+				.getEditor()).getTextField();
+		((NumberFormatter) inputSizeText.getFormatter())
+				.setAllowsInvalid(false);
 
 		// Add buttons
 		this.add(_startTextLabel, "wrap");
@@ -114,10 +119,11 @@ public class VidEditingPanel extends SidePanel implements ActionListener {
 
 		this.add(_working, "span, grow");
 		this.add(_cancel, "span, grow");
-
 	}
 
-	//Setup progress bar
+	/**
+	 * Setup progress bar
+	 */
 	public void setupProgress() {
 		_time.setActionCommand("tick");
 		_time.addActionListener(new ActionListener() {
@@ -136,9 +142,12 @@ public class VidEditingPanel extends SidePanel implements ActionListener {
 		});
 	}
 
-	// enums that have path to each font
+	/**
+	 * Enums that have path to each font
+	 */
 	public enum Font {
-		UbuntuRegular("/usr/share/fonts/truetype/ubuntu-font-family/Ubuntu-R.ttf"), UbuntuBold(
+		UbuntuRegular(
+				"/usr/share/fonts/truetype/ubuntu-font-family/Ubuntu-R.ttf"), UbuntuBold(
 				"/usr/share/fonts/truetype/ubuntu-font-family/Ubuntu-B.ttf"), UbuntuMedium(
 				"/usr/share/fonts/truetype/ubuntu-font-family/Ubuntu-M.ttf"), DejaVuSans(
 				"/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf");
@@ -157,8 +166,9 @@ public class VidEditingPanel extends SidePanel implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (_gPanel.getInputField().equals("")) {
-			JOptionPane.showMessageDialog(null,
-					"No source file has been selected. Please select a file in the General tab.");
+			JOptionPane
+					.showMessageDialog(null,
+							"No source file has been selected. Please select a file in the General tab.");
 			return;
 		}
 		_texter = new Texter();
@@ -167,7 +177,8 @@ public class VidEditingPanel extends SidePanel implements ActionListener {
 		String fontPath = thisFont.getPath();
 
 		// creates preview file if it does not exist
-		File file = new File(System.getProperty("user.home") + "/VAMIX/preview.mp4");
+		File file = new File(System.getProperty("user.home")
+				+ "/VAMIX/preview.mp4");
 		if (file.exists()) {
 			file.delete();
 		}
@@ -177,32 +188,40 @@ public class VidEditingPanel extends SidePanel implements ActionListener {
 		// add text command
 		if (e.getActionCommand().equals("confirm")) {
 			if (!_outnameText.getText().endsWith(".mp4")) {
-				JOptionPane.showMessageDialog(null, "The output file must end with .mp4");
+				JOptionPane.showMessageDialog(null,
+						"The output file must end with .mp4");
 				return;
 			} else {
-				_texter.drawText(_gPanel.getInputField(), _startText.getText(), _endText.getText(), _outnameText
-						.getText(), fontPath, "" + _fontSizeSpinner.getValue().toString(), _fontColourBox
-						.getSelectedItem().toString());
+				_texter.drawText(_gPanel.getInputField(), _startText.getText(),
+						_endText.getText(), _outnameText.getText(), fontPath,
+						"" + _fontSizeSpinner.getValue().toString(),
+						_fontColourBox.getSelectedItem().toString());
 				_time.start();
 				switchUsable();
 			}
 			// preview start command
 		} else if (e.getActionCommand().equals("start")) {
-			_texter.preview(true, _startText.getText(), fontPath, _fontSizeSpinner.getValue().toString(),
-					_fontColourBox.getSelectedItem().toString());
+			_texter.preview(true, _startText.getText(), fontPath,
+					_fontSizeSpinner.getValue().toString(), _fontColourBox
+							.getSelectedItem().toString());
 			_time.start();
 			switchUsable();
 
 			// preview end command
 		} else if (e.getActionCommand().equals("end")) {
-			_texter.preview(false, _endText.getText(), fontPath, _fontSizeSpinner.getValue().toString(), _fontColourBox
-					.getSelectedItem().toString());
+			_texter.preview(false, _endText.getText(), fontPath,
+					_fontSizeSpinner.getValue().toString(), _fontColourBox
+							.getSelectedItem().toString());
 			_time.start();
 			switchUsable();
 		}
 	}
 
-	// gets all state into a list
+	/**
+	 * Gets all states into a list
+	 * 
+	 * @return list representing the state of this panel
+	 */
 	public ArrayList<String> returnState() {
 		ArrayList<String> saveStateList = new ArrayList<String>();
 		saveStateList.add(_gPanel.getInputField());
@@ -217,18 +236,18 @@ public class VidEditingPanel extends SidePanel implements ActionListener {
 		return saveStateList;
 	}
 
-	// loads states from a list
+	/**
+	 * Loads states from a list
+	 * 
+	 * @param stateList
+	 */
 	public void loadState(ArrayList<String> stateList) {
 		_startText.setText("");
 		_endText.setText("");
 		ArrayList<String> loadStateList = stateList;
-//		_gPanel.setInputField(loadStateList.get(0));
-		// unsure how to load enum value right now
-		// need to convert string to enum
-		// possiblyy loop through all enums and check which are the same
-		// _fontBox.setSelectedItem(loadStateList.get(1));
-		((JSpinner.NumberEditor) _fontSizeSpinner.getEditor()).getTextField().setValue(
-				Integer.parseInt(loadStateList.get(2)));
+
+		((JSpinner.NumberEditor) _fontSizeSpinner.getEditor()).getTextField()
+				.setValue(Integer.parseInt(loadStateList.get(2)));
 
 		_outnameText.setText(loadStateList.get(4));
 
@@ -244,14 +263,17 @@ public class VidEditingPanel extends SidePanel implements ActionListener {
 			linePos++;
 		}
 	}
-	//Switch the buttons' enabled characteristic
-		protected void switchUsable() {
-			if (isUsable == true) {
-				isUsable = false;
-				_confirm.setEnabled(false);
-			} else {
-				isUsable = true;
-				_confirm.setEnabled(true);
-			}
+
+	/**
+	 * Switch the buttons' enabled characteristic
+	 */
+	protected void switchUsable() {
+		if (isUsable == true) {
+			isUsable = false;
+			_confirm.setEnabled(false);
+		} else {
+			isUsable = true;
+			_confirm.setEnabled(true);
 		}
+	}
 }

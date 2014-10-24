@@ -18,8 +18,7 @@ import operations.BashOperations;
 import operations.Concatenater;
 
 /**
- * ConcatPanel allows the user to concat two media files together. Taken from
- * SE206 Assignment 3, paired prototype.
+ * ConcatPanel allows the user to concat two media files together
  */
 @SuppressWarnings("serial")
 public class ConcatPanel extends SidePanel implements ActionListener {
@@ -112,10 +111,9 @@ public class ConcatPanel extends SidePanel implements ActionListener {
 		this.add(_cancel, "span, grow");
 	}
 
-	protected void setupPanel() {
-	}
-
-	// Setup buttons to perform appropriate actions
+	/**
+	 * Setup buttons to perform appropriate actions
+	 */
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (_selectField0.getText().equals("")
@@ -181,7 +179,9 @@ public class ConcatPanel extends SidePanel implements ActionListener {
 		}
 	}
 
-	// Begin merging audio
+	/**
+	 * Begin joining audio
+	 */
 	private void beginConcat() {
 		switchUsable();
 		_concater = new Concatenater();
@@ -190,8 +190,11 @@ public class ConcatPanel extends SidePanel implements ActionListener {
 		_time.start();
 	}
 
-	// Checks only the appropriate inputs are made
-	// Checks that the output ends in .mp3 or .mp4 depending on isAudio
+	/**
+	 * Checks that the output ends in .mp3 or .mp4 depending on isAudio
+	 * @param isAudio
+	 * @return boolean if it matches the format
+	 */
 	private boolean formatCheck(boolean isAudio) {
 		if (isAudio == true) {
 			if (_outFileT.getText().endsWith(".mp3")) {
@@ -208,7 +211,9 @@ public class ConcatPanel extends SidePanel implements ActionListener {
 		}
 	}
 
-	// Sets up the progress bar
+	/**
+	 * Sets up the progress bar
+	 */
 	public void setupProgress() {
 		_time.setActionCommand("tick");
 		_time.addActionListener(new ActionListener() {
@@ -227,7 +232,9 @@ public class ConcatPanel extends SidePanel implements ActionListener {
 		});
 	}
 
-	// Switch the buttons' enabled characteristic
+	/**
+	 * Switch the buttons' enabled characteristic
+	 */
 	protected void switchUsable() {
 		if (isUsable == true) {
 			isUsable = false;

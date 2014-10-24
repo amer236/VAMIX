@@ -15,7 +15,7 @@ public class Main {
 		try {
 			UIManager.setLookAndFeel("javax.swing.plaf.nimbus.NimbusLookAndFeel");
 		} catch (UnsupportedLookAndFeelException | ClassNotFoundException | InstantiationException | IllegalAccessException ex) {
-			// Oh well, worked at home
+			//Do nothing
 		}
 
 		SwingUtilities.invokeLater(new Runnable() {

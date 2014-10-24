@@ -36,14 +36,20 @@ public class Replacer extends SwingWorker<Void, Integer> {
 		}
 	}
 
-	// Public method to begin audio replacement
+	/**
+	 * Public method to begin audio replacement
+	 * @param mp3Input
+	 * @param mp4Input
+	 * @param outFile name
+	 * @param isShortest
+	 */
 	public void overlay(String mp3Input, String mp4Input, String outFile,
 			boolean isShortest) {
 		if (isShortest == true) {
 			_processString = "avconv -i '" + mp3Input + "' -i '" + mp4Input
 					+ "' -map 0:0 -map 1:0 -c copy -shortest '" + outFile + "'";
 		} else {
-			// This command is not working :(
+			// This command is not working
 			_processString = "avconv -i '" + mp3Input + "' -i '" + mp4Input
 					+ "' -map 0:0 -map 1:0 -acodec copy -vcodec copy '"
 					+ outFile + "'";
@@ -53,6 +59,9 @@ public class Replacer extends SwingWorker<Void, Integer> {
 		this.execute();
 	}
 
+	/**
+	 * Performs audio replacement
+	 */
 	private void overlaySW() {
 		try {
 			_builder = new ProcessBuilder("/bin/bash", "-c", _processString);
@@ -62,23 +71,30 @@ public class Replacer extends SwingWorker<Void, Integer> {
 			_result = _process.waitFor();
 
 			_process.destroy();
-
 		} catch (IOException | InterruptedException e) {
 			e.printStackTrace();
 		}
 	}
 
-	// Returns result of SwingWorker
+	/**
+	 * Returns result of SwingWorker
+	 * @return integer result
+	 */
 	public int getResult() {
 		return _result;
 	}
 
-	// Returns whether the SwingWorker is working
+	/**
+	 * Returns whether the SwingWorker is working
+	 * @return boolean whether operation is ongoing
+	 */
 	public boolean getWorking() {
 		return _isWorking;
 	}
 
-	// Cancel the Worker
+	/**
+	 * Cancel the operation
+	 */
 	public void cancel() {
 		if (_process != null) {
 			_process.destroy();

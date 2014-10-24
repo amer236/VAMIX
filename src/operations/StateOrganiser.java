@@ -33,15 +33,13 @@ public class StateOrganiser {
 		_sPanel = sPanel;
 	}
 
-	public void initialise() {
-
-	}
-
+	/**
+	 * Load the editing tab from the text file
+	 */
 	public void load() {
 		BufferedReader br;
 		ArrayList<String> stateList = new ArrayList<String>();
 		try {
-
 			br = new BufferedReader(new FileReader(System.getProperty("user.home") + "/Documents/VAMIX_STATE.txt"));
 			String line;
 
@@ -56,7 +54,9 @@ public class StateOrganiser {
 		}
 	}
 
-	// gets states and saves to a file
+	/**
+	 * Gets states and saves to a file
+	 */
 	public void save() {
 		_sPanel.saveSRTFile();
 		ArrayList<String> saveStateList = new ArrayList<String>();
@@ -69,9 +69,7 @@ public class StateOrganiser {
 			writer.close();
 			JOptionPane.showMessageDialog(null, "Video tab has been saved");
 		} catch (FileNotFoundException | UnsupportedEncodingException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
 	}
 }

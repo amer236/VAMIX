@@ -17,7 +17,6 @@ import net.miginfocom.swing.MigLayout;
 
 /**
  * ThemeSelector allows the user to change some colours of the current theme
- * Taken from SE206 Assignment 3, paired prototype.
  */
 @SuppressWarnings("serial")
 public class ThemeSelector extends JFrame {
@@ -35,21 +34,6 @@ public class ThemeSelector extends JFrame {
 		panel.add(green, "wrap, grow");
 		panel.add(new JLabel("Blue"), "grow");
 		panel.add(blue, "wrap, grow");
-		
-		//panel.add(new JLabel("NimbusBase"));
-		//panel.add(new JLabel("Control"), "wrap");
-		
-		//This button is too bugged to be included in the final version
-//		JButton base = new JButton("Set Base Colour");
-//		base.addActionListener(new ActionListener() {
-//			@Override
-//			public void actionPerformed(ActionEvent e) {
-//				UIManager.put("nimbusBase", new ColorUIResource(red.getValue(), green.getValue(), blue.getValue()));
-//				SwingUtilities.updateComponentTreeUI(frame);
-//				SwingUtilities.updateComponentTreeUI(ThemeSelector.this);
-//			}
-//		});
-//		panel.add(base,"grow");
 		
 		JButton control = new JButton("Set Background Color");
 		control.addActionListener(new ActionListener() {

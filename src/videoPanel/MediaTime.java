@@ -32,8 +32,10 @@ public class MediaTime extends JLabel implements ActionListener {
 		_timer.start();
 	}
 
+	/**
+	 * Recalculate progress in seconds, and update
+	 */
 	private void updateTime() {
-		// Recalculate progress in seconds
 		if (_player.getLength() == 0) {
 			this.setTime(0);
 		} else {
@@ -41,6 +43,10 @@ public class MediaTime extends JLabel implements ActionListener {
 		}
 	}
 
+	/**
+	 * Set media time in hh:mm:ss from seconds
+	 * @param totalSecs to convert to hh:mm:ss format
+	 */
 	private void setTime(int totalSecs) {
 		this.setToolTipText("Seconds: " + totalSecs);
 		// Convert seconds to hh:mm:ss
@@ -70,6 +76,10 @@ public class MediaTime extends JLabel implements ActionListener {
 		}
 	}
 	
+	/**
+	 * Gets the current time strings
+	 * @return string array of the current time
+	 */
 	public String[] getCurrentTime(){
 		String[] times = new String[3];
 		times[0] = "" + _hours10s + _hours;

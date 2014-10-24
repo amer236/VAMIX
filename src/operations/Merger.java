@@ -37,7 +37,12 @@ public class Merger extends SwingWorker<Void, Integer> {
 		}
 	}
 	
-	// Public method for beginning merge command
+	/**
+	 * Public method for beginning merge command
+	 * @param mp3Input1
+	 * @param mp3Input2
+	 * @param outFile name
+	 */
 	public void merge(String mp3Input1, String mp3Input2, String outFile) {
 		_processString = "avconv -i '" + mp3Input1 + "' -i '" + mp3Input2
 				+ "' -filter_complex amix=inputs=2:duration=longest '"
@@ -46,6 +51,9 @@ public class Merger extends SwingWorker<Void, Integer> {
 		this.execute();
 	}
 
+	/**
+	 * Perform the merge
+	 */
 	private void mergeSW() {
 		try {
 			_builder = new ProcessBuilder("/bin/bash", "-c", _processString);
@@ -61,17 +69,25 @@ public class Merger extends SwingWorker<Void, Integer> {
 		}
 	}
 
-	// Returns result of SwingWorker
+	/**
+	 * Returns result of SwingWorker
+	 * @return integer result
+	 */
 	public int getResult() {
 		return _result;
 	}
 
-	// Returns whether the SwingWorker is working
+	/**
+	 * Returns whether the SwingWorker is working
+	 * @return boolean if operation is in progress
+	 */
 	public boolean getWorking() {
 		return _isWorking;
 	}
 
-	// Cancel the Worker
+	/**
+	 * Cancel the operation
+	 */
 	public void cancel() {
 		if (_process != null) {
 			_process.destroy();

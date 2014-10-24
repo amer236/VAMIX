@@ -19,7 +19,7 @@ import operations.Replacer;
 
 /**
  * ReplaceAudioPanel allows the user to replace a video's audio track.
- * Taken frReplaceAudioPanelom SE206 Assignment 3, paired prototype.
+ * Taken from SE206 Assignment 3, paired prototype.
  */
 @SuppressWarnings("serial")
 public class ReplaceAudioPanel extends SidePanel implements ActionListener {
@@ -96,7 +96,9 @@ public class ReplaceAudioPanel extends SidePanel implements ActionListener {
 	protected void setupPanel() {
 	}
 
-	//Setup buttons to perform appropriate actions
+	/**
+	 * Setup buttons to perform appropriate actions
+	 */
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (_generalPanel.getInputField().equals("")) {
@@ -135,7 +137,10 @@ public class ReplaceAudioPanel extends SidePanel implements ActionListener {
 		}
 	}
 
-	// Begins replacing audio stream
+	/**
+	 * Begins replacing audio stream
+	 * @param b
+	 */
 	private void beginOverlay(boolean b) {
 		switchUsable();
 		_overlayer = new Replacer();
@@ -143,8 +148,11 @@ public class ReplaceAudioPanel extends SidePanel implements ActionListener {
 		_time.start();
 	}
 
-	// Checks only the appropriate inputs are made
-	// Checks that the output ends in .mp3 or .mp4 depending on isAudio
+	/**
+	 * Checks that the output ends in .mp3 or .mp4 depending on isAudio
+	 * @param isAudio
+	 * @return boolean
+	 */
 	private boolean formatCheck(boolean isAudio) {
 		if (isAudio == true) {
 			if (_outFileT.getText().endsWith(".mp3")) {
@@ -161,7 +169,9 @@ public class ReplaceAudioPanel extends SidePanel implements ActionListener {
 		}
 	}
 
-	// Sets up the progress bar
+	/**
+	 * Sets up the progress bar
+	 */
 	public void setupProgress() {
 		_time.setActionCommand("tick");
 		_time.addActionListener(new ActionListener() {
@@ -181,7 +191,9 @@ public class ReplaceAudioPanel extends SidePanel implements ActionListener {
 		});
 	}
 
-	//Switch the buttons' enabled characteristic
+	/**
+	 * Switch the buttons' enabled characteristic
+	 */
 	protected void switchUsable() {
 		if (isUsable == true) {
 			isUsable = false;

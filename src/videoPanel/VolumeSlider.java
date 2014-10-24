@@ -21,6 +21,9 @@ public class VolumeSlider extends JSlider {
 		initSlider();
 	}
 
+	/**
+	 * Initialize slider
+	 */
 	private void initSlider() {
 		// Initialization
 		this.setMinimum(0);

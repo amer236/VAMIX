@@ -32,6 +32,9 @@ public class TimeSlider extends JSlider implements ActionListener {
 		initSlider();
 	}
 
+	/**
+	 * Initialize slider
+	 */
 	private void initSlider() {
 		// Initialization
 		this.setMinimum(0);
@@ -54,8 +57,10 @@ public class TimeSlider extends JSlider implements ActionListener {
 		});
 	}
 
+	/**
+	 * Update slider to time of media
+	 */
 	private void updateTime() {
-		// Update slider to time of media
 		if (_player.getLength() == 0) {
 			this.setValue(0);
 		} else {

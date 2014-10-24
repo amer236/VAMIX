@@ -4,6 +4,9 @@ import java.util.ArrayList;
 
 import javax.swing.table.AbstractTableModel;
 
+/**
+ * This is the model for the subtitle table in the subtitlespanel
+ */
 @SuppressWarnings("serial")
 public class SubtitleTableModel extends AbstractTableModel {
 	
@@ -15,11 +18,6 @@ public class SubtitleTableModel extends AbstractTableModel {
 		colNames[1] = "Stop Time";
 		colNames[2] = "Text";
 	}
-
-//	public Class getColumnClass(int c) {
-//        return getValueAt(0, c).getClass();
-//    }
-
 
 	@Override
 	public int getColumnCount() {
@@ -33,13 +31,11 @@ public class SubtitleTableModel extends AbstractTableModel {
 
 	@Override
 	public int getRowCount() {
-		//return 10;
 		return dataEntries.size();
 	}
 
 	@Override
 	public Object getValueAt(int rowIndex, int columnIndex) {
-		//return "poop";
 		return dataEntries.get(rowIndex)[columnIndex];
 	}
 
@@ -47,9 +43,14 @@ public class SubtitleTableModel extends AbstractTableModel {
 	@Override
 	public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
 		dataEntries.get(rowIndex)[rowIndex] = (String) aValue;
-
 	}
 	
+	/**
+	 * Add a new row
+	 * @param s start time
+	 * @param t stop time
+	 * @param text
+	 */
 	public void addDataRow(String s, String t, String text){
 		String[] obj = new String[3];
 		obj[0] = s;
@@ -60,6 +61,10 @@ public class SubtitleTableModel extends AbstractTableModel {
 		fireTableDataChanged();
 	}
 	
+	/**
+	 * Delete row from table
+	 * @param row to delete
+	 */
 	public void deleteDataRow(int row){		
 		dataEntries.remove(row);
 		fireTableDataChanged();

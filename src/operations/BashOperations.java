@@ -17,32 +17,41 @@ public class BashOperations {
 	private ProcessBuilder _builder;
 	private Process _process;
 
-	// Cancels the current process
+	/**
+	 * Cancels the current process
+	 */
 	public void cancel() {
 		_process.destroy();
 	}
 
-	// Returns completion percentage
-	// Don't think this is used
+	/**
+	 * Returns completion percentage
+	 */
 	public int getPercentage() {
 		return _percent;
 	}
 
-	// Returns result of SwingWorker
+	/**
+	 * Returns result of SwingWorker
+	 */
 	public int getResult() {
 		return _result;
 	}
 
-	// Check that a file is audio
+	/**
+	 * Check that a file is audio
+	 * @param loc Location of file
+	 * @return boolean representing if the input is audio
+	 */
 	public boolean checkAudioFile(String loc) {
-		//File file = new File(loc);
 		boolean returnValue = false;
 		try {
 			_builder = new ProcessBuilder("/bin/bash", "-c", "echo $(file '"
 					+ loc + "')");
 			_builder = _builder.redirectErrorStream(true);
 			_process = _builder.start();
-
+			
+			//Read output from the process
 			InputStream stdout = _process.getInputStream();
 			BufferedReader stdoutBuffered = new BufferedReader(
 					new InputStreamReader(stdout));
@@ -62,8 +71,12 @@ public class BashOperations {
 		return returnValue;
 	}
 	
+	/**
+	 * Check that a file is video
+	 * @param loc Location of file
+	 * @return boolean representing if the input is video
+	 */
 	public boolean checkVideoFile(String loc) {
-		//File file = new File(loc);
 		boolean returnValue = false;
 		try {
 			_builder = new ProcessBuilder("/bin/bash", "-c", "echo $(file '"
@@ -71,6 +84,7 @@ public class BashOperations {
 			_builder = _builder.redirectErrorStream(true);
 			_process = _builder.start();
 
+			//Read output from the process
 			InputStream stdout = _process.getInputStream();
 			BufferedReader stdoutBuffered = new BufferedReader(
 					new InputStreamReader(stdout));

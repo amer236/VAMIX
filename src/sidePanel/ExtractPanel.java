@@ -103,10 +103,9 @@ public class ExtractPanel extends SidePanel implements ActionListener {
 		this.add(_cancel, "span, grow");
 	}
 
-	protected void setupPanel() {
-	}
-
-	// Setup button actions
+	/**
+	 * Setup button actions
+	 */
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (_fsp.getInputField().equals("")) {
@@ -210,8 +209,12 @@ public class ExtractPanel extends SidePanel implements ActionListener {
 		}
 	}
 
-	// Checks only the appropriate inputs are made
-	// Checks that the output ends in .mp3 or .mp4 depending on isAudio
+	/**
+	 * Checks only the appropriate inputs are made
+	 * Checks that the output ends in .mp3 or .mp4 depending on isAudio
+	 * @param isAudio is the check for audio or video
+	 * @return boolean whether inputs are appropriate
+	 */
 	private boolean formatCheck(boolean isAudio) {
 		if (isAudio == true) {
 			if (sTimeT.getText().matches("[0-9]+")
@@ -232,7 +235,10 @@ public class ExtractPanel extends SidePanel implements ActionListener {
 		}
 	}
 
-	// Begin extraction
+	/**
+	 * Begin extraction
+	 * @param isAudioVideoBoth
+	 */
 	private void beginExtract(int isAudioVideoBoth) {
 		switchUsable();
 		_extractor = new Extractor();
@@ -240,7 +246,9 @@ public class ExtractPanel extends SidePanel implements ActionListener {
 		_extractor.extract(_fsp.getInputField(), _sTime, _tTime, _outFile, isAudioVideoBoth);
 	}
 
-	// Setup progress bar
+	/**
+	 * Setup progress bar
+	 */
 	public void setupProgress() {
 		_time.setActionCommand("tick");
 		_time.addActionListener(new ActionListener() {
@@ -260,7 +268,9 @@ public class ExtractPanel extends SidePanel implements ActionListener {
 		});
 	}
 
-	// Switch the buttons' enabled characteristic
+	/**
+	 * Switch the buttons' enabled characteristic
+	 */
 	protected void switchUsable() {
 		if (isUsable == true) {
 			isUsable = false;

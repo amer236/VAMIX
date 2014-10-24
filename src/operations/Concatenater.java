@@ -33,7 +33,12 @@ public class Concatenater extends SwingWorker<Void, Integer> {
 		return null;
 	}
 
-	// Public method to begin worker
+	/**
+	 * Public method to begin worker
+	 * @param location1 First file location
+	 * @param location2 Second file location
+	 * @param outname Output file name
+	 */
 	public void concat(String location1, String location2, String outname) {
 		_isWorking = true;
 		_location1 = location1;
@@ -43,16 +48,19 @@ public class Concatenater extends SwingWorker<Void, Integer> {
 		this.execute();
 	}
 
-	// Create temp videos in mpeg format
+	/**
+	 * Create temporary videos in mpeg format
+	 */
 	private void createTempVids() {
 		createTemp1();
 		if (_result == 0) {
 			createTemp2();
 		}
-
 	}
 
-	// Creates temporary video 1
+	/**
+	 * Creates temporary video 1
+	 */
 	private void createTemp1() {
 		try {
 			_builder = new ProcessBuilder(
@@ -66,13 +74,14 @@ public class Concatenater extends SwingWorker<Void, Integer> {
 			_result = _process.waitFor();
 
 			_process.destroy();
-
 		} catch (IOException | InterruptedException e) {
 			e.printStackTrace();
 		}
 	}
 
-	// Creates temporary video 2
+	/**
+	 * Creates temporary video 2
+	 */
 	private void createTemp2() {
 		try {
 			_builder = new ProcessBuilder(
@@ -88,13 +97,14 @@ public class Concatenater extends SwingWorker<Void, Integer> {
 				mergeVideos();
 			}
 			_process.destroy();
-
 		} catch (IOException | InterruptedException e) {
 			e.printStackTrace();
 		}
 	}
 
-	// Merge temporary videos
+	/**
+	 * Merge the temporary videos
+	 */
 	private void mergeVideos() {
 		try {
 			String stringP = "cat temp1.mpg temp2.mpg > final.mpg";
@@ -108,13 +118,14 @@ public class Concatenater extends SwingWorker<Void, Integer> {
 			if (_result == 0) {
 				convertTomp4();
 			}
-			
 			_process.destroy();
-
 		} catch (IOException | InterruptedException e) {
 		}
 	}
 
+	/**
+	 * Convert the merged mpeg file to a file with an output name
+	 */
 	private void convertTomp4() {
 		 try {
 				String stringP = "avconv -i final.mpg -strict experimental '" + _outname + "'";
@@ -126,12 +137,13 @@ public class Concatenater extends SwingWorker<Void, Integer> {
 				_result = _process.waitFor();
 								
 				_process.destroy();
-
 			} catch (IOException | InterruptedException e) {
 			}
 	}
 
-	// Empties VAMIX folder for new operation
+	/**
+	 * Empties VAMIX folder for new operation
+	 */
 	private void clearTempFiles() {
 		File dir = new File(System.getProperty("user.home") + "/VAMIX");
 		for (File file : dir.listFiles()) {
@@ -150,17 +162,25 @@ public class Concatenater extends SwingWorker<Void, Integer> {
 		}
 	}
 
-	// Returns result of SwingWorker
+	/**
+	 * Returns result of SwingWorker
+	 * @return integer result of the operation
+	 */
 	public int getResult() {
 		return _result;
 	}
 
-	// Returns whether the SwingWorker is working
+	/**
+	 * Returns whether the SwingWorker is working
+	 * @return boolean representing whether the operation is in progress
+	 */
 	public boolean getWorking() {
 		return _isWorking;
 	}
 
-	// Cancel the Worker
+	/**
+	 * Cancel the operation
+	 */
 	public void cancel() {
 		if (_process != null) {
 			_process.destroy();

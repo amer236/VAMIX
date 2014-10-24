@@ -54,7 +54,9 @@ public class MainGUI {
 	JFrame _videoAdjustment = null;
 	JTabbedPane tabbedPane = null;
 
-	// Create and add all the necessary GUI components
+	/**
+	 * Create and add all the necessary GUI components
+	 */
 	public void createGUI() {
 		// Create VAMIX directory and save log file
 		File dir = new File(System.getProperty("user.home") + "/VAMIX");
@@ -110,8 +112,8 @@ public class MainGUI {
 		// Create panes for tabbedPane and add them
 		_generalPanel = new GeneralPanel("General", _mediaPlayer);
 		tabbedPane.addTab("File Select", _generalPanel);
-		ExtractPanel extractPanel = new ExtractPanel(
-				"Cut and Trim", _generalPanel);
+		ExtractPanel extractPanel = new ExtractPanel("Cut and Trim",
+				_generalPanel);
 		MergeAudioPanel mergePanel = new MergeAudioPanel("Merge Audio",
 				_generalPanel);
 		ReplaceAudioPanel overlayPanel = new ReplaceAudioPanel(
@@ -140,16 +142,18 @@ public class MainGUI {
 		// Initialise control panel
 		_controlPanel = new ControlsPanel(_mediaPlayer, _generalPanel);
 		videoPanel.add(_controlPanel, "");
-		
+
 		JPanel wrapSubtitle = new JPanel(new MigLayout());
-		SubtitlesPanel sPanel = new SubtitlesPanel("Subtitles", _generalPanel, _controlPanel.getMediaTime());
+		SubtitlesPanel sPanel = new SubtitlesPanel("Subtitles", _generalPanel,
+				_controlPanel.getMediaTime());
 		wrapSubtitle.add(sPanel, "grow");
 
 		tabbedPane.addTab("Subtitles", wrapSubtitle);
 
 		// Setup StateOrganiser
 		final StateOrganiser _so = new StateOrganiser(
-				System.getProperty("user.home") + "/VAMIX/.log.txt", vPanel, sPanel);
+				System.getProperty("user.home") + "/VAMIX/.log.txt", vPanel,
+				sPanel);
 
 		// Organise frame
 		frame.pack();
@@ -168,23 +172,22 @@ public class MainGUI {
 		menuBar.add(fileMenu);
 		JMenuItem quickOpen = new JMenuItem("Open Media");
 		fileMenu.add(quickOpen);
-		
+
 		quickOpen.addActionListener(new ActionListener() {
-			
+
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				JFileChooser fileChooser = new JFileChooser();
 				int returnValue = fileChooser.showOpenDialog(null);
 				if (returnValue == JFileChooser.APPROVE_OPTION) {
 					File selectedFile = fileChooser.getSelectedFile();
-					_generalPanel.setInputField(selectedFile.getAbsolutePath());				
+					_generalPanel.setInputField(selectedFile.getAbsolutePath());
 					_mediaPlayer.playMedia(selectedFile.getAbsolutePath());
 					_generalPanel.addToList(selectedFile.getAbsolutePath());
 				}
 			}
 		});
 
-		
 		menuBar.add(saveMenu);
 		JMenuItem item0 = new JMenuItem("Save State");
 		JMenuItem item1 = new JMenuItem("Load State");
@@ -240,7 +243,7 @@ public class MainGUI {
 				});
 			}
 		});
-		
+
 		JMenuItem adjust = new JMenuItem("Playback Adjustment");
 		optionsSubMenu.add(adjust);
 

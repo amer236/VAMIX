@@ -44,13 +44,19 @@ public class Downloader extends SwingWorker<Void, Integer> {
 		}
 	}
 
-	// Public method to begin download
+	/**
+	 * Public method to begin download
+	 * @param url for download
+	 */
 	public void download(String url) {
 		_url = url;
 		this.execute();
 	}
 
-	// Method to be run in background of swing worker
+	/**
+	 * Method to be run in background of swing worker
+	 * @param url for download
+	 */
 	private void downloadSW(String url) {
 		String fileSizeString = "";
 		long fileSize = 1;
@@ -102,17 +108,25 @@ public class Downloader extends SwingWorker<Void, Integer> {
 		}
 	}
 
-	// Returns progress through download as a percentage
+	/**
+	 * Returns progress through download as a percentage
+	 * @return integer progress through operation
+	 */
 	public int getPercentage() {
 		return _percent;
 	}
 
-	// Returns result of worker
+	/**
+	 * Returns result of worker
+	 * @return integer result
+	 */
 	public int getResult() {
 		return _result;
 	}
 
-	// Cancels the current process
+	/**
+	 * Cancels the current process
+	 */
 	public void cancel() {
 		if (_process != null) {
 			_process.destroy();

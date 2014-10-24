@@ -78,7 +78,9 @@ public class ControlsPanel extends JPanel {
 		createControls();
 	}
 	
-	// Fast forward or rewind depending on _action
+	/**
+	 * Fast forward or rewind depending on _action
+	 */
 	protected void repeatAction() {
 		if (_action.equals("forward")) {
 			_player.skip(200);
@@ -88,7 +90,9 @@ public class ControlsPanel extends JPanel {
 
 	}
 
-	// Setup controls as icons if possible and add to panel
+	/**
+	 * Setup controls as icons if possible and add to panel
+	 */
 	public void createControls() {
 		// All icons are from the basic application pack by Freepik, License CC BY 3.0
 		// http://www.flaticon.com/packs/basic-application
@@ -240,7 +244,9 @@ public class ControlsPanel extends JPanel {
 		this.add(volControls, "wrap, align right");
 	}
 
-	// Switch play button between play and pause
+	/**
+	 * Switch play button between play and pause
+	 */
 	public void switchPlayIcon() {
 		if (playPauseLoaded) {
 			if (btnPlay.getIcon().equals(playIcon)) {
@@ -257,7 +263,9 @@ public class ControlsPanel extends JPanel {
 		}
 	}
 
-	// Switch mute button between mute and unmute
+	/**
+	 * Switch mute button between mute and unmute
+	 */
 	private void switchMuteIcon() {
 		if (muteUnmuteLoaded) {
 			if (btnMute.getIcon().equals(unmuteIcon)) {
@@ -274,6 +282,10 @@ public class ControlsPanel extends JPanel {
 		}
 	}
 	
+	/**
+	 * Gets the MediaTime object
+	 * @return mediaTime object
+	 */
 	public MediaTime getMediaTime(){
 		return mediaTime;
 	}
