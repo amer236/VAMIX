@@ -186,6 +186,7 @@ public class SubtitlesPanel extends SidePanel {
 		});
 		
 		ChangeListener chListener = new ChangeListener(){
+			@SuppressWarnings("rawtypes")
 			@Override
 			public void stateChanged(ChangeEvent e) {
 				int totalStart = ((int) startHour.getValue() * 3600) + ((int) startMin.getValue() * 60) + (int) startSec.getValue();
@@ -257,6 +258,19 @@ public class SubtitlesPanel extends SidePanel {
 					output.close();
 					JOptionPane.showMessageDialog(null, "Subtitle file saved");
 				}
+			} else {
+				outSRT.createNewFile();
+				PrintWriter output = new PrintWriter(outtext + ".srt");
+				for (int i = 0; i < subtitleData.getRowCount(); i++) {
+					output.println();
+					output.println(i);
+					output.println(subtitleData.getValueAt(i, 0)
+							+ ",000 --> " + subtitleData.getValueAt(i, 1)
+							+ ",000");
+					output.println(subtitleData.getValueAt(i, 2));
+				}
+				output.close();
+				JOptionPane.showMessageDialog(null, "Subtitle file saved");
 			}
 		} catch (IOException e1) {
 			e1.printStackTrace();

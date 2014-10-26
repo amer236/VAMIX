@@ -65,7 +65,7 @@ public class VideoAdjustments extends JFrame implements ChangeListener{
 		panel.add(defaults, "span, grow");
 		
 		this.add(panel);
-		this.setPreferredSize(new Dimension(380, 250));
+		this.setPreferredSize(new Dimension(300, 180));
 		this.pack();
 		this.setResizable(false);
 	}
