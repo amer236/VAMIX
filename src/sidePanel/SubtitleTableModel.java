@@ -72,11 +72,35 @@ public class SubtitleTableModel extends AbstractTableModel {
 		fireTableDataChanged();
 	}
 	
+	/**
+	 * Sorts the list of subtitles
+	 */
 	public void sortList(){
 		Collections.sort(dataEntries, new Comparator<String[]>() {
 			@Override
 			public int compare(String[] o1, String[] o2) {
-				return o1[0].compareTo(o2[0]);
+				String[] obj1 = o1[0].split(":");
+				String[] obj2 = o2[0].split(":");
+
+				if(Integer.parseInt(obj1[0]) > Integer.parseInt(obj2[0])){
+					return 1;
+				} else if(Integer.parseInt(obj1[0]) < Integer.parseInt(obj2[0])){
+					return -1;
+				}
+				if(Integer.parseInt(obj1[1]) > Integer.parseInt(obj2[1])){
+					return 1;
+				} else if(Integer.parseInt(obj1[1]) < Integer.parseInt(obj2[1])){
+					return -1;
+				}
+				if(Integer.parseInt(obj1[2]) > Integer.parseInt(obj2[2])){
+					return 1;
+				} else if(Integer.parseInt(obj1[2]) < Integer.parseInt(obj2[2])){
+					return -1;
+				}
+				
+				return 0;
+				
+				//return o1[0].compareTo(o2[0]);
 			}
 		});
 	}

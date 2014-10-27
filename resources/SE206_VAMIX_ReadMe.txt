@@ -1,4 +1,4 @@
-SE206 VAMIX Beta ReadMe
+SE206 VAMIX ReadMe
 Alex Mercer
 
 INSTALLATION
@@ -7,7 +7,7 @@ INSTALLATION
 -To launch the .jar file, open your console and navigate to the installed directory.
 -Then, enter "java -jar SE206_VAMIX_beta_amer236.jar". The program will then launch.
 
--DO NOT launch the jar by applying the executable permissions.
+-DO NOT launch the jar by applying the executable permissions and double clicking. This will cause loss of functionality
 
 -To launch from eclipse, add the src folder and the resources folder to an eclipse project. After adding
 -the three jar files from the resources folder to the build path, the project will then compile and can be run.
@@ -15,16 +15,16 @@ INSTALLATION
 
 OVERVIEW
 -Upon running the program, the main video player and controls are located on the right of the window, 
--with 3 tabs on the left.
--The general tab contains file select and file download capabilities. The file select allows you 
+-with 4 tabs on the left.
+-The File Select tab contains file select and file download capabilities. The file select allows you 
 -to import video files to an easy access list.
 -From here, individual files can be loaded into the player.
 -To download a file, simply enter a url and click download. The download progress is displayed 
 -with a loading bar.
--The audio tab allows you to cut audio, video or both, to merge audio tracks, and to replace a video's audio track with another. 
+-The Manipulation tab allows you to cut audio, video or both, to merge audio tracks, replace a video's audio track with another, and join media files. 
 -Each of these functions can be carried out at the same time, can be cancelled and show whether they are active.
--The video tab allows you to add a title screen and a credits scene to the current video, and to apply filters to the video.
--The top menu bar allows you to Save/Load state, as well as select some custom theme colours. 
+-The Video tab allows you to add a title screen and a credits scene to the current video, and to apply filters to the video.
+-The top menu bar allows you to Save/Load state, as well as select some custom theme colours and adjust media playback settings. 
 -This readme can also be accessed the menu bar.
 
 OVERLAY AUDIO
