@@ -1,6 +1,8 @@
 package sidePanel;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 import javax.swing.table.AbstractTableModel;
 
@@ -68,5 +70,14 @@ public class SubtitleTableModel extends AbstractTableModel {
 	public void deleteDataRow(int row){		
 		dataEntries.remove(row);
 		fireTableDataChanged();
+	}
+	
+	public void sortList(){
+		Collections.sort(dataEntries, new Comparator<String[]>() {
+			@Override
+			public int compare(String[] o1, String[] o2) {
+				return o1[0].compareTo(o2[0]);
+			}
+		});
 	}
 }

@@ -133,6 +133,7 @@ public class SubtitlesPanel extends SidePanel {
 						+ endMin.getValue().toString()
 						+ ":"
 						+ endSec.getValue().toString(), subtitle.getText());
+				subtitleData.sortList();
 			}
 		});
 
@@ -164,7 +165,6 @@ public class SubtitlesPanel extends SidePanel {
 					loadSRTFile(absolutePath);
 				}
 			}
-
 		});
 		
 		startTime.addActionListener(new ActionListener() {

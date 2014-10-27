@@ -117,7 +117,7 @@ public class MainGUI {
 		MergeAudioPanel mergePanel = new MergeAudioPanel("Merge Audio",
 				_generalPanel);
 		ReplaceAudioPanel overlayPanel = new ReplaceAudioPanel(
-				"Replace audio track", _generalPanel);
+				"Replace Audio Track", _generalPanel);
 
 		// Wrap each audio pane into wrapAudio
 		JPanel wrapAudio = new JPanel(new MigLayout());
@@ -174,7 +174,6 @@ public class MainGUI {
 		fileMenu.add(quickOpen);
 
 		quickOpen.addActionListener(new ActionListener() {
-
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				JFileChooser fileChooser = new JFileChooser();

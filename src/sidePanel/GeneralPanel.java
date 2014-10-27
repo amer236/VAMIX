@@ -46,7 +46,7 @@ public class GeneralPanel extends SidePanel implements ActionListener {
 	JList<String> list = new JList<String>(listModel);
 	JButton add = new JButton("Import File");
 	JButton delete = new JButton("Remove File");
-	JButton play = new JButton("Load selected media");
+	JButton play = new JButton("Load Selected Media");
 	JLabel imported = new JLabel("Imported Files");
 
 	public GeneralPanel(String name, EmbeddedMediaPlayer player) {
@@ -92,9 +92,8 @@ public class GeneralPanel extends SidePanel implements ActionListener {
 				int returnValue = fileChooser.showOpenDialog(null);
 				if (returnValue == JFileChooser.APPROVE_OPTION) {
 					File selectedFile = fileChooser.getSelectedFile();
-					listModel.addElement(selectedFile.getAbsolutePath());
+					addToList(selectedFile.getAbsolutePath());
 				}
-				delete.setEnabled(true);
 			}
 		});
 		
@@ -271,6 +270,7 @@ public class GeneralPanel extends SidePanel implements ActionListener {
 	 */
 	public void addToList(String input){
 		listModel.addElement(input);
+		delete.setEnabled(true);
 	}
 	
 	/**
